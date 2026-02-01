@@ -10,6 +10,7 @@ Promenite vrednosti konstanti ispod sa vašim stvarnim podacima
 
 const PHONE_NUMBER = "+381 62 144 5958";
 const WHATSAPP_NUMBER = "+381621445958";
+const VIBER_NUMBER = "+381621445958";
 const EMAIL_ADDRESS = "vojkan@example.com"; // IZMENITE: Vaša email adresa
 const ADDRESS = "Uspenska 1, ulaz iz Pavla Papa";
 
@@ -24,6 +25,7 @@ const Contact = () => {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   
   const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Zdravo! Želim da zakažem termin u salonu Modni frizer VOJKAN.")}`;
+  const viberLink = `viber://chat?number=${encodeURIComponent(VIBER_NUMBER.replace(/\s/g, ""))}`;
   const emailLink = `mailto:${EMAIL_ADDRESS}?subject=${encodeURIComponent("Zakazivanje termina - Modni frizer VOJKAN")}`;
   const phoneLink = `tel:${PHONE_NUMBER.replace(/\s/g, "")}`;
 
@@ -70,6 +72,25 @@ const Contact = () => {
                     </div>
                     <div>
                       <p className="text-foreground font-medium mb-1">WhatsApp</p>
+                      <p className="text-muted-foreground text-sm">Pišite nam direktno</p>
+                    </div>
+                  </a>
+                </StaggerItem>
+
+                <StaggerItem>
+                  <a
+                    href={viberLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-4 p-6 bg-card border border-border 
+                               hover:border-primary/50 transition-all duration-300 group"
+                  >
+                    <div className="w-14 h-14 flex items-center justify-center border border-primary/30 
+                                    group-hover:bg-primary/10 transition-colors">
+                      <MessageCircle className="w-6 h-6 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-foreground font-medium mb-1">Viber</p>
                       <p className="text-muted-foreground text-sm">Pišite nam direktno</p>
                     </div>
                   </a>

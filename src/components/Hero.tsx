@@ -11,12 +11,14 @@ import BookingCalendar from "./BookingCalendar";
 */
 
 const WHATSAPP_NUMBER = "+381621445958";
+const VIBER_NUMBER = "+381621445958";
 const EMAIL_ADDRESS = "vojkan@example.com"; // IZMENITE: Vaša email adresa
 
 const Hero = () => {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   
   const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER.replace(/\s/g, "")}?text=${encodeURIComponent("Zdravo! Želim da zakažem termin u salonu Modni frizer VOJKAN.")}`;
+  const viberLink = `viber://chat?number=${encodeURIComponent(VIBER_NUMBER.replace(/\s/g, ""))}`;
   const emailLink = `mailto:${EMAIL_ADDRESS}?subject=${encodeURIComponent("Zakazivanje termina - Modni frizer VOJKAN")}`;
 
   return (
@@ -85,6 +87,15 @@ const Hero = () => {
             >
               <MessageCircle className="w-5 h-5" />
               WhatsApp
+            </a>
+            <a
+              href={viberLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-outline-gold"
+            >
+              <MessageCircle className="w-5 h-5" />
+              Viber
             </a>
             <a
               href={emailLink}
