@@ -19,7 +19,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase, isSupabaseConfigured } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { CalendarIcon, Clock, Check, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -85,6 +85,11 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
   const fetchBookedSlots = async (date: Date) => {
     setIsLoadingSlots(true);
     try {
+      if (!isSupabaseConfigured || !supabase) {
+        setBookedSlots([]);
+        return;
+      }
+
       const { data, error } = await supabase
         .from("appointments")
         .select("appointment_time")
@@ -129,6 +134,8 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
     notes?: string;
   }) => {
     try {
+      if (!isSupabaseConfigured || !supabase) return;
+
       const response = await supabase.functions.invoke("send-booking-notification", {
         body: appointmentData,
       });
@@ -144,6 +151,15 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
   };
 
   const handleSubmit = async () => {
+    if (!isSupabaseConfigured || !supabase) {
+      toast({
+        title: "Online zakazivanje nije dostupno",
+        description: "Trenutno nije podešen sistem za online zakazivanje. Kontaktirajte nas putem telefona ili WhatsApp-a.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     if (!selectedDate || !selectedTime || !selectedService || !customerName || !customerPhone) {
       toast({
         title: "Greška",
