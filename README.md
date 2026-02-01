@@ -1,4 +1,4 @@
-# Modni Frizer VOJKAN — Web sajt
+# Modni Frizer VOJKAN
 
 Ovo je statički/SPA web sajt za frizerski salon **Modni Frizer VOJKAN**.
 
