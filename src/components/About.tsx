@@ -4,18 +4,18 @@ import { ScrollReveal, StaggerContainer, StaggerItem } from "./animations/Scroll
 const features = [
   {
     icon: Scissors,
-    title: "Modni Stil",
-    description: "Pratimo najnovije trendove i prilagođavamo ih vašem stilu"
+    title: "Precizno šišanje",
+    description: "Oblik koji se lepo nosi i kada nemaš vremena za stilizovanje."
   },
   {
     icon: Award,
-    title: "40+ Godina Iskustva",
-    description: "Preko četiri decenije posvećenosti ženskoj lepoti i stilu"
+    title: "Boje i balayage",
+    description: "Prirodni prelivi i nijanse koje odgovaraju tenu i stilu."
   },
   {
     icon: Heart,
-    title: "Zadovoljni Klijenti",
-    description: "Hiljade zadovoljnih klijentkinja tokom godina"
+    title: "Konsultacije pre usluge",
+    description: "Kratak dogovor pre rada — da znaš šta dobijaš i koliko traje."
   }
 ];
 
@@ -27,7 +27,7 @@ const About = () => {
         <ScrollReveal className="text-center mb-16">
           <p className="text-primary uppercase tracking-[0.3em] text-sm mb-4">O nama</p>
           <h2 className="heading-section mb-6">
-            Tradicija Kvaliteta i <span className="text-gold-gradient">Stila</span>
+            Iskustvo, mirna ruka i dogovor bez <span className="text-gold-gradient">iznenađenja</span>
           </h2>
           <div className="decorative-line mb-8" />
         </ScrollReveal>
@@ -35,16 +35,14 @@ const About = () => {
         {/* Glavni tekst */}
         <ScrollReveal delay={0.2} className="max-w-3xl mx-auto text-center mb-16">
           <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-            <strong className="text-foreground">Modni frizer VOJKAN</strong> je premium ženski frizerski salon 
-            u srcu Novog Sada, sa tradicijom dugom preko <strong className="text-primary">40 godina</strong>. 
-            Glavni frizer <strong className="text-foreground">Vojkan</strong> je osnivač salona, 
-            a uz njega radi i njegov sin <strong className="text-foreground">Boža</strong>, 
-            koji je ispekao porodični zanat i nastavlja tradiciju izvrsnosti.
+            <strong className="text-foreground">Modni frizer VOJKAN</strong> je ženski frizerski salon u centru Novog Sada sa
+            tradicijom dugom preko <strong className="text-primary">40 godina</strong>. Radimo porodično —
+            <strong className="text-foreground"> Vojkan</strong> i <strong className="text-foreground">Boža</strong> — i cilj
+            nam je da izađeš iz salona sa frizurom koju možeš lako da održavaš.
           </p>
           <p className="text-muted-foreground leading-relaxed">
-            Verujemo da je svaka frizura umetničko delo. Bilo da tražite elegantnu transformaciju 
-            ili održavanje vašeg savršenog izgleda, naš salon je mesto gde porodična tradicija 
-            sreće savremeni stil.
+            Pre svake promene radimo kratke konsultacije: šta želiš, šta ti stoji i šta je realno za tvoju kosu. Ako farbaš
+            ili radiš balayage, dobićeš i savet kako da boja traje duže i kako da kosa ostane sjajna.
           </p>
         </ScrollReveal>
 

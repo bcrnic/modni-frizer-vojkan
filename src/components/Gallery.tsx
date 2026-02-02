@@ -18,7 +18,7 @@ const Gallery = () => {
       <div className="container mx-auto">
         {/* Naslov sekcije */}
         <ScrollReveal className="text-center mb-16">
-          <p className="text-primary uppercase tracking-[0.3em] text-sm mb-4">Portfolio</p>
+          <p className="text-primary uppercase tracking-[0.3em] text-sm mb-4">Galerija</p>
           <h2 className="heading-section mb-6">
             Naši <span className="text-gold-gradient">Radovi</span>
           </h2>
@@ -56,7 +56,7 @@ const Gallery = () => {
         {/* Poziv za više slika */}
         <ScrollReveal delay={0.3}>
           <p className="text-center text-muted-foreground mt-12">
-            Pratite nas na društvenim mrežama za više inspiracije i naših radova
+            Ako želiš frizuru u ovom stilu, pošalji sliku porukom i napiši željeni termin.
           </p>
         </ScrollReveal>
       </div>

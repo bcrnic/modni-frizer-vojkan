@@ -41,13 +41,14 @@ const Services = () => {
       <div className="container mx-auto">
         {/* Naslov sekcije */}
         <ScrollReveal className="text-center mb-16">
-          <p className="text-primary uppercase tracking-[0.3em] text-sm mb-4">Cenovnik</p>
+          <p className="text-primary uppercase tracking-[0.3em] text-sm mb-4">Usluge</p>
           <h2 className="heading-section mb-6">
-            Naše <span className="text-gold-gradient">Usluge</span>
+            Cenovnik i najčešće <span className="text-gold-gradient">usluge</span>
           </h2>
           <div className="decorative-line mb-8" />
           <p className="text-muted-foreground max-w-xl mx-auto">
-            Premium usluge uz korišćenje najkvalitetnijih proizvoda i tehnika
+            Cene su okvirne i zavise od dužine kose i utroška materijala. Ako nisi sigurna šta ti tačno treba, javi se porukom
+            — preporučićemo opciju i okvirnu cenu pre dolaska.
           </p>
         </ScrollReveal>
 
@@ -83,7 +84,7 @@ const Services = () => {
         <ScrollReveal delay={0.3}>
           <p className="text-center text-muted-foreground text-sm mt-12">
             * Cene mogu varirati u zavisnosti od dužine kose i kompleksnosti tretmana.
-            Konsultacije su besplatne.
+            Konsultacije su besplatne. Tačnu cenu dogovaramo nakon kratkog pregleda kose.
           </p>
         </ScrollReveal>
       </div>

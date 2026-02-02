@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import logo from "@/assets/logo.png";
+import { BOOKING_URL } from "@/config/links";
 
 const navLinks = [
   { href: "#o-salonu", label: "O salonu" },
@@ -60,7 +61,9 @@ const Navigation = () => {
 
           {/* CTA dugme - desktop */}
           <a
-            href="#kontakt"
+            href={BOOKING_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="hidden md:inline-flex btn-gold py-3 px-6 text-xs"
           >
             Zakažite termin
@@ -92,7 +95,9 @@ const Navigation = () => {
                 </a>
               ))}
               <a
-                href="#kontakt"
+                href={BOOKING_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="btn-gold mt-4"
                 onClick={() => setIsMobileMenuOpen(false)}
               >

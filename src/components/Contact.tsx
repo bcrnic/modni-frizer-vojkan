@@ -1,17 +1,12 @@
-import { useState } from "react";
 import { Phone, Mail, MessageCircle, MapPin, Clock, CalendarDays } from "lucide-react";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "./animations/ScrollReveal";
-import BookingCalendar from "./BookingCalendar";
+import { BOOKING_URL, EMAIL_ADDRESS, PHONE_NUMBER_DISPLAY, PHONE_NUMBER_TEL, VIBER_NUMBER, WHATSAPP_NUMBER, WHATSAPP_PREFILL } from "@/config/links";
 
 /*
 === KONTAKT INFORMACIJE - MESTA ZA IZMENU ===
 Promenite vrednosti konstanti ispod sa vašim stvarnim podacima
 */
 
-const PHONE_NUMBER = "+381 62 144 5958";
-const WHATSAPP_NUMBER = "+381621445958";
-const VIBER_NUMBER = "+381621445958";
-const EMAIL_ADDRESS = "vojkan@example.com"; // IZMENITE: Vaša email adresa
 const ADDRESS = "Uspenska 1, ulaz iz Pavla Papa";
 
 // IZMENITE: Vaše radno vreme
@@ -22,12 +17,10 @@ const WORKING_HOURS = [
 ];
 
 const Contact = () => {
-  const [isBookingOpen, setIsBookingOpen] = useState(false);
-  
-  const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Zdravo! Želim da zakažem termin u salonu Modni frizer VOJKAN.")}`;
+  const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_PREFILL)}`;
   const viberLink = `viber://chat?number=${encodeURIComponent(VIBER_NUMBER.replace(/\s/g, ""))}`;
   const emailLink = `mailto:${EMAIL_ADDRESS}?subject=${encodeURIComponent("Zakazivanje termina - Modni frizer VOJKAN")}`;
-  const phoneLink = `tel:${PHONE_NUMBER.replace(/\s/g, "")}`;
+  const phoneLink = `tel:${PHONE_NUMBER_TEL.replace(/\s/g, "")}`;
 
   return (
     <>
@@ -37,20 +30,23 @@ const Contact = () => {
           <ScrollReveal className="text-center mb-16">
             <p className="text-primary uppercase tracking-[0.3em] text-sm mb-4">Kontakt</p>
             <h2 className="heading-section mb-6">
-              Zakažite <span className="text-gold-gradient">Termin</span>
+              Tu smo u <span className="text-gold-gradient">centru Novog Sada</span>
             </h2>
             <div className="decorative-line mb-8" />
             <p className="text-muted-foreground max-w-xl mx-auto mb-6">
-              Najlakše zakažite termin porukom - odgovor stiže u najkraćem roku
+              Najbrže je porukom (WhatsApp/Viber). Ako voliš direktno — pozovi nas. Odgovaramo u toku radnog vremena i
+              potvrđujemo termin čim se dogovorimo.
             </p>
             {/* Online booking CTA */}
-            <button
-              onClick={() => setIsBookingOpen(true)}
+            <a
+              href={BOOKING_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn-gold inline-flex items-center gap-2"
             >
               <CalendarDays className="w-5 h-5" />
-              Zakaži Online Termin
-            </button>
+              Zakaži termin
+            </a>
           </ScrollReveal>
 
           <div className="grid lg:grid-cols-2 gap-12">
@@ -72,7 +68,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <p className="text-foreground font-medium mb-1">WhatsApp</p>
-                      <p className="text-muted-foreground text-sm">Pišite nam direktno</p>
+                      <p className="text-muted-foreground text-sm">Pošalji poruku i napiši uslugu + željeni dan</p>
                     </div>
                   </a>
                 </StaggerItem>
@@ -91,7 +87,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <p className="text-foreground font-medium mb-1">Viber</p>
-                      <p className="text-muted-foreground text-sm">Pišite nam direktno</p>
+                      <p className="text-muted-foreground text-sm">Pošalji poruku i napiši uslugu + željeni dan</p>
                     </div>
                   </a>
                 </StaggerItem>
@@ -125,7 +121,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <p className="text-foreground font-medium mb-1">Telefon</p>
-                      <p className="text-muted-foreground text-sm">{PHONE_NUMBER}</p>
+                      <p className="text-muted-foreground text-sm">{PHONE_NUMBER_DISPLAY}</p>
                     </div>
                   </a>
                 </StaggerItem>
@@ -188,7 +184,6 @@ const Contact = () => {
         </div>
       </section>
 
-      <BookingCalendar open={isBookingOpen} onOpenChange={setIsBookingOpen} />
     </>
   );
 };

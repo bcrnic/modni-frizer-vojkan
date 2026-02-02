@@ -1,8 +1,7 @@
-import { useState } from "react";
 import { MessageCircle, Mail, CalendarDays } from "lucide-react";
 import logo from "@/assets/logo.png";
 import heroBg from "@/assets/hero-bg.jpg";
-import BookingCalendar from "./BookingCalendar";
+import { BOOKING_URL, EMAIL_ADDRESS, VIBER_NUMBER, WHATSAPP_NUMBER, WHATSAPP_PREFILL } from "@/config/links";
 
 /*
 === MESTA ZA IZMENU ===
@@ -10,14 +9,8 @@ import BookingCalendar from "./BookingCalendar";
 - EMAIL_ADDRESS: Promenite email adresu
 */
 
-const WHATSAPP_NUMBER = "+381621445958";
-const VIBER_NUMBER = "+381621445958";
-const EMAIL_ADDRESS = "vojkan@example.com"; // IZMENITE: Vaša email adresa
-
 const Hero = () => {
-  const [isBookingOpen, setIsBookingOpen] = useState(false);
-  
-  const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER.replace(/\s/g, "")}?text=${encodeURIComponent("Zdravo! Želim da zakažem termin u salonu Modni frizer VOJKAN.")}`;
+  const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER.replace(/\s/g, "")}?text=${encodeURIComponent(WHATSAPP_PREFILL)}`;
   const viberLink = `viber://chat?number=${encodeURIComponent(VIBER_NUMBER.replace(/\s/g, ""))}`;
   const emailLink = `mailto:${EMAIL_ADDRESS}?subject=${encodeURIComponent("Zakazivanje termina - Modni frizer VOJKAN")}`;
 
@@ -50,7 +43,7 @@ const Hero = () => {
             className="heading-display mb-6 text-foreground animate-fade-in opacity-0"
             style={{ animationDelay: "0.4s" }}
           >
-            Modni Frizer <span className="text-gold-gradient">VOJKAN</span>
+            Ženski frizerski salon u Novom Sadu — frizura koja ti stoji i sutra
           </h1>
 
           {/* Podnaslov */}
@@ -58,7 +51,8 @@ const Hero = () => {
             className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-4 font-light tracking-wide animate-fade-in opacity-0"
             style={{ animationDelay: "0.6s" }}
           >
-            Luksuzan frizerski doživljaj u srcu Novog Sada
+            U “Modnom frizeru VOJKAN” radiš sa frizerima koji slušaju, predlažu i rade precizno. Zakaži termin za šišanje,
+            boju, balayage ili svečanu frizuru — bez komplikacija.
           </p>
 
           {/* Dekorativna linija */}
@@ -72,13 +66,15 @@ const Hero = () => {
             className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up opacity-0"
             style={{ animationDelay: "0.8s" }}
           >
-            <button
-              onClick={() => setIsBookingOpen(true)}
+            <a
+              href={BOOKING_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn-gold"
             >
               <CalendarDays className="w-5 h-5" />
-              Zakaži Online Termin
-            </button>
+              Zakaži termin
+            </a>
             <a
               href={whatsappLink}
               target="_blank"
@@ -105,6 +101,9 @@ const Hero = () => {
               Email
             </a>
           </div>
+          <p className="text-sm text-muted-foreground mt-6 animate-fade-in opacity-0" style={{ animationDelay: "0.95s" }}>
+            Najbrže odgovaramo na poruke. Pošalji: željeni dan + usluga + dužina kose.
+          </p>
         </div>
 
         {/* Scroll indikator */}
@@ -113,7 +112,6 @@ const Hero = () => {
         </div>
       </section>
 
-      <BookingCalendar open={isBookingOpen} onOpenChange={setIsBookingOpen} />
     </>
   );
 };
