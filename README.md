@@ -1,33 +1,30 @@
 # Modni Frizer VOJKAN
 
-Ovo je statički/SPA web sajt za frizerski salon **Modni Frizer VOJKAN**.
+This repository contains a single-page website for the hair salon **Modni Frizer VOJKAN**.
 
-Sajt sadrži:
+## Tech stack
 
-- početnu (Hero) sekciju
-- informacije o salonu
-- listu usluga
-- galeriju radova
-- kontakt sekciju
-
-## Tehnologije
-
-- React + TypeScript
+- React
+- TypeScript
 - Vite
 - Tailwind CSS
-- shadcn/ui (Radix UI komponente)
+- shadcn/ui (Radix UI)
 - framer-motion
 
-## Lokalno pokretanje
+## Running locally
 
-Preduslov: Node.js (preporuka: Node 18+)
+Requirements:
+
+- Node.js 18+
+
+Install dependencies and start the dev server:
 
 ```bash
 npm install
 npm run dev
 ```
 
-Aplikacija će biti dostupna na:
+The app will be available at:
 
 - http://localhost:8080
 
@@ -37,12 +34,4 @@ Aplikacija će biti dostupna na:
 npm run build
 ```
 
-Build izlaz je u folderu `dist/`.
-
-## Skripte
-
-- `npm run dev` — development server
-- `npm run build` — production build
-- `npm run preview` — preview buildu-ovanog sajta
-- `npm run lint` — ESLint
-- `npm test` — Vitest
+Production output is generated in `dist/`.
