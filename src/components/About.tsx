@@ -15,7 +15,7 @@ const features = [
   {
     icon: Heart,
     title: "Konsultacije pre usluge",
-    description: "Kratak dogovor pre rada — da znaš šta dobijaš i koliko traje."
+    description: "Kratak dogovor pre rada - da znaš šta dobijaš i koliko traje."
   }
 ];
 
@@ -36,8 +36,8 @@ const About = () => {
         <ScrollReveal delay={0.2} className="max-w-3xl mx-auto text-center mb-16">
           <p className="text-lg text-muted-foreground leading-relaxed mb-6">
             <strong className="text-foreground">Modni frizer VOJKAN</strong> je ženski frizerski salon u centru Novog Sada sa
-            tradicijom dugom preko <strong className="text-primary">40 godina</strong>. Radimo porodično —
-            <strong className="text-foreground"> Vojkan</strong> i <strong className="text-foreground">Boža</strong> — i cilj
+            tradicijom dugom preko <strong className="text-primary">40 godina</strong>. Radimo porodično -
+            <strong className="text-foreground"> Vojkan</strong> i <strong className="text-foreground">Boža</strong> - i cilj
             nam je da izađeš iz salona sa frizurom koju možeš lako da održavaš.
           </p>
           <p className="text-muted-foreground leading-relaxed">

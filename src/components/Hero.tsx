@@ -43,7 +43,7 @@ const Hero = () => {
             className="heading-display mb-6 text-foreground animate-fade-in opacity-0"
             style={{ animationDelay: "0.4s" }}
           >
-            Ženski frizerski salon u Novom Sadu — frizura koja ti stoji i sutra
+            Ženski frizerski salon u Novom Sadu - frizura koja ti stoji i sutra
           </h1>
 
           {/* Podnaslov */}
@@ -52,7 +52,7 @@ const Hero = () => {
             style={{ animationDelay: "0.6s" }}
           >
             U “Modnom frizeru VOJKAN” radiš sa frizerima koji slušaju, predlažu i rade precizno. Zakaži termin za šišanje,
-            boju, balayage ili svečanu frizuru — bez komplikacija.
+            boju, balayage ili svečanu frizuru - bez komplikacija.
           </p>
 
           {/* Dekorativna linija */}

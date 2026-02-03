@@ -34,7 +34,7 @@ const Contact = () => {
             </h2>
             <div className="decorative-line mb-8" />
             <p className="text-muted-foreground max-w-xl mx-auto mb-6">
-              Najbrže je porukom (WhatsApp/Viber). Ako voliš direktno — pozovi nas. Odgovaramo u toku radnog vremena i
+              Najbrže je porukom (WhatsApp/Viber). Ako voliš direktno - pozovi nas. Odgovaramo u toku radnog vremena i
               potvrđujemo termin čim se dogovorimo.
             </p>
             {/* Online booking CTA */}

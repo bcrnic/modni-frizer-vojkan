@@ -48,7 +48,7 @@ const Services = () => {
           <div className="decorative-line mb-8" />
           <p className="text-muted-foreground max-w-xl mx-auto">
             Cene su okvirne i zavise od dužine kose i utroška materijala. Ako nisi sigurna šta ti tačno treba, javi se porukom
-            — preporučićemo opciju i okvirnu cenu pre dolaska.
+            - preporučićemo opciju i okvirnu cenu pre dolaska.
           </p>
         </ScrollReveal>
 
