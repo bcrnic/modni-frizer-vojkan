@@ -1,7 +1,7 @@
 import { MessageCircle, Mail, CalendarDays } from "lucide-react";
 import logo from "@/assets/logo.png";
 import heroBg from "@/assets/hero-bg.jpg";
-import { BOOKING_URL, EMAIL_ADDRESS, VIBER_NUMBER, WHATSAPP_NUMBER, WHATSAPP_PREFILL } from "@/config/links";
+import { EMAIL_ADDRESS, VIBER_NUMBER, WHATSAPP_NUMBER, WHATSAPP_PREFILL } from "@/config/links";
 
 /*
 === MESTA ZA IZMENU ===
@@ -9,7 +9,11 @@ import { BOOKING_URL, EMAIL_ADDRESS, VIBER_NUMBER, WHATSAPP_NUMBER, WHATSAPP_PRE
 - EMAIL_ADDRESS: Promenite email adresu
 */
 
-const Hero = () => {
+interface HeroProps {
+  onBookingOpen: () => void;
+}
+
+const Hero = ({ onBookingOpen }: HeroProps) => {
   const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER.replace(/\s/g, "")}?text=${encodeURIComponent(WHATSAPP_PREFILL)}`;
   const viberLink = `viber://chat?number=${encodeURIComponent(VIBER_NUMBER.replace(/\s/g, ""))}`;
   const emailLink = `mailto:${EMAIL_ADDRESS}?subject=${encodeURIComponent("Zakazivanje termina - Modni frizer VOJKAN")}`;
@@ -66,15 +70,13 @@ const Hero = () => {
             className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up opacity-0"
             style={{ animationDelay: "0.8s" }}
           >
-            <a
-              href={BOOKING_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={onBookingOpen}
               className="btn-gold"
             >
               <CalendarDays className="w-5 h-5" />
               Zakaži termin
-            </a>
+            </button>
             <a
               href={whatsappLink}
               target="_blank"

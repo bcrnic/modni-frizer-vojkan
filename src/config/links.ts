@@ -1,5 +1,3 @@
-export const BOOKING_URL = "https://example.com/booking";
-
 export const WHATSAPP_NUMBER = "+381621445958";
 export const VIBER_NUMBER = "+381621445958";
 export const EMAIL_ADDRESS = "vojkan@example.com";

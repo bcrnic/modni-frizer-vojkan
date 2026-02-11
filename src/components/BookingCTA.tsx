@@ -1,8 +1,12 @@
 import { CalendarDays, MessageCircle } from "lucide-react";
 import { ScrollReveal } from "./animations/ScrollReveal";
-import { BOOKING_URL, WHATSAPP_NUMBER, WHATSAPP_PREFILL } from "@/config/links";
+import { WHATSAPP_NUMBER, WHATSAPP_PREFILL } from "@/config/links";
 
-const BookingCTA = () => {
+interface BookingCTAProps {
+  onBookingOpen: () => void;
+}
+
+const BookingCTA = ({ onBookingOpen }: BookingCTAProps) => {
   const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER.replace(/\s/g, "")}?text=${encodeURIComponent(WHATSAPP_PREFILL)}`;
 
   return (
@@ -16,15 +20,13 @@ const BookingCTA = () => {
             uslugu i željeni dan, a mi predložimo najbolji termin.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href={BOOKING_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={onBookingOpen}
               className="btn-gold"
             >
               <CalendarDays className="w-5 h-5" />
               Zakaži termin
-            </a>
+            </button>
             <a
               href={whatsappLink}
               target="_blank"

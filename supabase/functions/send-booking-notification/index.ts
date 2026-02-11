@@ -3,6 +3,12 @@ import { Resend } from "https://esm.sh/resend@2.0.0";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
+const SALON_EMAIL = Deno.env.get("SALON_EMAIL") || "salon@example.com";
+const SENDER_EMAIL = Deno.env.get("SENDER_EMAIL") || "noreply@example.com";
+const SALON_NAME = "Modni Frizer Vojkan";
+const SALON_ADDRESS = Deno.env.get("SALON_ADDRESS") || "Uspenska 1, ulaz iz Pavla Papa, Novi Sad";
+const SALON_PHONE = Deno.env.get("SALON_PHONE") || "+381 62 144 5958";
+
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers":
@@ -52,8 +58,8 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send notification to salon owner
     const ownerEmailResponse = await resend.emails.send({
-      from: "Modni Frizer Vojkan <noreply@YOUR-VERIFIED-DOMAIN.com>", // Replace with your verified domain
-      to: ["salon@example.com"], // Replace with actual salon email
+      from: `${SALON_NAME} <${SENDER_EMAIL}>`,
+      to: [SALON_EMAIL],
       subject: `Novi termin: ${customerName} - ${serviceType}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -89,9 +95,9 @@ const handler = async (req: Request): Promise<Response> => {
     let customerEmailResponse = null;
     if (customerEmail) {
       customerEmailResponse = await resend.emails.send({
-        from: "Modni Frizer Vojkan <noreply@YOUR-VERIFIED-DOMAIN.com>", // Replace with your verified domain
+        from: `${SALON_NAME} <${SENDER_EMAIL}>`,
         to: [customerEmail],
-        subject: `Potvrda termina - Modni Frizer Vojkan`,
+        subject: `Potvrda termina - ${SALON_NAME}`,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
             <h1 style="color: #333; border-bottom: 2px solid #d4af37; padding-bottom: 10px;">
@@ -112,9 +118,9 @@ const handler = async (req: Request): Promise<Response> => {
             <p>Radujemo se Vašoj poseti!</p>
             
             <p style="margin-top: 30px;">
-              <strong>Modni Frizer Vojkan</strong><br>
-              📍 Adresa salona<br>
-              📞 Telefon salona
+              <strong>${SALON_NAME}</strong><br>
+              📍 ${SALON_ADDRESS}<br>
+              📞 ${SALON_PHONE}
             </p>
             
             <p style="color: #888; font-size: 12px; margin-top: 30px;">

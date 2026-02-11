@@ -91,14 +91,11 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
       }
 
       const { data, error } = await supabase
-        .from("appointments")
-        .select("appointment_time")
-        .eq("appointment_date", format(date, "yyyy-MM-dd"))
-        .neq("status", "cancelled");
+        .rpc("get_booked_slots", { check_date: format(date, "yyyy-MM-dd") });
 
       if (error) throw error;
 
-      const slots = data?.map((apt) => apt.appointment_time.slice(0, 5)) || [];
+      const slots = data?.map((apt: { appointment_time: string }) => apt.appointment_time.slice(0, 5)) || [];
       setBookedSlots(slots);
     } catch (error) {
       console.error("Error fetching booked slots:", error);

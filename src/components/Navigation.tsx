@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import logo from "@/assets/logo.png";
-import { BOOKING_URL } from "@/config/links";
 
 const navLinks = [
   { href: "#o-salonu", label: "O salonu" },
@@ -10,7 +9,11 @@ const navLinks = [
   { href: "#kontakt", label: "Kontakt" },
 ];
 
-const Navigation = () => {
+interface NavigationProps {
+  onBookingOpen: () => void;
+}
+
+const Navigation = ({ onBookingOpen }: NavigationProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -60,14 +63,12 @@ const Navigation = () => {
           </div>
 
           {/* CTA dugme - desktop */}
-          <a
-            href={BOOKING_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={onBookingOpen}
             className="hidden md:inline-flex btn-gold py-3 px-6 text-xs"
           >
             Zakažite termin
-          </a>
+          </button>
 
           {/* Hamburger meni - mobile */}
           <button
@@ -94,15 +95,12 @@ const Navigation = () => {
                   {link.label}
                 </a>
               ))}
-              <a
-                href={BOOKING_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
                 className="btn-gold mt-4"
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={() => { setIsMobileMenuOpen(false); onBookingOpen(); }}
               >
                 Zakažite termin
-              </a>
+              </button>
             </div>
           </div>
         )}

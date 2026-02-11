@@ -1,6 +1,6 @@
 import { Phone, Mail, MessageCircle, MapPin, Clock, CalendarDays } from "lucide-react";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "./animations/ScrollReveal";
-import { BOOKING_URL, EMAIL_ADDRESS, PHONE_NUMBER_DISPLAY, PHONE_NUMBER_TEL, VIBER_NUMBER, WHATSAPP_NUMBER, WHATSAPP_PREFILL } from "@/config/links";
+import { EMAIL_ADDRESS, PHONE_NUMBER_DISPLAY, PHONE_NUMBER_TEL, VIBER_NUMBER, WHATSAPP_NUMBER, WHATSAPP_PREFILL } from "@/config/links";
 
 /*
 === KONTAKT INFORMACIJE - MESTA ZA IZMENU ===
@@ -16,7 +16,11 @@ const WORKING_HOURS = [
   { day: "Nedelja", hours: "Zatvoreno" },
 ];
 
-const Contact = () => {
+interface ContactProps {
+  onBookingOpen: () => void;
+}
+
+const Contact = ({ onBookingOpen }: ContactProps) => {
   const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_PREFILL)}`;
   const viberLink = `viber://chat?number=${encodeURIComponent(VIBER_NUMBER.replace(/\s/g, ""))}`;
   const emailLink = `mailto:${EMAIL_ADDRESS}?subject=${encodeURIComponent("Zakazivanje termina - Modni frizer VOJKAN")}`;
@@ -38,15 +42,13 @@ const Contact = () => {
               potvrđujemo termin čim se dogovorimo.
             </p>
             {/* Online booking CTA */}
-            <a
-              href={BOOKING_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={onBookingOpen}
               className="btn-gold inline-flex items-center gap-2"
             >
               <CalendarDays className="w-5 h-5" />
               Zakaži termin
-            </a>
+            </button>
           </ScrollReveal>
 
           <div className="grid lg:grid-cols-2 gap-12">

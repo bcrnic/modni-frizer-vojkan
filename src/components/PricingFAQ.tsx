@@ -1,9 +1,13 @@
 import { CalendarDays, MessageCircle } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { BOOKING_URL, WHATSAPP_NUMBER, WHATSAPP_PREFILL } from "@/config/links";
+import { WHATSAPP_NUMBER, WHATSAPP_PREFILL } from "@/config/links";
 import { ScrollReveal } from "./animations/ScrollReveal";
 
-const PricingFAQ = () => {
+interface PricingFAQProps {
+  onBookingOpen: () => void;
+}
+
+const PricingFAQ = ({ onBookingOpen }: PricingFAQProps) => {
   const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER.replace(/\s/g, "")}?text=${encodeURIComponent(WHATSAPP_PREFILL)}`;
 
   return (
@@ -55,10 +59,10 @@ const PricingFAQ = () => {
           </Accordion>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
-            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn-gold">
+            <button onClick={onBookingOpen} className="btn-gold">
               <CalendarDays className="w-5 h-5" />
               Zakaži termin
-            </a>
+            </button>
             <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="btn-outline-gold">
               <MessageCircle className="w-5 h-5" />
               Pitaj za cenu

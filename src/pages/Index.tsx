@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
@@ -7,6 +8,7 @@ import BookingCTA from "@/components/BookingCTA";
 import Gallery from "@/components/Gallery";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import BookingCalendar from "@/components/BookingCalendar";
 
 /*
 === MODNI FRIZER VOJKAN - GLAVNI SAJT ===
@@ -24,19 +26,23 @@ SEO meta tagovi:
 */
 
 const Index = () => {
+  const [bookingOpen, setBookingOpen] = useState(false);
+  const handleBookingOpen = () => setBookingOpen(true);
+
   return (
     <div className="min-h-screen bg-background">
-      <Navigation />
+      <Navigation onBookingOpen={handleBookingOpen} />
       <main>
-        <Hero />
+        <Hero onBookingOpen={handleBookingOpen} />
         <About />
         <Services />
-        <PricingFAQ />
-        <BookingCTA />
+        <PricingFAQ onBookingOpen={handleBookingOpen} />
+        <BookingCTA onBookingOpen={handleBookingOpen} />
         <Gallery />
-        <Contact />
+        <Contact onBookingOpen={handleBookingOpen} />
       </main>
       <Footer />
+      <BookingCalendar open={bookingOpen} onOpenChange={setBookingOpen} />
     </div>
   );
 };
