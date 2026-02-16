@@ -4,7 +4,7 @@ import logo from "@/assets/logo.png";
 
 const navLinks = [
   { href: "#o-salonu", label: "O salonu" },
-  { href: "#usluge", label: "Usluge" },
+  { href: "#usluge", label: "Cenovnik" },
   { href: "#galerija", label: "Galerija" },
   { href: "#kontakt", label: "Kontakt" },
 ];

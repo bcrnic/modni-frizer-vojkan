@@ -11,7 +11,7 @@ const ADDRESS = "Uspenska 1, ulaz iz Pavla Papa";
 
 // IZMENITE: Vaše radno vreme
 const WORKING_HOURS = [
-  { day: "Ponedeljak - Petak", hours: "11:00 - 20:00" },
+  { day: "Ponedeljak - Petak", hours: "11:00 - 19:00" },
   { day: "Subota", hours: "08:00 - 16:00" },
   { day: "Nedelja", hours: "Zatvoreno" },
 ];
