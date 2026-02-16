@@ -1,12 +1,6 @@
 import { Instagram, Facebook } from "lucide-react";
 import logo from "@/assets/logo.png";
-
-/*
-=== DRUŠTVENE MREŽE - MESTA ZA IZMENU ===
-Promenite URL-ove ispod sa vašim stvarnim profilima
-*/
-const INSTAGRAM_URL = "https://instagram.com/modnifrizer_vojkan"; // IZMENITE: Vaš Instagram profil
-const FACEBOOK_URL = "https://facebook.com/modnifrizer.vojkan"; // IZMENITE: Vaš Facebook profil
+import { SOCIAL_LINKS } from "@/config/links";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -25,7 +19,7 @@ const Footer = () => {
           {/* Društvene mreže */}
           <div className="flex items-center gap-4">
             <a
-              href={INSTAGRAM_URL}
+              href={SOCIAL_LINKS.instagram}
               target="_blank"
               rel="noopener noreferrer"
               className="w-10 h-10 flex items-center justify-center border border-border 
@@ -35,7 +29,7 @@ const Footer = () => {
               <Instagram className="w-5 h-5" />
             </a>
             <a
-              href={FACEBOOK_URL}
+              href={SOCIAL_LINKS.facebook}
               target="_blank"
               rel="noopener noreferrer"
               className="w-10 h-10 flex items-center justify-center border border-border 
