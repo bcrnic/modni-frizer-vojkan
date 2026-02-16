@@ -56,7 +56,7 @@ const Hero = ({ onBookingOpen }: HeroProps) => {
             style={{ animationDelay: "0.6s" }}
           >
             U “<span className="text-gold-gradient">Modnom frizeru VOJKAN</span>” radiš sa frizerima koji slušaju, predlažu i rade precizno. Zakaži termin za šišanje,
-            boju, balayage ili svečanu frizuru - bez komplikacija.
+            boju ili balayage - bez komplikacija.
           </p>
 
           {/* Dekorativna linija */}
