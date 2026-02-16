@@ -16,7 +16,7 @@ const PricingFAQ = ({ onBookingOpen }: PricingFAQProps) => {
         <ScrollReveal className="text-center mb-12">
           <p className="text-primary uppercase tracking-[0.3em] text-sm mb-4">Cene</p>
           <h2 className="heading-section mb-6">
-            Cene u salonu <span className="text-gold-gradient">Modni frizer VOJKAN</span> (Novi Sad)
+            Cene u salonu Modni frizer VOJKAN - Novi Sad
           </h2>
           <div className="decorative-line mb-8" />
           <p className="text-muted-foreground max-w-2xl mx-auto">
