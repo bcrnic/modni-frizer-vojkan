@@ -1,10 +1,11 @@
-import { useState } from "react";
-import { format, addDays, isSunday, isBefore, startOfDay } from "date-fns";
+import { useState, useEffect } from "react";
+import { format, addDays, isSunday, isBefore, startOfDay, parseISO } from "date-fns";
 import { srLatn } from "date-fns/locale";
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
 import {
   Select,
   SelectContent,
@@ -21,31 +22,13 @@ import {
 } from "@/components/ui/dialog";
 import { supabase, isSupabaseConfigured } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
-import { CalendarIcon, Clock, Check, Loader2 } from "lucide-react";
+import { CalendarIcon, Clock, Check, Loader2, AlertCircle } from "lucide-react";
+import { checkSlotAvailability, createAppointment, getSlotStateLabel, getSlotStateColor } from "@/services/booking";
+import type { SlotAvailability } from "@/services/booking";
+import type { SlotState } from "@/integrations/supabase/types";
 import { cn } from "@/lib/utils";
 
-const SERVICES = [
-  "Šišanje",
-  "Feniranje",
-  "Farbanje kose",
-  "Pramenovi",
-  "Balayage",
-  "Tretman keratina",
-  "Dubinska nega",
-  "Svečana frizura",
-];
-
-const TIME_SLOTS = [
-  "11:00", "11:30", "12:00", "12:30", "13:00", "13:30",
-  "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",
-  "17:00", "17:30", "18:00", "18:30", "19:00", "19:30",
-];
-
-const SATURDAY_TIME_SLOTS = [
-  "08:00", "08:30", "09:00", "09:30", "10:00", "10:30",
-  "11:00", "11:30", "12:00", "12:30", "13:00", "13:30",
-  "14:00", "14:30", "15:00", "15:30",
-];
+import { SERVICES, TIME_SLOTS, SATURDAY_TIME_SLOTS } from "@/config/constants";
 
 interface BookingCalendarProps {
   open: boolean;
@@ -62,7 +45,7 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
   const [customerEmail, setCustomerEmail] = useState("");
   const [notes, setNotes] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [bookedSlots, setBookedSlots] = useState<string[]>([]);
+  const [slotAvailability, setSlotAvailability] = useState<Record<string, SlotAvailability>>({});
   const [isLoadingSlots, setIsLoadingSlots] = useState(false);
 
   const resetForm = () => {
@@ -74,7 +57,7 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
     setCustomerPhone("");
     setCustomerEmail("");
     setNotes("");
-    setBookedSlots([]);
+    setSlotAvailability({});
   };
 
   const handleClose = () => {
@@ -82,23 +65,38 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
     onOpenChange(false);
   };
 
-  const fetchBookedSlots = async (date: Date) => {
+  const fetchSlotAvailability = async (date: Date) => {
     setIsLoadingSlots(true);
     try {
       if (!isSupabaseConfigured || !supabase) {
-        setBookedSlots([]);
+        setSlotAvailability({});
         return;
       }
 
-      const { data, error } = await supabase
-        .rpc("get_booked_slots", { check_date: format(date, "yyyy-MM-dd") });
+      const isSat = date.getDay() === 6;
+      const slots = isSat ? SATURDAY_TIME_SLOTS : TIME_SLOTS;
+      const results: Record<string, SlotAvailability> = {};
 
-      if (error) throw error;
+      // Check each slot's availability
+      for (const slot of slots) {
+        const [hours, minutes] = slot.split(':').map(Number);
+        const slotDate = new Date(date);
+        slotDate.setHours(hours, minutes, 0, 0);
 
-      const slots = data?.map((apt: { appointment_time: string }) => apt.appointment_time.slice(0, 5)) || [];
-      setBookedSlots(slots);
+        const availability = await checkSlotAvailability(slotDate);
+        if (availability) {
+          results[slot] = availability;
+        }
+      }
+
+      setSlotAvailability(results);
     } catch (error) {
-      console.error("Error fetching booked slots:", error);
+      console.error("Error fetching slot availability:", error);
+      toast({
+        title: "Greška",
+        description: "Došlo je do greške pri proveri dostupnosti. Molimo pokušajte ponovo.",
+        variant: "destructive",
+      });
     } finally {
       setIsLoadingSlots(false);
     }
@@ -108,7 +106,7 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
     setSelectedDate(date);
     setSelectedTime("");
     if (date) {
-      await fetchBookedSlots(date);
+      await fetchSlotAvailability(date);
     }
   };
 
@@ -116,35 +114,7 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
     if (!selectedDate) return [];
     
     const isSat = selectedDate.getDay() === 6;
-    const slots = isSat ? SATURDAY_TIME_SLOTS : TIME_SLOTS;
-    
-    return slots.filter((slot) => !bookedSlots.includes(slot));
-  };
-
-  const sendEmailNotification = async (appointmentData: {
-    customerName: string;
-    customerPhone: string;
-    customerEmail?: string;
-    appointmentDate: string;
-    appointmentTime: string;
-    serviceType: string;
-    notes?: string;
-  }) => {
-    try {
-      if (!isSupabaseConfigured || !supabase) return;
-
-      const response = await supabase.functions.invoke("send-booking-notification", {
-        body: appointmentData,
-      });
-
-      if (response.error) {
-        console.error("Email notification error:", response.error);
-      } else {
-        console.log("Email notification sent successfully");
-      }
-    } catch (error) {
-      console.error("Failed to send email notification:", error);
-    }
+    return isSat ? SATURDAY_TIME_SLOTS : TIME_SLOTS;
   };
 
   const handleSubmit = async () => {
@@ -169,34 +139,27 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
     setIsSubmitting(true);
 
     try {
-      const appointmentDate = format(selectedDate, "yyyy-MM-dd");
-      
-      const { error } = await supabase.from("appointments").insert({
-        customer_name: customerName,
-        customer_phone: customerPhone,
-        customer_email: customerEmail || null,
-        appointment_date: appointmentDate,
-        appointment_time: selectedTime,
-        service_type: selectedService,
-        notes: notes || null,
-      });
+      const [hours, minutes] = selectedTime.split(':').map(Number);
+      const startTime = new Date(selectedDate);
+      startTime.setHours(hours, minutes, 0, 0);
 
-      if (error) throw error;
-
-      // Send email notification (non-blocking)
-      sendEmailNotification({
+      const result = await createAppointment({
         customerName,
         customerPhone,
         customerEmail: customerEmail || undefined,
-        appointmentDate,
-        appointmentTime: selectedTime,
+        startTime,
         serviceType: selectedService,
         notes: notes || undefined,
+        source: 'online'
       });
+
+      if (!result.success) {
+        throw new Error(result.error || 'Failed to create appointment');
+      }
 
       toast({
         title: "Termin uspešno zakazan!",
-        description: `Očekujemo Vas ${format(selectedDate, "d. MMMM yyyy.", { locale: srLatn })} u ${selectedTime}h.`,
+        description: `Očekujemo Vas ${format(startTime, "d. MMMM yyyy.", { locale: srLatn })} u ${selectedTime}h.`,
       });
 
       handleClose();
@@ -204,7 +167,7 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
       console.error("Error booking appointment:", error);
       toast({
         title: "Greška pri zakazivanju",
-        description: "Došlo je do greške. Molimo pokušajte ponovo.",
+        description: error instanceof Error ? error.message : "Došlo je do greške. Molimo pokušajte ponovo.",
         variant: "destructive",
       });
     } finally {
@@ -288,17 +251,46 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
                   </p>
                 ) : (
                   <div className="grid grid-cols-4 gap-2">
-                    {availableSlots.map((time) => (
-                      <Button
-                        key={time}
-                        variant={selectedTime === time ? "default" : "outline"}
-                        size="sm"
-                        onClick={() => setSelectedTime(time)}
-                        className="text-sm"
-                      >
-                        {time}
-                      </Button>
-                    ))}
+                    {availableSlots.map((time) => {
+                      const availability = slotAvailability[time];
+                      const state = availability?.state || 'ONLINE_AVAILABLE';
+                      const isSelectable = state === 'ONLINE_AVAILABLE';
+                      
+                      return (
+                        <div key={time} className="relative group">
+                          <Button
+                            variant={selectedTime === time ? "default" : "outline"}
+                            size="sm"
+                            onClick={() => isSelectable && setSelectedTime(time)}
+                            className={cn(
+                              "text-sm w-full",
+                              !isSelectable && "opacity-50 cursor-not-allowed",
+                              selectedTime === time && "ring-2 ring-primary"
+                            )}
+                          >
+                            {time}
+                          </Button>
+                          
+                          {/* Availability badge */}
+                          <Badge 
+                            variant="outline"
+                            className={cn(
+                              "absolute -top-2 -right-2 text-[10px] py-0 px-1",
+                              getSlotStateColor(state)
+                            )}
+                          >
+                            {state === 'ONLINE_AVAILABLE' ? '✓' : '!'}
+                          </Badge>
+                          
+                          {/* Tooltip on hover */}
+                          {!isSelectable && (
+                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-background border text-xs rounded shadow-lg hidden group-hover:block whitespace-nowrap z-50">
+                              {getSlotStateLabel(state)}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
                 )}
               </div>

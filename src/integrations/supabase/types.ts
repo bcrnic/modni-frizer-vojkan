@@ -6,9 +6,11 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
+export type SlotState = 'ONLINE_AVAILABLE' | 'ONLINE_FULL_WALKIN_AVAILABLE' | 'FULL';
+export type AppointmentSource = 'online' | 'walkin';
+export type AppointmentStatus = 'confirmed' | 'cancelled';
+
 export type Database = {
-  // Allows to automatically instantiate createClient with right options
-  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "14.1"
   }
@@ -16,8 +18,8 @@ export type Database = {
     Tables: {
       appointments: {
         Row: {
-          appointment_date: string
-          appointment_time: string
+          start_time: string
+          end_time: string
           created_at: string
           customer_email: string | null
           customer_name: string
@@ -25,12 +27,13 @@ export type Database = {
           id: string
           notes: string | null
           service_type: string
-          status: string
+          status: AppointmentStatus
+          source: AppointmentSource
           updated_at: string
         }
         Insert: {
-          appointment_date: string
-          appointment_time: string
+          start_time: string
+          end_time: string
           created_at?: string
           customer_email?: string | null
           customer_name: string
@@ -38,12 +41,13 @@ export type Database = {
           id?: string
           notes?: string | null
           service_type: string
-          status?: string
+          status?: AppointmentStatus
+          source?: AppointmentSource
           updated_at?: string
         }
         Update: {
-          appointment_date?: string
-          appointment_time?: string
+          start_time?: string
+          end_time?: string
           created_at?: string
           customer_email?: string | null
           customer_name?: string
@@ -51,7 +55,35 @@ export type Database = {
           id?: string
           notes?: string | null
           service_type?: string
-          status?: string
+          status?: AppointmentStatus
+          source?: AppointmentSource
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      salon_settings: {
+        Row: {
+          id: number
+          total_capacity: number
+          online_ratio: number
+          max_online_per_slot: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: number
+          total_capacity?: number
+          online_ratio?: number
+          max_online_per_slot?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: number
+          total_capacity?: number
+          online_ratio?: number
+          max_online_per_slot?: number
+          created_at?: string
           updated_at?: string
         }
         Relationships: []
@@ -61,7 +93,42 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      check_slot_availability: {
+        Args: {
+          check_start: string
+          check_end: string
+        }
+        Returns: {
+          state: SlotState
+          online_count: number
+          total_count: number
+          max_online: number
+          total_capacity: number
+        }
+      }
+      create_appointment: {
+        Args: {
+          p_customer_name: string
+          p_customer_phone: string
+          p_customer_email: string
+          p_start_time: string
+          p_end_time: string
+          p_service_type: string
+          p_notes?: string
+          p_source?: AppointmentSource
+        }
+        Returns: {
+          success: boolean
+          error?: string
+          status: {
+            state: SlotState
+            online_count: number
+            total_count: number
+            max_online: number
+            total_capacity: number
+          }
+        }
+      }
     }
     Enums: {
       [_ in never]: never
