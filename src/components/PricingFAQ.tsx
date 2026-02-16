@@ -30,7 +30,7 @@ const PricingFAQ = ({ onBookingOpen }: PricingFAQProps) => {
             <AccordionItem value="item-1">
               <AccordionTrigger>Da li imate cenovnik?</AccordionTrigger>
               <AccordionContent className="text-muted-foreground">
-                Imamo okvirne cene u sekciji “Usluge”. Tačna cena zavisi od dužine kose, gustine i količine materijala.
+                Imamo okvirne cene u sekciji "Cenovnik". Tačna cena zavisi od dužine kose, gustine i količine materijala.
               </AccordionContent>
             </AccordionItem>
 

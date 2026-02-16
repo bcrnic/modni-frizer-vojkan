@@ -46,7 +46,7 @@ const Footer = () => {
               O salonu
             </a>
             <a href="#usluge" className="text-muted-foreground hover:text-primary transition-colors">
-              Usluge
+              Cenovnik
             </a>
             <a href="#galerija" className="text-muted-foreground hover:text-primary transition-colors">
               Galerija

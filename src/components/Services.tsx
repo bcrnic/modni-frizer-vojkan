@@ -1,7 +1,7 @@
 import { ScrollReveal, StaggerContainer, StaggerItem } from "./animations/ScrollReveal";
 
 /*
-=== USLUGE - MESTA ZA IZMENU ===
+=== CENOVNIK - MESTA ZA IZMENU ===
 Izmenite cene i opise usluga u nizu "services" ispod
 */
 
@@ -41,9 +41,9 @@ const Services = () => {
       <div className="container mx-auto">
         {/* Naslov sekcije */}
         <ScrollReveal className="text-center mb-16">
-          <p className="text-primary uppercase tracking-[0.3em] text-sm mb-4">Usluge</p>
+          <p className="text-primary uppercase tracking-[0.3em] text-sm mb-4">Cenovnik</p>
           <h2 className="heading-section mb-6">
-            Cenovnik i najčešće <span className="text-gold-gradient">usluge</span>
+            Naše <span className="text-gold-gradient">cene</span>
           </h2>
           <div className="decorative-line mb-8" />
           <p className="text-muted-foreground max-w-xl mx-auto">
