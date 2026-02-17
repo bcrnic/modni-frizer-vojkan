@@ -26,6 +26,9 @@ const Contact = ({ onBookingOpen }: ContactProps) => {
   const emailLink = `mailto:${EMAIL_ADDRESS}?subject=${encodeURIComponent("Zakazivanje termina - Modni frizer VOJKAN")}`;
   const phoneLink = `tel:${PHONE_NUMBER_TEL.replace(/\s/g, "")}`;
   const googleMapsLink = "https://maps.app.goo.gl/tyw5yTK9W7Gv9cZW7";
+  const googleMapsEmbedSrc = `https://www.google.com/maps?q=${encodeURIComponent(
+    "Hotel Centar, Uspenska 1, Novi Sad"
+  )}&output=embed`;
 
   return (
     <>
@@ -162,23 +165,15 @@ const Contact = ({ onBookingOpen }: ContactProps) => {
                     <p className="text-muted-foreground font-medium">Hotel Centar</p>
                     <p className="text-muted-foreground">{ADDRESS}</p>
                     <p className="text-muted-foreground">Novi Sad 21000, Srbija</p>
-                    <a
-                      href={googleMapsLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex mt-3 text-sm text-primary hover:underline"
-                    >
-                      Otvori tačnu lokaciju u Google Maps
-                    </a>
                   </div>
                 </div>
               </ScrollReveal>
 
               {/* Google Maps */}
               <ScrollReveal direction="right" delay={0.2}>
-                <div className="aspect-[4/3] bg-card border border-border overflow-hidden">
+                <div className="relative aspect-[4/3] bg-card border border-border overflow-hidden">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2805.2!2d19.8423!3d45.2551!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x475b1060a9297855%3A0x2d2f2e69f67e8b4f!2sHotel%20Centar!5e0!3m2!1ssr!2srs!4v1"
+                    src={googleMapsEmbedSrc}
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}
@@ -188,6 +183,14 @@ const Contact = ({ onBookingOpen }: ContactProps) => {
                     title="Lokacija salona Modni frizer VOJKAN - Hotel Centar, Novi Sad"
                     className="grayscale hover:grayscale-0 transition-all duration-500"
                   />
+                  <a
+                    href={googleMapsLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="absolute left-3 bottom-3 text-xs md:text-sm bg-background/90 backdrop-blur px-3 py-2 border border-border hover:border-primary transition-colors"
+                  >
+                    Otvori u Google Maps
+                  </a>
                 </div>
               </ScrollReveal>
             </div>
