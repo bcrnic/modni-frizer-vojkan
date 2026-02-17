@@ -54,7 +54,7 @@ const Hero = ({ onBookingOpen }: HeroProps) => {
             className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-3 font-light tracking-wide animate-fade-in opacity-0"
             style={{ animationDelay: "0.5s" }}
           >
-            Zakazivanje termina ili dolazak bez zakazivanja - izbor je vaš.
+            Zakazivanje termina ili dolazak bez zakazivanja - izbor je Vaš.
           </p>
 
           {/* Podnaslov */}

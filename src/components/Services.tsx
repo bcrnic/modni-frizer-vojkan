@@ -9,7 +9,7 @@ const services = [
   {
     category: "Šišanje & Stilizacija",
     items: [
-      { name: "Žensko šišanje", price: "3.500 RSD", description: "Kreativno šišanje prilagođeno vašem stilu" },
+      { name: "Žensko šišanje", price: "3.500 RSD", description: "Kreativno šišanje prilagođeno Vašem stilu" },
       { name: "Feniranje", price: "1.200 RSD", description: "Profesionalno feniranje i stilizacija" },
       { name: "Šišanje + feniranje", price: "4.500 RSD", description: "Kompletna transformacija" },
       { name: "Svečana frizura", price: "4.000 RSD", description: "Za posebne prilike i događaje" },

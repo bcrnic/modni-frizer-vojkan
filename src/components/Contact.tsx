@@ -4,7 +4,7 @@ import { EMAIL_ADDRESS, PHONE_NUMBER_DISPLAY, PHONE_NUMBER_TEL, VIBER_NUMBER, WH
 
 /*
 === KONTAKT INFORMACIJE - MESTA ZA IZMENU ===
-Promenite vrednosti konstanti ispod sa vašim stvarnim podacima
+Promenite vrednosti konstanti ispod sa Vašim stvarnim podacima
 */
 
 const ADDRESS = "Uspenska 1, ulaz iz Pavla Papa";
