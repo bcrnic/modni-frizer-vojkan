@@ -9,6 +9,8 @@ import Gallery from "@/components/Gallery";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import BookingCalendar from "@/components/BookingCalendar";
+import BookingInfo from "@/components/sections/BookingInfo";
+import FAQ from "@/components/sections/FAQ";
 
 /*
 === MODNI FRIZER VOJKAN - GLAVNI SAJT ===
@@ -36,9 +38,11 @@ const Index = () => {
         <Hero onBookingOpen={handleBookingOpen} />
         <About />
         <Services />
+        <BookingInfo onBookingOpen={handleBookingOpen} />
         <PricingFAQ onBookingOpen={handleBookingOpen} />
         <BookingCTA onBookingOpen={handleBookingOpen} />
         <Gallery />
+        <FAQ />
         <Contact onBookingOpen={handleBookingOpen} />
       </main>
       <Footer />

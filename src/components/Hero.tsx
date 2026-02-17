@@ -50,6 +50,13 @@ const Hero = ({ onBookingOpen }: HeroProps) => {
             Ženski frizerski salon u <span className="text-gold-gradient">Novom Sadu</span> - frizura koja ti stoji i sutra
           </h1>
 
+          <p
+            className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-3 font-light tracking-wide animate-fade-in opacity-0"
+            style={{ animationDelay: "0.5s" }}
+          >
+            Zakazivanje termina ili dolazak bez zakazivanja - izbor je vaš.
+          </p>
+
           {/* Podnaslov */}
           <p 
             className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-4 font-light tracking-wide animate-fade-in opacity-0"
