@@ -85,7 +85,7 @@ export const getSlotStateLabel = (state: SlotState): string => {
     case 'ONLINE_AVAILABLE':
       return 'Dostupno za online zakazivanje';
     case 'ONLINE_FULL_WALKIN_AVAILABLE':
-      return 'Online zakazivanje nije dostupno — možete doći lično';
+      return 'Online zakazivanje nije dostupno - možete doći lično';
     case 'FULL':
       return 'Nema slobodnih mesta';
     default:
