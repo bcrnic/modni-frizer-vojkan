@@ -43,10 +43,10 @@ const PricingFAQ = ({ onBookingOpen }: PricingFAQProps) => {
             </AccordionItem>
 
             <AccordionItem value="item-3">
-              <AccordionTrigger>Da li moram da zakažem termin?</AccordionTrigger>
+              <AccordionTrigger>Da li su cene iz cenovnika konačne?</AccordionTrigger>
               <AccordionContent className="text-muted-foreground">
-                Može i bez zakazivanja, ali preporučujemo zakazivanje kako bi termin bio siguran - posebno za boju, balayage i
-                vikend.
+                Cene su okvirne. Tačna cena zavisi od dužine kose, gustine i utroška materijala - zato se dogovaramo nakon kratkih
+                konsultacija.
               </AccordionContent>
             </AccordionItem>
 

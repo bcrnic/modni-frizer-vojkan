@@ -42,7 +42,7 @@ const Index = () => {
         <PricingFAQ onBookingOpen={handleBookingOpen} />
         <BookingCTA onBookingOpen={handleBookingOpen} />
         <Gallery />
-        <FAQ />
+        <FAQ onBookingOpen={handleBookingOpen} />
         <Contact onBookingOpen={handleBookingOpen} />
       </main>
       <Footer />

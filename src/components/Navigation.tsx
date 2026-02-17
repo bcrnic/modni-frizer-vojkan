@@ -5,7 +5,9 @@ import logo from "@/assets/logo.png";
 const navLinks = [
   { href: "#o-salonu", label: "O salonu" },
   { href: "#usluge", label: "Cenovnik" },
+  { href: "#zakazivanje", label: "Zakazivanje" },
   { href: "#galerija", label: "Galerija" },
+  { href: "#faq", label: "Česta pitanja" },
   { href: "#kontakt", label: "Kontakt" },
 ];
 
