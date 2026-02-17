@@ -25,6 +25,7 @@ const Contact = ({ onBookingOpen }: ContactProps) => {
   const viberLink = `viber://chat?number=${encodeURIComponent(VIBER_NUMBER.replace(/\s/g, ""))}`;
   const emailLink = `mailto:${EMAIL_ADDRESS}?subject=${encodeURIComponent("Zakazivanje termina - Modni frizer VOJKAN")}`;
   const phoneLink = `tel:${PHONE_NUMBER_TEL.replace(/\s/g, "")}`;
+  const googleMapsLink = "https://maps.app.goo.gl/tyw5yTK9W7Gv9cZW7";
 
   return (
     <>
@@ -161,6 +162,14 @@ const Contact = ({ onBookingOpen }: ContactProps) => {
                     <p className="text-muted-foreground font-medium">Hotel Centar</p>
                     <p className="text-muted-foreground">{ADDRESS}</p>
                     <p className="text-muted-foreground">Novi Sad 21000, Srbija</p>
+                    <a
+                      href={googleMapsLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex mt-3 text-sm text-primary hover:underline"
+                    >
+                      Otvori tačnu lokaciju u Google Maps
+                    </a>
                   </div>
                 </div>
               </ScrollReveal>
