@@ -18,7 +18,7 @@ const services = [
   {
     category: "Farbanje Kose",
     items: [
-      { name: "Farbanje kose", price: "od 3.000 RSD", description: "Jednobojno farbanje premium bojama" },
+      { name: "Farbanje kose", price: "od 4.000 RSD", description: "Jednobojno farbanje premium bojama" },
       { name: "Pramenovi / Balayage", price: "od 4.500 RSD", description: "Moderna tehnika za prirodan izgled" },
       { name: "Ombre / Sombre", price: "od 5.000 RSD", description: "Preliv boja za dramatičan efekat" },
       { name: "Toniranje", price: "od 2.000 RSD", description: "Osvežavanje i nijansiranje boje" },

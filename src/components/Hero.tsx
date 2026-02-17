@@ -47,7 +47,7 @@ const Hero = ({ onBookingOpen }: HeroProps) => {
             className="heading-display mb-6 text-foreground animate-fade-in opacity-0"
             style={{ animationDelay: "0.4s" }}
           >
-            Ženski frizerski salon u <span className="text-gold-gradient">Novom Sadu</span> - frizura koja ti stoji i sutra
+            Ženski frizerski salon u <span className="text-gold-gradient">Novom Sadu</span> - frizura koja traje
           </h1>
 
           <p
