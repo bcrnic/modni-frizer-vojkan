@@ -12,3 +12,5 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+Sitemap: https://bcrnic.github.io/modni-frizer-vojkan/sitemap.xml
