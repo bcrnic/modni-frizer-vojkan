@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { format } from "date-fns";
 import { srLatn } from "date-fns/locale";
 import { Calendar } from "@/components/ui/calendar";
@@ -14,14 +14,26 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
-import { CalendarIcon, Clock, Loader2 } from "lucide-react";
-import { checkSlotAvailability, createAppointment, getSlotStateLabel, getSlotStateColor } from "@/services/booking";
+import { CalendarIcon, Clock, Loader2, UserPlus } from "lucide-react";
+import {
+  checkSlotAvailability,
+  createAppointment,
+  getSlotStateColor,
+} from "@/services/booking";
 import type { SlotAvailability } from "@/services/booking";
-import type { SlotState } from "@/integrations/supabase/types";
 import { cn } from "@/lib/utils";
 import { SERVICES, TIME_SLOTS, SATURDAY_TIME_SLOTS } from "@/config/constants";
 
-export default function WalkinBooking() {
+// ─── Types ────────────────────────────────────────────────────────────────────
+
+interface WalkinBookingProps {
+  /** Poziva se nakon uspešnog kreiranja – npr. za re-fetch liste */
+  onSuccess?: () => void;
+}
+
+// ─── Component ────────────────────────────────────────────────────────────────
+
+export default function WalkinBooking({ onSuccess }: WalkinBookingProps) {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
   const [selectedTime, setSelectedTime] = useState<string>("");
   const [selectedService, setSelectedService] = useState<string>("");
@@ -32,100 +44,96 @@ export default function WalkinBooking() {
   const [slotAvailability, setSlotAvailability] = useState<Record<string, SlotAvailability>>({});
   const [isLoadingSlots, setIsLoadingSlots] = useState(false);
 
-  const fetchSlotAvailability = async (date: Date) => {
+  // ── Fetch slots in parallel ────────────────────────────────────────────────
+
+  const fetchSlotAvailability = useCallback(async (date: Date) => {
     setIsLoadingSlots(true);
+    setSlotAvailability({});
     try {
       const isSat = date.getDay() === 6;
       const slots = isSat ? SATURDAY_TIME_SLOTS : TIME_SLOTS;
+
+      const entries = await Promise.all(
+        slots.map(async (slot) => {
+          const [hours, minutes] = slot.split(":").map(Number);
+          const slotDate = new Date(date);
+          slotDate.setHours(hours, minutes, 0, 0);
+          const availability = await checkSlotAvailability(slotDate);
+          return [slot, availability] as const;
+        })
+      );
+
       const results: Record<string, SlotAvailability> = {};
-
-      for (const slot of slots) {
-        const [hours, minutes] = slot.split(':').map(Number);
-        const slotDate = new Date(date);
-        slotDate.setHours(hours, minutes, 0, 0);
-
-        const availability = await checkSlotAvailability(slotDate);
-        if (availability) {
-          results[slot] = availability;
-        }
+      for (const [slot, availability] of entries) {
+        if (availability) results[slot] = availability;
       }
-
       setSlotAvailability(results);
-    } catch (error) {
-      console.error("Error fetching slot availability:", error);
+    } catch (err) {
+      console.error("Error fetching slot availability:", err);
       toast({
         title: "Greška",
-        description: "Došlo je do greške pri proveri dostupnosti.",
+        description: "Nije moguće proveriti dostupnost slotova.",
         variant: "destructive",
       });
     } finally {
       setIsLoadingSlots(false);
     }
-  };
+  }, []);
 
   const handleDateSelect = async (date: Date | undefined) => {
     setSelectedDate(date);
     setSelectedTime("");
-    if (date) {
-      await fetchSlotAvailability(date);
-    }
+    if (date) await fetchSlotAvailability(date);
   };
 
-  const getAvailableTimeSlots = () => {
-    if (!selectedDate) return [];
-    const isSat = selectedDate.getDay() === 6;
-    return isSat ? SATURDAY_TIME_SLOTS : TIME_SLOTS;
-  };
+  // ── Submit ─────────────────────────────────────────────────────────────────
 
   const handleSubmit = async () => {
     if (!selectedDate || !selectedTime || !selectedService || !customerName) {
       toast({
-        title: "Greška",
-        description: "Molimo popunite obavezna polja (ime i usluga).",
+        title: "Nedostaju podaci",
+        description: "Popuni ime klijenta, datum, vreme i uslugu.",
         variant: "destructive",
       });
       return;
     }
 
     setIsSubmitting(true);
-
     try {
-      const [hours, minutes] = selectedTime.split(':').map(Number);
+      const [hours, minutes] = selectedTime.split(":").map(Number);
       const startTime = new Date(selectedDate);
       startTime.setHours(hours, minutes, 0, 0);
 
       const result = await createAppointment({
         customerName,
-        customerPhone,
+        customerPhone: customerPhone || "—",
         startTime,
         serviceType: selectedService,
         notes: notes || undefined,
-        source: 'walkin'
+        source: "walkin",
       });
 
-      if (!result.success) {
-        throw new Error(result.error || 'Greška pri kreiranju termina');
-      }
+      if (!result.success) throw new Error(result.error ?? "Greška pri kreiranju termina");
 
       toast({
-        title: "Walk-in termin zakazan",
-        description: `${customerName} - ${format(startTime, "d. MMMM yyyy.", { locale: srLatn })} u ${selectedTime}h`,
+        title: "Termin kreiran ✓",
+        description: `${customerName} – ${format(startTime, "d. MMMM", { locale: srLatn })} u ${selectedTime}h`,
       });
 
-      // Reset form
+      // Reset
       setCustomerName("");
       setCustomerPhone("");
       setNotes("");
       setSelectedService("");
       setSelectedTime("");
-      
-      // Refresh availability
+
+      // Re-fetch dostupnosti i lista u parent-u
       await fetchSlotAvailability(selectedDate);
-    } catch (error) {
-      console.error("Error creating walk-in:", error);
+      onSuccess?.();
+    } catch (err) {
       toast({
         title: "Greška",
-        description: error instanceof Error ? error.message : "Došlo je do greške pri kreiranju termina.",
+        description: err instanceof Error ? err.message : "Kreiranje termina nije uspelo.",
         variant: "destructive",
       });
     } finally {
@@ -133,19 +141,23 @@ export default function WalkinBooking() {
     }
   };
 
-  return (
-    <div className="space-y-6 p-4">
-      <div>
-        <h2 className="text-lg font-medium mb-2">Walk-in Zakazivanje</h2>
-        <p className="text-sm text-muted-foreground mb-4">
-          Kreiranje termina za walk-in klijente. Nije ograničeno online kvotom.
-        </p>
-      </div>
+  const timeSlots = selectedDate
+    ? selectedDate.getDay() === 6
+      ? SATURDAY_TIME_SLOTS
+      : TIME_SLOTS
+    : [];
 
-      <div className="grid gap-4 md:grid-cols-2">
+  // ── Render ────────────────────────────────────────────────────────────────
+
+  return (
+    <div className="bg-card border border-border rounded-lg p-6 space-y-6">
+
+      {/* Gornji red: kalendar + vremenski slotovi */}
+      <div className="grid gap-6 md:grid-cols-2">
+        {/* Kalendar */}
         <div>
-          <Label className="text-sm text-muted-foreground mb-3 block">
-            <CalendarIcon className="w-4 h-4 inline mr-2" />
+          <Label className="text-sm text-muted-foreground mb-3 flex items-center gap-2">
+            <CalendarIcon className="w-4 h-4" />
             Datum
           </Label>
           <Calendar
@@ -153,119 +165,133 @@ export default function WalkinBooking() {
             selected={selectedDate}
             onSelect={handleDateSelect}
             locale={srLatn}
-            className="rounded-md border mx-auto"
+            className="rounded-md border border-border"
           />
         </div>
 
-        <div className="space-y-4">
-          {selectedDate && (
-            <div>
-              <Label className="text-sm text-muted-foreground mb-3 block">
-                <Clock className="w-4 h-4 inline mr-2" />
-                Vreme ({format(selectedDate, "d. MMM", { locale: srLatn })})
-              </Label>
-              {isLoadingSlots ? (
-                <div className="flex items-center justify-center py-8">
-                  <Loader2 className="w-6 h-6 animate-spin text-primary" />
-                </div>
-              ) : (
-                <div className="grid grid-cols-4 gap-2">
-                  {getAvailableTimeSlots().map((time) => {
-                    const availability = slotAvailability[time];
-                    const state = availability?.state || 'ONLINE_AVAILABLE';
-                    const isSelectable = state !== 'FULL';
-                    
-                    return (
-                      <div key={time} className="relative group">
-                        <Button
-                          variant={selectedTime === time ? "default" : "outline"}
-                          size="sm"
-                          onClick={() => isSelectable && setSelectedTime(time)}
-                          className={cn(
-                            "text-sm w-full",
-                            !isSelectable && "opacity-50 cursor-not-allowed",
-                            selectedTime === time && "ring-2 ring-primary"
-                          )}
-                        >
-                          {time}
-                        </Button>
-                        
-                        <Badge 
-                          variant="outline"
-                          className={cn(
-                            "absolute -top-2 -right-2 text-[10px] py-0 px-1",
-                            getSlotStateColor(state)
-                          )}
-                        >
-                          {state === 'FULL' ? '×' : availability?.total_count || 0}
-                        </Badge>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
+        {/* Slotovi */}
+        <div>
+          <Label className="text-sm text-muted-foreground mb-3 flex items-center gap-2">
+            <Clock className="w-4 h-4" />
+            {selectedDate
+              ? `Vreme – ${format(selectedDate, "d. MMM", { locale: srLatn })}`
+              : "Vreme"}
+          </Label>
+
+          {isLoadingSlots ? (
+            <div className="flex items-center justify-center py-12">
+              <Loader2 className="w-6 h-6 animate-spin text-primary" />
+            </div>
+          ) : timeSlots.length === 0 ? (
+            <p className="text-sm text-muted-foreground py-4">Izaberi datum.</p>
+          ) : (
+            <div className="grid grid-cols-4 gap-2">
+              {timeSlots.map((time) => {
+                const avail = slotAvailability[time];
+                // Admins can override ONLINE_FULL, only truly FULL is blocked
+                const isFull = avail?.state === "FULL";
+
+                return (
+                  <div key={time} className="relative">
+                    <Button
+                      variant={selectedTime === time ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => !isFull && setSelectedTime(time)}
+                      className={cn(
+                        "w-full text-xs",
+                        isFull && "opacity-40 cursor-not-allowed",
+                        selectedTime === time && "ring-2 ring-primary"
+                      )}
+                    >
+                      {time}
+                    </Button>
+
+                    {avail && (
+                      <Badge
+                        variant="outline"
+                        className={cn(
+                          "absolute -top-2 -right-2 text-[9px] py-0 px-1 leading-tight",
+                          getSlotStateColor(avail.state)
+                        )}
+                      >
+                        {avail.total_count}/{avail.total_capacity}
+                      </Badge>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           )}
-
-          <div>
-            <Label>Usluga *</Label>
-            <Select value={selectedService} onValueChange={setSelectedService}>
-              <SelectTrigger>
-                <SelectValue placeholder="Izaberite uslugu..." />
-              </SelectTrigger>
-              <SelectContent>
-                {SERVICES.map((service) => (
-                  <SelectItem key={service} value={service}>
-                    {service}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div>
-            <Label>Ime klijenta *</Label>
-            <Input
-              value={customerName}
-              onChange={(e) => setCustomerName(e.target.value)}
-              placeholder="Ime i prezime"
-            />
-          </div>
-
-          <div>
-            <Label>Telefon (opciono)</Label>
-            <Input
-              value={customerPhone}
-              onChange={(e) => setCustomerPhone(e.target.value)}
-              placeholder="+381 6X XXX XXXX"
-            />
-          </div>
-
-          <div>
-            <Label>Napomena (opciono)</Label>
-            <Input
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-              placeholder="Posebni zahtevi..."
-            />
-          </div>
-
-          <Button
-            onClick={handleSubmit}
-            disabled={isSubmitting || !selectedDate || !selectedTime || !selectedService || !customerName}
-            className="w-full"
-          >
-            {isSubmitting ? (
-              <>
-                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                Kreiranje...
-              </>
-            ) : (
-              "Zakaži walk-in"
-            )}
-          </Button>
         </div>
       </div>
+
+      {/* Donji deo: usluga + podaci */}
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div className="space-y-1.5">
+          <Label>Usluga *</Label>
+          <Select value={selectedService} onValueChange={setSelectedService}>
+            <SelectTrigger>
+              <SelectValue placeholder="Izaberi uslugu..." />
+            </SelectTrigger>
+            <SelectContent>
+              {SERVICES.map((s) => (
+                <SelectItem key={s} value={s}>{s}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-1.5">
+          <Label htmlFor="wk-name">Ime klijenta *</Label>
+          <Input
+            id="wk-name"
+            value={customerName}
+            onChange={(e) => setCustomerName(e.target.value)}
+            placeholder="Ime i prezime"
+          />
+        </div>
+
+        <div className="space-y-1.5">
+          <Label htmlFor="wk-phone">Telefon (opciono)</Label>
+          <Input
+            id="wk-phone"
+            type="tel"
+            value={customerPhone}
+            onChange={(e) => setCustomerPhone(e.target.value)}
+            placeholder="+381 6X XXX XXXX"
+          />
+        </div>
+
+        <div className="space-y-1.5">
+          <Label htmlFor="wk-notes">Napomena (opciono)</Label>
+          <Input
+            id="wk-notes"
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+            placeholder="Posebni zahtevi..."
+          />
+        </div>
+      </div>
+
+      {/* Submit */}
+      <Button
+        onClick={handleSubmit}
+        disabled={isSubmitting || !selectedDate || !selectedTime || !selectedService || !customerName}
+        className="w-full sm:w-auto"
+        size="lg"
+      >
+        {isSubmitting ? (
+          <>
+            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+            Kreiranje...
+          </>
+        ) : (
+          <>
+            <UserPlus className="w-4 h-4 mr-2" />
+            Zakaži termin
+          </>
+        )}
+      </Button>
     </div>
   );
 }

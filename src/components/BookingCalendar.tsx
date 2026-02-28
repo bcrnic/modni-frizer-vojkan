@@ -75,15 +75,20 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
 
       const isSat = date.getDay() === 6;
       const slots = isSat ? SATURDAY_TIME_SLOTS : TIME_SLOTS;
+
+      // Check all slots in parallel instead of sequentially
+      const entries = await Promise.all(
+        slots.map(async (slot) => {
+          const [hours, minutes] = slot.split(':').map(Number);
+          const slotDate = new Date(date);
+          slotDate.setHours(hours, minutes, 0, 0);
+          const availability = await checkSlotAvailability(slotDate);
+          return [slot, availability] as const;
+        })
+      );
+
       const results: Record<string, SlotAvailability> = {};
-
-      // Check each slot's availability
-      for (const slot of slots) {
-        const [hours, minutes] = slot.split(':').map(Number);
-        const slotDate = new Date(date);
-        slotDate.setHours(hours, minutes, 0, 0);
-
-        const availability = await checkSlotAvailability(slotDate);
+      for (const [slot, availability] of entries) {
         if (availability) {
           results[slot] = availability;
         }
