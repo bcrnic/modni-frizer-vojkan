@@ -4,28 +4,28 @@ import { ScrollReveal } from "./animations/ScrollReveal";
 const galleryImages = [
   { 
     src: `${import.meta.env.BASE_URL}assets/gallery-1.jpg`, 
-    alt: "Elegantna talasasta kosa", 
-    caption: "Savršeni talasi za svaku priliku" 
+    alt: "Platinasto plava ravna kosa", 
+    caption: "Čista plava nijansa i savršeno ravno feniranje" 
   },
   { 
     src: `${import.meta.env.BASE_URL}assets/gallery-2.jpg`, 
-    alt: "Balayage pramenovi", 
-    caption: "Prirodan preliv boja" 
+    alt: "Ravna frizura na srednju dužinu", 
+    caption: "Prirodan sjaj i precizno šišanje" 
   },
   { 
     src: `${import.meta.env.BASE_URL}assets/gallery-3.jpg`, 
-    alt: "Svečana frizura", 
-    caption: "Elegantna punđa za posebne trenutke" 
+    alt: "Kratki bob sa šiškama", 
+    caption: "Moderni bob sa punim volumenom" 
   },
   { 
     src: `${import.meta.env.BASE_URL}assets/gallery-4.jpg`, 
-    alt: "Profesionalna stilizacija", 
-    caption: "Besprekoran look iz salona" 
+    alt: "Bob sa pramenovima", 
+    caption: "Topli pramenovi i čiste linije šišanja" 
   },
   { 
     src: `${import.meta.env.BASE_URL}assets/gallery-5.jpg`, 
-    alt: "Moderna plavuša frizura", 
-    caption: "Savremena elegancija sa plavim tonovima" 
+    alt: "Talasasta smeđa kosa", 
+    caption: "Mekani talasi za prirodan, elegantan look" 
   },
   // Dodaj još slika ovako:
   // { 
