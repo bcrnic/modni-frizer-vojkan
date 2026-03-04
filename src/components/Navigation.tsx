@@ -40,7 +40,7 @@ const Navigation = ({ onBookingOpen }: NavigationProps) => {
           {/* Logo */}
           <a href="#" className="flex items-center gap-3">
             <img
-              src="/assets/logo.png"
+              src={`${import.meta.env.BASE_URL}assets/logo.png`}
               alt="Modni Frizer VOJKAN"
               className="w-12 h-12 object-contain"
             />

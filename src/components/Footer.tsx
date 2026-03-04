@@ -10,7 +10,7 @@ const Footer = () => {
         <div className="flex flex-col items-center gap-6">
           {/* Logo */}
           <img
-            src="/assets/logo.png"
+            src={`${import.meta.env.BASE_URL}assets/logo.png`}
             alt="Modni Frizer VOJKAN"
             className="w-20 h-20 object-contain opacity-80"
           />

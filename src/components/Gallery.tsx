@@ -3,27 +3,27 @@ import { ScrollReveal } from "./animations/ScrollReveal";
 
 const galleryImages = [
   { 
-    src: "/assets/gallery-1.jpg", 
+    src: `${import.meta.env.BASE_URL}assets/gallery-1.jpg`, 
     alt: "Elegantna talasasta kosa", 
     caption: "Savršeni talasi za svaku priliku" 
   },
   { 
-    src: "/assets/gallery-2.jpg", 
+    src: `${import.meta.env.BASE_URL}assets/gallery-2.jpg`, 
     alt: "Balayage pramenovi", 
     caption: "Prirodan preliv boja" 
   },
   { 
-    src: "/assets/gallery-3.jpg", 
+    src: `${import.meta.env.BASE_URL}assets/gallery-3.jpg`, 
     alt: "Svečana frizura", 
     caption: "Elegantna punđa za posebne trenutke" 
   },
   { 
-    src: "/assets/gallery-4.jpg", 
+    src: `${import.meta.env.BASE_URL}assets/gallery-4.jpg`, 
     alt: "Profesionalna stilizacija", 
     caption: "Besprekoran look iz salona" 
   },
   { 
-    src: "/assets/gallery-5.jpg", 
+    src: `${import.meta.env.BASE_URL}assets/gallery-5.jpg`, 
     alt: "Moderna plavuša frizura", 
     caption: "Savremena elegancija sa plavim tonovima" 
   },
