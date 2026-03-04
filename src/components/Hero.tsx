@@ -1,6 +1,4 @@
 import { MessageCircle, Mail, CalendarDays } from "lucide-react";
-import logo from "@/assets/logo.png";
-import heroBg from "@/assets/hero-bg.jpg";
 import { EMAIL_ADDRESS, VIBER_NUMBER, WHATSAPP_NUMBER, WHATSAPP_PREFILL } from "@/config/links";
 
 /*
@@ -24,7 +22,7 @@ const Hero = ({ onBookingOpen }: HeroProps) => {
         {/* Pozadinska slika sa overlay-em */}
         <div className="absolute inset-0">
           <img
-            src={heroBg}
+            src="/assets/hero-bg.jpg"
             alt="Luksuzni frizerski salon"
             className="w-full h-full object-cover opacity-40"
           />
@@ -36,7 +34,7 @@ const Hero = ({ onBookingOpen }: HeroProps) => {
         {/* Logo */}
           <div className="mb-8 animate-fade-in opacity-0" style={{ animationDelay: "0.2s" }}>
             <img
-              src={logo}
+              src="/assets/logo.png"
               alt="Modni Frizer Vojkan Logo"
               className="w-36 h-36 md:w-48 md:h-48 mx-auto object-contain mix-blend-lighten opacity-90"
             />

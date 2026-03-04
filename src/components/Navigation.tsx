@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
-import logo from "@/assets/logo.png";
 
 const navLinks = [
   { href: "#o-salonu", label: "O salonu" },
@@ -41,7 +40,7 @@ const Navigation = ({ onBookingOpen }: NavigationProps) => {
           {/* Logo */}
           <a href="#" className="flex items-center gap-3">
             <img
-              src={logo}
+              src="/assets/logo.png"
               alt="Modni Frizer VOJKAN"
               className="w-12 h-12 object-contain"
             />

@@ -1,5 +1,4 @@
 import { Instagram, Facebook } from "lucide-react";
-import logo from "@/assets/logo.png";
 import { SOCIAL_LINKS } from "@/config/links";
 
 const Footer = () => {
@@ -11,7 +10,7 @@ const Footer = () => {
         <div className="flex flex-col items-center gap-6">
           {/* Logo */}
           <img
-            src={logo}
+            src="/assets/logo.png"
             alt="Modni Frizer VOJKAN"
             className="w-20 h-20 object-contain opacity-80"
           />

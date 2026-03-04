@@ -1,15 +1,38 @@
 import { motion } from "framer-motion";
 import { ScrollReveal } from "./animations/ScrollReveal";
-import gallery1 from "@/assets/gallery-1.jpg";
-import gallery2 from "@/assets/gallery-2.jpg";
-import gallery3 from "@/assets/gallery-3.jpg";
-import gallery4 from "@/assets/gallery-4.jpg";
 
 const galleryImages = [
-  { src: gallery1, alt: "Elegantna talasasta kosa", caption: "Savršeni talasi za svaku priliku" },
-  { src: gallery2, alt: "Balayage pramenovi", caption: "Prirodan preliv boja" },
-  { src: gallery3, alt: "Svečana frizura", caption: "Elegantna punđa za posebne trenutke" },
-  { src: gallery4, alt: "Profesionalna stilizacija", caption: "Besprekoran look iz salona" },
+  { 
+    src: "/assets/gallery-1.jpg", 
+    alt: "Elegantna talasasta kosa", 
+    caption: "Savršeni talasi za svaku priliku" 
+  },
+  { 
+    src: "/assets/gallery-2.jpg", 
+    alt: "Balayage pramenovi", 
+    caption: "Prirodan preliv boja" 
+  },
+  { 
+    src: "/assets/gallery-3.jpg", 
+    alt: "Svečana frizura", 
+    caption: "Elegantna punđa za posebne trenutke" 
+  },
+  { 
+    src: "/assets/gallery-4.jpg", 
+    alt: "Profesionalna stilizacija", 
+    caption: "Besprekoran look iz salona" 
+  },
+  { 
+    src: "/assets/gallery-5.jpg", 
+    alt: "Moderna plavuša frizura", 
+    caption: "Savremena elegancija sa plavim tonovima" 
+  },
+  // Dodaj još slika ovako:
+  // { 
+  //   src: "/assets/gallery-6.jpg", 
+  //   alt: "Opis slike", 
+  //   caption: "Kratki opis" 
+  // },
 ];
 
 const Gallery = () => {
