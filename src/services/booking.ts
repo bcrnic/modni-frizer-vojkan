@@ -1,4 +1,4 @@
-import { addMinutes, parseISO, format } from 'date-fns';
+import { addMinutes, format } from 'date-fns';
 import { supabase } from '@/integrations/supabase/client';
 import type { SlotState, AppointmentSource } from '@/integrations/supabase/types';
 
@@ -32,7 +32,7 @@ export const checkSlotAvailability = async (
   if (!supabase) return null;
 
   const endTime = addMinutes(startTime, duration);
-  
+
   const { data, error } = await supabase.rpc('check_slot_availability', {
     check_start: format(startTime, "yyyy-MM-dd'T'HH:mm:ssxxx"),
     check_end: format(endTime, "yyyy-MM-dd'T'HH:mm:ssxxx")
@@ -50,9 +50,9 @@ export const createAppointment = async (
   appointment: AppointmentData
 ): Promise<{ success: boolean; error?: string; status?: SlotAvailability }> => {
   if (!supabase) {
-    return { 
-      success: false, 
-      error: 'Booking system not configured' 
+    return {
+      success: false,
+      error: 'Booking system not configured'
     };
   }
 
@@ -77,7 +77,35 @@ export const createAppointment = async (
     };
   }
 
-  return data as { success: boolean; error?: string; status: SlotAvailability };
+  const result = data as { success: boolean; error?: string; status: SlotAvailability };
+
+  // Fire-and-forget email: only on successful online bookings
+  if (result.success && appointment.source !== 'walkin') {
+    sendBookingNotification(appointment);
+  }
+
+  return result;
+};
+
+const sendBookingNotification = async (appointment: AppointmentData): Promise<void> => {
+  if (!supabase) return;
+
+  try {
+    await supabase.functions.invoke('send-booking-notification', {
+      body: {
+        customerName: appointment.customerName,
+        customerPhone: appointment.customerPhone,
+        customerEmail: appointment.customerEmail,
+        appointmentDate: appointment.startTime.toISOString(),
+        appointmentTime: format(appointment.startTime, 'HH:mm'),
+        serviceType: appointment.serviceType,
+        notes: appointment.notes,
+      },
+    });
+  } catch (err) {
+    // Non-critical – booking was successful, email is best-effort
+    console.warn('Email notification failed (non-critical):', err);
+  }
 };
 
 export const getSlotStateLabel = (state: SlotState): string => {

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { format, isToday, isTomorrow, parseISO } from "date-fns";
+import { format, isToday, isTomorrow, parseISO, addDays } from "date-fns";
 import { srLatn } from "date-fns/locale";
 import type { Session } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
@@ -112,8 +112,8 @@ const AdminDashboard = ({ session: _session }: AdminDashboardProps) => {
 
       if (selectedDate) {
         const day = format(selectedDate, "yyyy-MM-dd");
-        // filter by date prefix using gte/lt since start_time is a timestamptz
-        q = q.gte("start_time", `${day}T00:00:00`).lt("start_time", `${day}T23:59:59`);
+        const nextDay = format(addDays(selectedDate, 1), "yyyy-MM-dd");
+        q = q.gte("start_time", `${day}T00:00:00`).lt("start_time", `${nextDay}T00:00:00`);
       }
 
       if (statusFilter !== "all") {
