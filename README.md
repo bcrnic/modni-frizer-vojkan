@@ -41,7 +41,7 @@ WHERE id = 1;
 
 ---
 
-## 🚀 Setup & Environment Variables
+
 
 Before running the application, you need to configure your Supabase project.
 

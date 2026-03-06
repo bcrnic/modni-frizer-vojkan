@@ -37,6 +37,8 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import WalkinBooking from "@/components/admin/WalkinBooking";
+import EditAppointmentDialog from "@/components/admin/EditAppointmentDialog";
+import { getHolidays, addHoliday, deleteHoliday, type HolidayData } from "@/services/booking";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -96,6 +98,17 @@ const AdminDashboard = ({ session: _session }: AdminDashboardProps) => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [updatingId, setUpdatingId] = useState<string | null>(null);
+
+  // Edit State
+  const [editAppointmentItem, setEditAppointmentItem] = useState<Appointment | null>(null);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+
+  // Holidays State
+  const [holidays, setHolidays] = useState<HolidayData[]>([]);
+  const [holidayDate, setHolidayDate] = useState<Date | undefined>(undefined);
+  const [holidayReason, setHolidayReason] = useState("");
+  const [isAddingHoliday, setIsAddingHoliday] = useState(false);
+
   const [isLive, setIsLive] = useState(false);
   const channelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
 
@@ -130,6 +143,11 @@ const AdminDashboard = ({ session: _session }: AdminDashboardProps) => {
       setIsLoading(false);
     }
   }, [selectedDate, statusFilter]);
+
+  const fetchHolidaysData = useCallback(async () => {
+    const data = await getHolidays();
+    setHolidays(data);
+  }, []);
 
   // ── Real-time subscription ─────────────────────────────────────────────────
 
@@ -166,7 +184,8 @@ const AdminDashboard = ({ session: _session }: AdminDashboardProps) => {
   // Initial load
   useEffect(() => {
     fetchAppointments();
-  }, [fetchAppointments]);
+    fetchHolidaysData();
+  }, [fetchAppointments, fetchHolidaysData]);
 
   // ── Auth logout ────────────────────────────────────────────────────────────
 
@@ -197,13 +216,50 @@ const AdminDashboard = ({ session: _session }: AdminDashboardProps) => {
     }
   };
 
-  // ── Computed ──────────────────────────────────────────────────────────────
+  const handleAddHoliday = async () => {
+    if (!holidayDate) return;
+    setIsAddingHoliday(true);
+    try {
+      const success = await addHoliday(holidayDate, holidayReason);
+      if (success) {
+        toast({ title: "Slobodan dan dodat", description: "Termini na ovaj dan su sada blokirani." });
+        setHolidayDate(undefined);
+        setHolidayReason("");
+        await fetchHolidaysData();
+      } else {
+        throw new Error("Failed to add");
+      }
+    } catch (err) {
+      toast({ title: "Greška", description: "Nije moguće dodati slobodan dan (možda već postoji).", variant: "destructive" });
+    } finally {
+      setIsAddingHoliday(false);
+    }
+  };
 
-  const activeCount = appointments.filter((a) => a.status !== "cancelled").length;
-  const onlineCount = appointments.filter((a) => a.source === "online" && a.status !== "cancelled").length;
-  const walkinCount = appointments.filter((a) => a.source === "walkin" && a.status !== "cancelled").length;
+  const handleDeleteHoliday = async (id: string) => {
+    try {
+      const success = await deleteHoliday(id);
+      if (success) {
+        toast({ title: "Slobodan dan obrisan", description: "Termini su sada ponovo otvoreni za ovaj dan." });
+        await fetchHolidaysData();
+      }
+    } catch (err) {
+      toast({ title: "Greška", description: "Nije moguće obrisati slobodan dan.", variant: "destructive" });
+    }
+  };
 
-  // ── Render ────────────────────────────────────────────────────────────────
+  // ── Computed statistics ────────────────────────────────────────────────────
+  const activeAppointments = appointments.filter(
+    (apt: Appointment) => apt.status === "confirmed"
+  );
+  const activeCount = activeAppointments.length;
+  const onlineCount = activeAppointments.filter(
+    (apt: Appointment) => apt.source === "online"
+  ).length;
+  const walkinCount = activeAppointments.filter(
+    (apt: Appointment) => apt.source === "walkin"
+  ).length;
+
 
   return (
     <div className="min-h-screen bg-background">
@@ -248,6 +304,10 @@ const AdminDashboard = ({ session: _session }: AdminDashboardProps) => {
             <TabsTrigger value="add" className="gap-2">
               <Plus className="w-4 h-4" />
               Dodaj termin
+            </TabsTrigger>
+            <TabsTrigger value="holidays" className="gap-2">
+              <CalendarDays className="w-4 h-4" />
+              Neradni dani
             </TabsTrigger>
           </TabsList>
 
@@ -438,6 +498,19 @@ const AdminDashboard = ({ session: _session }: AdminDashboardProps) => {
                                 )}
                               </Button>
 
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                className="text-primary border-primary/30 hover:bg-primary/10"
+                                onClick={() => {
+                                  setEditAppointmentItem(apt);
+                                  setIsEditDialogOpen(true);
+                                }}
+                              >
+                                {<Scissors className="w-4 h-4 mr-1" />}
+                                Uredi
+                              </Button>
+
                               <AlertDialog>
                                 <AlertDialogTrigger asChild>
                                   <Button
@@ -493,8 +566,99 @@ const AdminDashboard = ({ session: _session }: AdminDashboardProps) => {
               <WalkinBooking onSuccess={fetchAppointments} />
             </div>
           </TabsContent>
+
+          {/* TAB: Holidays (Neradni dani) */}
+          <TabsContent value="holidays">
+            <div className="grid lg:grid-cols-[350px_1fr] gap-8">
+              {/* Add Holiday Form */}
+              <aside className="space-y-6">
+                <div className="bg-card border border-border rounded-lg p-5 space-y-4">
+                  <div>
+                    <h3 className="font-medium text-lg mb-1">Blokiraj dan</h3>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      Izabrani dan će biti potpuno uklonjen iz kalendara za online zakazivanje.
+                    </p>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Izaberi datum *</label>
+                    <Calendar
+                      mode="single"
+                      selected={holidayDate}
+                      onSelect={setHolidayDate}
+                      locale={srLatn}
+                      disabled={(date) => date < new Date(new Date().setHours(0, 0, 0, 0))}
+                      className="rounded-md border border-border w-full flex justify-center"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Razlog (Opciono)</label>
+                    <input
+                      type="text"
+                      value={holidayReason}
+                      onChange={(e) => setHolidayReason(e.target.value)}
+                      placeholder="Npr. Državni praznik, Godišnji odmor..."
+                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    />
+                  </div>
+
+                  <Button
+                    className="w-full mt-2"
+                    onClick={handleAddHoliday}
+                    disabled={!holidayDate || isAddingHoliday}
+                  >
+                    {isAddingHoliday ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Plus className="w-4 h-4 mr-2" />}
+                    Blokiraj izabrani dan
+                  </Button>
+                </div>
+              </aside>
+
+              {/* Holidays List */}
+              <div className="bg-card border border-border rounded-lg p-6">
+                <h2 className="font-heading text-xl mb-6">Lista neradnih dana</h2>
+
+                {holidays.length === 0 ? (
+                  <div className="text-center py-12 text-muted-foreground">
+                    <CalendarDays className="w-12 h-12 mx-auto mb-4 opacity-30" />
+                    <p>Trenutno nema blokiranih dana u kalendaru.</p>
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    {holidays.map((holiday) => (
+                      <div key={holiday.id} className="flex items-center justify-between p-4 border border-border rounded-lg hover:border-primary/30 transition-colors">
+                        <div>
+                          <p className="font-medium capitalize">{format(parseISO(holiday.holiday_date), "EEEE, d. MMMM yyyy.", { locale: srLatn })}</p>
+                          {holiday.reason && (
+                            <p className="text-sm text-muted-foreground mt-1">{holiday.reason}</p>
+                          )}
+                        </div>
+
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="text-red-500 hover:bg-red-500/10 hover:text-red-600"
+                          onClick={() => handleDeleteHoliday(holiday.id)}
+                          title="Obriši"
+                        >
+                          <XCircle className="w-5 h-5" />
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </TabsContent>
         </Tabs>
       </div>
+
+      <EditAppointmentDialog
+        appointment={editAppointmentItem}
+        isOpen={isEditDialogOpen}
+        onOpenChange={setIsEditDialogOpen}
+        onSuccess={fetchAppointments}
+      />
     </div>
   );
 };

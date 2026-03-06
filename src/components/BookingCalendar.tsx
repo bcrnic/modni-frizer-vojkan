@@ -117,7 +117,7 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
 
   const getAvailableTimeSlots = () => {
     if (!selectedDate) return [];
-    
+
     const isSat = selectedDate.getDay() === 6;
     return isSat ? SATURDAY_TIME_SLOTS : TIME_SLOTS;
   };
@@ -211,8 +211,8 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
                 s === step
                   ? "bg-primary text-primary-foreground"
                   : s < step
-                  ? "bg-primary/20 text-primary"
-                  : "bg-muted text-muted-foreground"
+                    ? "bg-primary/20 text-primary"
+                    : "bg-muted text-muted-foreground"
               )}
             >
               {s < step ? <Check className="w-4 h-4" /> : s}
@@ -260,7 +260,7 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
                       const availability = slotAvailability[time];
                       const state = availability?.state || 'ONLINE_AVAILABLE';
                       const isSelectable = state === 'ONLINE_AVAILABLE';
-                      
+
                       return (
                         <div key={time} className="relative group">
                           <Button
@@ -275,9 +275,9 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
                           >
                             {time}
                           </Button>
-                          
+
                           {/* Availability badge */}
-                          <Badge 
+                          <Badge
                             variant="outline"
                             className={cn(
                               "absolute -top-2 -right-2 text-[10px] py-0 px-1",
@@ -286,7 +286,7 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
                           >
                             {state === 'ONLINE_AVAILABLE' ? '✓' : '!'}
                           </Badge>
-                          
+
                           {/* Tooltip on hover */}
                           {!isSelectable && (
                             <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-background border text-xs rounded shadow-lg hidden group-hover:block whitespace-nowrap z-50">

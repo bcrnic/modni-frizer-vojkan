@@ -23,6 +23,12 @@ export interface AppointmentData {
   source?: AppointmentSource;
 }
 
+export interface HolidayData {
+  id: string;
+  holiday_date: string;
+  reason: string | null;
+}
+
 const DEFAULT_APPOINTMENT_DURATION = 60; // minutes
 
 export const checkSlotAvailability = async (
@@ -77,14 +83,82 @@ export const createAppointment = async (
     };
   }
 
-  const result = data as { success: boolean; error?: string; status: SlotAvailability };
 
-  // Fire-and-forget email: only on successful online bookings
-  if (result.success && appointment.source !== 'walkin') {
-    sendBookingNotification(appointment);
+};
+
+// ─── Edit appointment ─────────────────────────────────────────────────────────
+
+export const editAppointment = async (
+  appointmentId: string,
+  appointment: AppointmentData,
+  status: string
+): Promise<{ success: boolean; error?: string; status?: SlotAvailability }> => {
+  if (!supabase) {
+    return { success: false, error: 'Booking system not configured' };
   }
 
-  return result;
+  const endTime = addMinutes(appointment.startTime, DEFAULT_APPOINTMENT_DURATION);
+
+  const { data, error } = await supabase.rpc('update_appointment', {
+    p_appointment_id: appointmentId,
+    p_start_time: format(appointment.startTime, "yyyy-MM-dd'T'HH:mm:ssxxx"),
+    p_end_time: format(endTime, "yyyy-MM-dd'T'HH:mm:ssxxx"),
+    p_service_type: appointment.serviceType,
+    p_customer_name: appointment.customerName,
+    p_customer_phone: appointment.customerPhone,
+    p_notes: appointment.notes,
+    p_status: status
+  });
+
+  if (error) {
+    console.error('Error updating appointment:', error);
+    return { success: false, error: error.message };
+  }
+
+  return data as { success: boolean; error?: string; status: SlotAvailability };
+};
+
+// ─── Holidays Management ──────────────────────────────────────────────────────
+
+export const getHolidays = async (): Promise<HolidayData[]> => {
+  if (!supabase) return [];
+  const { data, error } = await supabase
+    .from('salon_holidays')
+    .select('*')
+    .order('holiday_date', { ascending: true });
+
+  if (error) {
+    console.error('Error fetching holidays:', error);
+    return [];
+  }
+  return data as HolidayData[];
+};
+
+export const addHoliday = async (date: Date, reason?: string): Promise<boolean> => {
+  if (!supabase) return false;
+  const { error } = await supabase
+    .from('salon_holidays')
+    .insert([{ holiday_date: format(date, 'yyyy-MM-dd'), reason }]);
+
+  if (error) {
+    console.error('Error adding holiday:', error);
+    return false;
+  }
+  return true;
+};
+
+export const deleteHoliday = async (id: string): Promise<boolean> => {
+  if (!supabase) return false;
+  const { error } = await supabase
+    .from('salon_holidays')
+    .delete()
+    .eq('id', id);
+
+  if (error) {
+    console.error('Error deleting holiday:', error);
+    return false;
+  }
+  return true;
 };
 
 const sendBookingNotification = async (appointment: AppointmentData): Promise<void> => {
