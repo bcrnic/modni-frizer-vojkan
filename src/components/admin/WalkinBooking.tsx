@@ -27,7 +27,7 @@ import { SERVICES, TIME_SLOTS, SATURDAY_TIME_SLOTS } from "@/config/constants";
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 interface WalkinBookingProps {
-  /** Poziva se nakon uspešnog kreiranja – npr. za re-fetch liste */
+  /** Called after a successful booking – e.g. to re-fetch the list */
   onSuccess?: () => void;
 }
 
@@ -127,7 +127,7 @@ export default function WalkinBooking({ onSuccess }: WalkinBookingProps) {
       setSelectedService("");
       setSelectedTime("");
 
-      // Re-fetch dostupnosti i lista u parent-u
+      // Re-fetch availability and list in the parent component
       await fetchSlotAvailability(selectedDate);
       onSuccess?.();
     } catch (err) {
@@ -152,9 +152,9 @@ export default function WalkinBooking({ onSuccess }: WalkinBookingProps) {
   return (
     <div className="bg-card border border-border rounded-lg p-6 space-y-6">
 
-      {/* Gornji red: kalendar + vremenski slotovi */}
+      {/* Top row: calendar + time slots */}
       <div className="grid gap-6 md:grid-cols-2">
-        {/* Kalendar */}
+        {/* Calendar */}
         <div>
           <Label className="text-sm text-muted-foreground mb-3 flex items-center gap-2">
             <CalendarIcon className="w-4 h-4" />
@@ -169,7 +169,7 @@ export default function WalkinBooking({ onSuccess }: WalkinBookingProps) {
           />
         </div>
 
-        {/* Slotovi */}
+        {/* Time slots */}
         <div>
           <Label className="text-sm text-muted-foreground mb-3 flex items-center gap-2">
             <Clock className="w-4 h-4" />
@@ -225,7 +225,7 @@ export default function WalkinBooking({ onSuccess }: WalkinBookingProps) {
         </div>
       </div>
 
-      {/* Donji deo: usluga + podaci */}
+      {/* Bottom part: service + customer details */}
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-1.5">
           <Label>Usluga *</Label>

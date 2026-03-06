@@ -136,7 +136,7 @@ const AdminDashboard = ({ session: _session }: AdminDashboardProps) => {
   useEffect(() => {
     if (!supabase) return;
 
-    // Cleanup previous channel if any
+    // Clean up previous channel if any
     if (channelRef.current) {
       supabase.removeChannel(channelRef.current);
     }
@@ -173,7 +173,7 @@ const AdminDashboard = ({ session: _session }: AdminDashboardProps) => {
   const handleLogout = async () => {
     if (!supabase) return;
     await supabase.auth.signOut();
-    // Admin.tsx detectuje session=null i prikazuje login
+    // Admin.tsx detects session=null and shows login
   };
 
   // ── Update status ──────────────────────────────────────────────────────────
@@ -188,7 +188,7 @@ const AdminDashboard = ({ session: _session }: AdminDashboardProps) => {
         .eq("id", id);
       if (error) throw error;
       toast({ title: "Status ažuriran", description: `Termin je ${STATUS_LABELS[newStatus]?.toLowerCase()}.` });
-      // Real-time će automatski osvežiti – ne treba ručno
+      // Real-time will automatically refresh - no need to do it manually
     } catch (err) {
       console.error(err);
       toast({ title: "Greška", description: "Nije moguće ažurirati status.", variant: "destructive" });
@@ -216,7 +216,7 @@ const AdminDashboard = ({ session: _session }: AdminDashboardProps) => {
               <h1 className="font-heading text-xl leading-none">Admin Panel</h1>
               <p className="text-xs text-muted-foreground">Modni Frizer Vojkan</p>
             </div>
-            {/* Real-time indikator */}
+            {/* Real-time indicator */}
             <div
               className={cn(
                 "flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full border ml-4",
@@ -251,13 +251,13 @@ const AdminDashboard = ({ session: _session }: AdminDashboardProps) => {
             </TabsTrigger>
           </TabsList>
 
-          {/* ── TAB: Termini ── */}
+          {/* TAB: Appointments */}
           <TabsContent value="appointments">
             <div className="grid lg:grid-cols-[280px_1fr] gap-8">
 
               {/* Sidebar */}
               <aside className="space-y-4">
-                {/* Kalendar */}
+                {/* Calendar */}
                 <div className="bg-card border border-border rounded-lg p-4">
                   <h3 className="font-medium mb-3 flex items-center gap-2 text-sm">
                     <CalendarDays className="w-4 h-4 text-primary" />
@@ -298,7 +298,7 @@ const AdminDashboard = ({ session: _session }: AdminDashboardProps) => {
                   </Select>
                 </div>
 
-                {/* Statistika */}
+                {/* Statistics */}
                 <div className="bg-card border border-border rounded-lg p-4 space-y-2.5">
                   <h3 className="font-medium text-sm">Statistika</h3>
                   <div className="flex justify-between text-sm">
@@ -316,7 +316,7 @@ const AdminDashboard = ({ session: _session }: AdminDashboardProps) => {
                 </div>
               </aside>
 
-              {/* Lista termina */}
+              {/* Appointments list */}
               <div>
                 <div className="flex items-center justify-between mb-6">
                   <h2 className="font-heading text-2xl">
@@ -371,7 +371,7 @@ const AdminDashboard = ({ session: _session }: AdminDashboardProps) => {
                               </span>
                             </div>
 
-                            {/* Detalji */}
+                            {/* Details */}
                             <div className="grid sm:grid-cols-2 gap-x-8 gap-y-1.5">
                               <div className="flex items-center gap-2 text-sm">
                                 <Clock className="w-4 h-4 text-primary flex-shrink-0" />
@@ -418,7 +418,7 @@ const AdminDashboard = ({ session: _session }: AdminDashboardProps) => {
                             </div>
                           </div>
 
-                          {/* Akcije */}
+                          {/* Actions */}
                           {apt.status !== "cancelled" && (
                             <div className="flex gap-2 flex-shrink-0">
                               <Button
@@ -481,7 +481,7 @@ const AdminDashboard = ({ session: _session }: AdminDashboardProps) => {
             </div>
           </TabsContent>
 
-          {/* ── TAB: Dodaj termin ── */}
+          {/* TAB: Add Appointment */}
           <TabsContent value="add">
             <div className="max-w-2xl">
               <div className="mb-6">

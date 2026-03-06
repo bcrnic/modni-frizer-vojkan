@@ -2,36 +2,32 @@ import { motion } from "framer-motion";
 import { ScrollReveal } from "./animations/ScrollReveal";
 
 const galleryImages = [
-  { 
-    src: `${import.meta.env.BASE_URL}assets/gallery-1.jpg`, 
-    alt: "Platinasto plava ravna kosa", 
-    caption: "Čista plava nijansa i savršeno ravno feniranje" 
+  {
+    src: `${import.meta.env.BASE_URL}assets/gallery-1.jpg`,
+    alt: "Platinasto plava ravna kosa",
+    caption: "Čista plava nijansa i savršeno ravno feniranje"
   },
-  { 
-    src: `${import.meta.env.BASE_URL}assets/gallery-2.jpg`, 
-    alt: "Ravna frizura na srednju dužinu", 
-    caption: "Prirodan sjaj i precizno šišanje" 
+  {
+    src: `${import.meta.env.BASE_URL}assets/gallery-2.jpg`,
+    alt: "Ravna frizura na srednju dužinu",
+    caption: "Prirodan sjaj i precizno šišanje"
   },
-  { 
-    src: `${import.meta.env.BASE_URL}assets/gallery-3.jpg`, 
-    alt: "Kratki bob sa šiškama", 
-    caption: "Moderni bob sa punim volumenom" 
+
+  {
+    src: `${import.meta.env.BASE_URL}assets/gallery-4.jpg`,
+    alt: "Bob sa pramenovima",
+    caption: "Topli pramenovi i čiste linije šišanja"
   },
-  { 
-    src: `${import.meta.env.BASE_URL}assets/gallery-4.jpg`, 
-    alt: "Bob sa pramenovima", 
-    caption: "Topli pramenovi i čiste linije šišanja" 
+  {
+    src: `${import.meta.env.BASE_URL}assets/gallery-5.jpg`,
+    alt: "Talasasta smeđa kosa",
+    caption: "Mekani talasi za prirodan, elegantan look"
   },
-  { 
-    src: `${import.meta.env.BASE_URL}assets/gallery-5.jpg`, 
-    alt: "Talasasta smeđa kosa", 
-    caption: "Mekani talasi za prirodan, elegantan look" 
-  },
-  // Dodaj još slika ovako:
-  // { 
-  //   src: "/assets/gallery-6.jpg", 
-  //   alt: "Opis slike", 
-  //   caption: "Kratki opis" 
+  // Add more images like this:
+  // {
+  //   src: "/assets/gallery-6.jpg",
+  //   alt: "Image description",
+  //   caption: "Short caption"
   // },
 ];
 
@@ -39,7 +35,7 @@ const Gallery = () => {
   return (
     <section id="galerija" className="section-padding bg-secondary/30">
       <div className="container mx-auto">
-        {/* Naslov sekcije */}
+        {/* Section Title */}
         <ScrollReveal className="text-center mb-16">
           <p className="text-primary uppercase tracking-[0.3em] text-sm mb-4">Galerija</p>
           <h2 className="heading-section mb-6">
@@ -48,7 +44,7 @@ const Gallery = () => {
           <div className="decorative-line mb-8" />
         </ScrollReveal>
 
-        {/* Galerija grid */}
+        {/* Gallery grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
           {galleryImages.map((image, index) => (
             <motion.div
@@ -68,7 +64,7 @@ const Gallery = () => {
                 height={750}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
-              {/* Overlay sa tekstom */}
+              {/* Text overlay */}
               <div className="absolute inset-0 z-10 flex flex-col justify-end p-6 
                               bg-gradient-to-t from-black/80 via-black/20 to-transparent
                               opacity-0 group-hover:opacity-100 transition-opacity duration-500">
@@ -79,7 +75,7 @@ const Gallery = () => {
           ))}
         </div>
 
-        {/* Poziv za više slika */}
+        {/* Call to action for more photos */}
         <ScrollReveal delay={0.3}>
           <p className="text-center text-muted-foreground mt-12">
             Ako želiš frizuru u ovom stilu, pošalji sliku porukom i napiši željeni termin.

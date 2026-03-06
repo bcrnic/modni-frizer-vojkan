@@ -6,8 +6,8 @@ import AdminLogin from "./AdminLogin";
 import { Loader2 } from "lucide-react";
 
 /**
- * Admin entry point – ne koristi router /admin/login.
- * Prikazuje login ili dashboard na osnovu Supabase session stanja.
+ * Admin entry point – avoids using a separate /admin/login route.
+ * Shows login or dashboard based on Supabase session state.
  */
 const Admin = () => {
   const [session, setSession] = useState<Session | null>(null);
@@ -19,13 +19,13 @@ const Admin = () => {
       return;
     }
 
-    // Učitaj inicijalnu sesiju
+    // Load initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       setLoading(false);
     });
 
-    // Prati promene sesije (login / logout)
+    // Track session changes (login / logout)
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (_event, session) => setSession(session)
     );
