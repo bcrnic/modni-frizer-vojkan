@@ -9,27 +9,27 @@ const services = [
   {
     category: "Šišanje & Stilizacija",
     items: [
-      { name: "Žensko šišanje", price: "od 3.500 RSD", description: "Kreativno šišanje prilagođeno Vašem stilu" },
-      { name: "Feniranje", price: "1.200 RSD", description: "Profesionalno feniranje i stilizacija" },
-      { name: "Šišanje + feniranje", price: "od 4.500 RSD", description: "Kompletna transformacija" },
+      { name: "Žensko šišanje + feniranje", price: "od 3.500 RSD", description: "Kreativno šišanje prilagođeno Vašem stilu" },
+      { name: "Feniranje", price: "od 1.200 RSD", description: "Profesionalno feniranje i stilizacija" },
     ]
   },
   {
     category: "Farbanje Kose",
     items: [
-      { name: "Farbanje kose", price: "od 4.000 RSD", description: "Jednobojno farbanje premium bojama" },
-      { name: "Pramenovi / Balayage", price: "od 4.500 RSD", description: "Moderna tehnika za prirodan izgled" },
-      { name: "Ombre / Sombre", price: "od 5.000 RSD", description: "Preliv boja za dramatičan efekat" },
-      { name: "Toniranje", price: "od 2.000 RSD", description: "Osvežavanje i nijansiranje boje" },
+      { name: "Farbanje kose - koren", price: "od 4.000 RSD", description: "Jednobojno farbanje premium bojama" },
+      { name: "Farbanje kose - cela dužina", price: "od 5.000 RSD", description: "Jednobojno farbanje premium bojama" },
+      { name: "Farbanje kose + šišanje", price: "od 6.000 RSD", description: "Jednobojno farbanje premium bojama" },
+      { name: "Pramenovi / Balayage", price: "od 9.000 RSD", description: "Moderna tehnika za prirodan izgled" },
+      { name: "Pramenovi / Balayage + šišanje", price: "od 11.000 RSD", description: "Moderna tehnika za prirodan izgled" },
+      { name: "Preliv / Toniranje", price: "od 4.000 RSD", description: "Osvežavanje i nijansiranje boje" },
+      { name: "Preliv / Toniranje + šišanje", price: "od 6.000 RSD", description: "Osvežavanje i nijansiranje boje" },
     ]
   },
   {
     category: "Tretmani & Nega",
     items: [
-      { name: "Regeneracija kose", price: "1.500 RSD", description: "Dubinski tretman za oporavak kose" },
-      { name: "Keratinski tretman", price: "od 5.000 RSD", description: "Ispravljanje i obnova strukture kose" },
-      { name: "Botoks za kosu", price: "od 4.000 RSD", description: "Intenzivna hidratacija i sjaj" },
-      { name: "Olaplex tretman", price: "od 3.500 RSD", description: "Obnova oštećenih veza u kosi" },
+      { name: "Regeneracija kose + feniranje", price: "od 2.500 RSD", description: "Dubinski tretman za oporavak kose" },
+      { name: "Nadogradnja kose", price: "od 450 RSD po pramenu", description: "Totalna transformacija u jednom danu" },
     ]
   }
 ];
