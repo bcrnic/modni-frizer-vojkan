@@ -19,6 +19,11 @@ const services = [
       { name: "Farbanje kose - koren", price: "od 4.000 RSD", description: "Jednobojno farbanje premium bojama" },
       { name: "Farbanje kose - cela dužina", price: "od 5.000 RSD", description: "Jednobojno farbanje premium bojama" },
       { name: "Farbanje kose + šišanje", price: "od 6.000 RSD", description: "Jednobojno farbanje premium bojama" },
+    ]
+  },
+  {
+    category: "Pramenovi & Prelivi",
+    items: [
       { name: "Pramenovi / Balayage", price: "od 9.000 RSD", description: "Moderna tehnika za prirodan izgled" },
       { name: "Pramenovi / Balayage + šišanje", price: "od 11.000 RSD", description: "Moderna tehnika za prirodan izgled" },
       { name: "Preliv / Toniranje", price: "od 4.000 RSD", description: "Osvežavanje i nijansiranje boje" },
@@ -52,7 +57,7 @@ const Services = () => {
         </ScrollReveal>
 
         {/* Kategorije usluga */}
-        <StaggerContainer className="grid lg:grid-cols-3 gap-8">
+        <StaggerContainer className="grid md:grid-cols-2 gap-8">
           {services.map((category) => (
             <StaggerItem key={category.category}>
               <div className="service-card h-full">
