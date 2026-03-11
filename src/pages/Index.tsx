@@ -12,21 +12,6 @@ import BookingCalendar from "@/components/BookingCalendar";
 import BookingInfo from "@/components/sections/BookingInfo";
 import FAQ from "@/components/sections/FAQ";
 
-/*
-=== MODNI FRIZER VOJKAN - GLAVNI SAJT ===
-
-MESTA ZA IZMENU u sledećim fajlovima:
-- src/components/Hero.tsx → WhatsApp broj, email
-- src/components/Contact.tsx → Telefon, email, adresa, radno vreme
-- src/components/Services.tsx → Cene i opisi usluga
-
-Za Google mapu:
-- src/components/Contact.tsx → Zamenite placeholder sa embed kodom
-
-SEO meta tagovi:
-- index.html → Promenite title i description
-*/
-
 const Index = () => {
   const [bookingOpen, setBookingOpen] = useState(false);
   const handleBookingOpen = () => setBookingOpen(true);
