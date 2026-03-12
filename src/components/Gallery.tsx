@@ -2,33 +2,56 @@ import { motion } from "framer-motion";
 import { ScrollReveal } from "./animations/ScrollReveal";
 
 const galleryImages = [
-  {
-    src: `${import.meta.env.BASE_URL}assets/gallery-1.jpg`,
-    alt: "Platinasto plava ravna kosa",
-    caption: "Čista plava nijansa i savršeno ravno feniranje"
+  { 
+    src: `${import.meta.env.BASE_URL}assets/1.jpeg`, 
+    alt: "Bakarni talasi (srednja dužina)", 
+    caption: "Topla bakarna nijansa i mekani talasi" 
   },
-  {
-    src: `${import.meta.env.BASE_URL}assets/gallery-2.jpg`,
-    alt: "Ravna frizura na srednju dužinu",
-    caption: "Prirodan sjaj i precizno šišanje"
+  { 
+    src: `${import.meta.env.BASE_URL}assets/2.jpeg`, 
+    alt: "Ledeno plavi lob (ravno)", 
+    caption: "Precizan rez i hladni tonovi plave" 
   },
-
-  {
-    src: `${import.meta.env.BASE_URL}assets/gallery-4.jpg`,
-    alt: "Bob sa pramenovima",
-    caption: "Topli pramenovi i čiste linije šišanja"
+  { 
+    src: `${import.meta.env.BASE_URL}assets/3.jpeg`, 
+    alt: "Ravna kosa sa toplim prelivom", 
+    caption: "Prirodan preliv i sjajno feniranje" 
   },
-  {
-    src: `${import.meta.env.BASE_URL}assets/gallery-5.jpg`,
-    alt: "Talasasta smeđa kosa",
-    caption: "Mekani talasi za prirodan, elegantan look"
+  { 
+    src: `${import.meta.env.BASE_URL}assets/4.jpeg`, 
+    alt: "Kratka bob frizura (blond)", 
+    caption: "Geometrijski bob sa čistom linijom" 
   },
-  // Add more images like this:
-  // {
-  //   src: "/assets/gallery-6.jpg",
-  //   alt: "Image description",
-  //   caption: "Short caption"
-  // },
+  { 
+    src: `${import.meta.env.BASE_URL}assets/5.jpeg`, 
+    alt: "Kratki bob sa volumenom (blond)", 
+    caption: "Pun volumen i svetli blond ton" 
+  },
+  { 
+    src: `${import.meta.env.BASE_URL}assets/6.jpeg`, 
+    alt: "Platinasto plavi bob", 
+    caption: "Kratka forma i hladna plava nijansa" 
+  },
+  { 
+    src: `${import.meta.env.BASE_URL}assets/7.jpeg`, 
+    alt: "Talasasta smeđa kosa", 
+    caption: "Mekani talasi za prirodan, elegantan look" 
+  },
+  { 
+    src: `${import.meta.env.BASE_URL}assets/8.jpeg`, 
+    alt: "Plava balayage sa loknama", 
+    caption: "Mekani prelivi i glamurozne lokne" 
+  },
+  { 
+    src: `${import.meta.env.BASE_URL}assets/9.jpeg`, 
+    alt: "Ultra ravna platinasto plava kosa", 
+    caption: "Ogledalo sjaj i savršeno ravno feniranje" 
+  },
+  { 
+    src: `${import.meta.env.BASE_URL}assets/10.jpeg`, 
+    alt: "Svečana frizura sa punđom", 
+    caption: "Romantične lokne i elegantno podignuta kosa" 
+  },
 ];
 
 const Gallery = () => {
