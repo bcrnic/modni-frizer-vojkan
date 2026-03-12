@@ -14,12 +14,21 @@ const BookingInfo = ({ onBookingOpen }: BookingInfoProps) => {
             Zakazivanje termina i walk-in posete
           </h2>
 
-          <p className="text-xl md:text-2xl text-muted-foreground/90 leading-relaxed mb-6 font-light">
-            Dođi bez zakazivanja ili rezerviši termin unapred.
-          </p>
-          <p className="text-base text-muted-foreground leading-relaxed">
-            Uvek ostavljamo kapacitet za walk-in klijente. Za sigurnost, zakaži online ili telefonom.
-          </p>
+          <div className="space-y-4 text-muted-foreground text-base md:text-lg leading-relaxed">
+            <p>
+              U našem salonu možete doći bez zakazivanja ili rezervisati termin unapred - kako vam više odgovara.
+            </p>
+            <p>
+              Uvek ostavljamo deo kapaciteta za klijente koji dolaze bez zakazivanja, tako da ste dobrodošli u bilo kom
+              trenutku tokom radnog vremena.
+            </p>
+            <p>
+              Ako želite da izbegnete čekanje, preporučujemo zakazivanje termina online ili telefonom.
+            </p>
+            <p>
+              Naš cilj je da pružimo maksimalnu fleksibilnost - bilo da planirate unapred ili dolazite spontano.
+            </p>
+          </div>
 
           <div className="mt-8 flex flex-col items-center gap-2">
             <button onClick={onBookingOpen} className="btn-gold inline-flex items-center gap-2">
