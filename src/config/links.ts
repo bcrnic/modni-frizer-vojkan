@@ -1,6 +1,6 @@
 export const WHATSAPP_NUMBER = "+381621445958";
 export const VIBER_NUMBER = "+381621445958";
-export const EMAIL_ADDRESS = "vojkan@example.com";
+export const EMAIL_ADDRESS = "modnifrizervojkan@hotmail.com";
 export const BOOKING_URL = "https://www.planway.com/salon-vojkan";
 
 export const PHONE_NUMBER_DISPLAY = "+381 62 144 5958";
