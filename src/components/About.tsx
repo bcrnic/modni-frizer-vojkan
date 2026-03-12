@@ -34,15 +34,11 @@ const About = () => {
 
         {/* Glavni tekst */}
         <ScrollReveal delay={0.2} className="max-w-3xl mx-auto text-center mb-16">
-          <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-            <strong className="text-gold-gradient">Modni frizer VOJKAN</strong> je ženski frizerski salon u centru Novog Sada sa
-            tradicijom dugom preko <strong className="text-primary">40 godina</strong>. Radimo porodično -
-            <strong className="text-gold-gradient"> Vojkan</strong> i <strong className="text-gold-gradient">Boža</strong> - i cilj
-            nam je da izađeš iz salona sa frizurom koju možeš lako da održavaš.
+          <p className="text-xl md:text-2xl text-muted-foreground/90 leading-relaxed mb-8 font-light">
+            Ženski frizerski salon u centru Novog Sada sa tradicijom od <strong className="text-primary">40 godina</strong>.
           </p>
-          <p className="text-muted-foreground leading-relaxed">
-            Pre svake promene radimo kratke konsultacije: šta želiš, šta ti stoji i šta je realno za tvoju kosu. Ako farbaš
-            ili radiš balayage, dobićeš i savet kako da boja traje duže i kako da kosa ostane sjajna.
+          <p className="text-base text-muted-foreground leading-relaxed">
+            Radimo porodično i cilj nam je frizura koju lako održavaš. Pre svake promene: kratka konsultacija i savet za negu.
           </p>
         </ScrollReveal>
 
@@ -50,11 +46,11 @@ const About = () => {
         <StaggerContainer className="grid md:grid-cols-3 gap-8">
           {features.map((feature) => (
             <StaggerItem key={feature.title}>
-              <div className="text-center p-8 border border-border/50 bg-card/50 
-                              hover:border-primary/30 transition-all duration-500">
-                <div className="inline-flex items-center justify-center w-16 h-16 
-                                border border-primary/30 mb-6">
-                  <feature.icon className="w-7 h-7 text-primary" />
+              <div className="text-center p-10 border border-border/30 bg-card/30 shadow-sm
+                              hover:border-primary/20 hover:shadow-md transition-all duration-500">
+                <div className="inline-flex items-center justify-center w-14 h-14 
+                                border border-primary/20 mb-8">
+                  <feature.icon className="w-5 h-5 text-primary" />
                 </div>
                 <h3 className="font-heading text-xl mb-3">{feature.title}</h3>
                 <p className="text-muted-foreground text-sm">{feature.description}</p>

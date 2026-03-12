@@ -9,32 +9,32 @@ const services = [
   {
     category: "Šišanje & Stilizacija",
     items: [
-      { name: "Žensko šišanje + feniranje", price: "od 3.500 RSD", description: "Kreativno šišanje prilagođeno Vašem stilu" },
-      { name: "Feniranje", price: "od 1.200 RSD", description: "Profesionalno feniranje i stilizacija" },
+      { name: "Žensko šišanje + feniranje", price: "od 3.500 RSD", description: "Prilagođeno Vašem stilu" },
+      { name: "Feniranje", price: "od 1.200 RSD", description: "Profesionalna stilizacija" },
     ]
   },
   {
     category: "Farbanje Kose",
     items: [
-      { name: "Farbanje kose - koren", price: "od 4.000 RSD", description: "Jednobojno farbanje premium bojama" },
-      { name: "Farbanje kose - cela dužina", price: "od 5.000 RSD", description: "Jednobojno farbanje premium bojama" },
-      { name: "Farbanje kose + šišanje", price: "od 6.000 RSD", description: "Jednobojno farbanje premium bojama" },
+      { name: "Farbanje kose - koren", price: "od 4.000 RSD", description: "Premium boje" },
+      { name: "Farbanje kose - cela dužina", price: "od 5.000 RSD", description: "Premium boje" },
+      { name: "Farbanje kose + šišanje", price: "od 6.000 RSD", description: "Premium boje" },
     ]
   },
   {
     category: "Pramenovi & Prelivi",
     items: [
-      { name: "Pramenovi / Balayage", price: "od 9.000 RSD", description: "Moderna tehnika za prirodan izgled" },
-      { name: "Pramenovi / Balayage + šišanje", price: "od 11.000 RSD", description: "Moderna tehnika za prirodan izgled" },
-      { name: "Preliv / Toniranje", price: "od 4.000 RSD", description: "Osvežavanje i nijansiranje boje" },
-      { name: "Preliv / Toniranje + šišanje", price: "od 6.000 RSD", description: "Osvežavanje i nijansiranje boje" },
+      { name: "Pramenovi / Balayage", price: "od 9.000 RSD", description: "Prirodan izgled" },
+      { name: "Pramenovi / Balayage + šišanje", price: "od 11.000 RSD", description: "Prirodan izgled" },
+      { name: "Preliv / Toniranje", price: "od 4.000 RSD", description: "Osvežavanje boje" },
+      { name: "Preliv / Toniranje + šišanje", price: "od 6.000 RSD", description: "Osvežavanje boje" },
     ]
   },
   {
     category: "Tretmani & Nega",
     items: [
-      { name: "Regeneracija kose + feniranje", price: "od 2.500 RSD", description: "Dubinski tretman za oporavak kose" },
-      { name: "Nadogradnja kose", price: "od 450 RSD po pramenu", description: "Totalna transformacija u jednom danu" },
+      { name: "Regeneracija kose + feniranje", price: "od 2.500 RSD", description: "Dubinski tretman" },
+      { name: "Nadogradnja kose", price: "od 450 RSD po pramenu", description: "Transformacija" },
     ]
   }
 ];
@@ -50,9 +50,8 @@ const Services = () => {
             Naše <span className="text-gold-gradient">cene</span>
           </h2>
           <div className="decorative-line mb-8" />
-          <p className="text-muted-foreground max-w-xl mx-auto">
-            Cene su okvirne i zavise od dužine kose i utroška materijala. Ako nisi sigurna šta ti tačno treba, javi se porukom
-            - preporučićemo opciju i okvirnu cenu pre dolaska.
+          <p className="text-lg text-muted-foreground/80 max-w-2xl mx-auto font-light">
+            Cene zavise od dužine kose. Javi se porukom za tačnu cenu.
           </p>
         </ScrollReveal>
 
@@ -60,7 +59,7 @@ const Services = () => {
         <StaggerContainer className="grid md:grid-cols-2 gap-8">
           {services.map((category) => (
             <StaggerItem key={category.category}>
-              <div className="service-card h-full">
+              <div className="service-card h-full p-10 shadow-sm hover:shadow-md transition-shadow duration-300">
                 <h3 className="font-heading text-2xl text-center mb-8 pb-4 border-b border-border">
                   {category.category}
                 </h3>
@@ -87,8 +86,7 @@ const Services = () => {
         {/* Napomena */}
         <ScrollReveal delay={0.3}>
           <p className="text-center text-muted-foreground text-sm mt-12">
-            * Cene mogu varirati u zavisnosti od dužine kose i kompleksnosti tretmana.
-            Konsultacije su besplatne. Tačnu cenu dogovaramo nakon kratkog pregleda kose.
+            Konsultacije su besplatne. Tačnu cenu dogovaramo nakon pregleda kose.
           </p>
         </ScrollReveal>
       </div>

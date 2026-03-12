@@ -25,11 +25,11 @@ const Index = () => {
         <Services />
         <BookingInfo onBookingOpen={handleBookingOpen} />
         <PricingFAQ onBookingOpen={handleBookingOpen} />
-        <BookingCTA onBookingOpen={handleBookingOpen} />
         <Gallery />
         <FAQ onBookingOpen={handleBookingOpen} />
         <Contact onBookingOpen={handleBookingOpen} />
       </main>
+      <BookingCTA onBookingOpen={handleBookingOpen} />
       <Footer />
       <BookingCalendar open={bookingOpen} onOpenChange={setBookingOpen} />
     </div>

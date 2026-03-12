@@ -1,4 +1,4 @@
-import { Instagram, Facebook } from "lucide-react";
+import { Instagram, Facebook, Clock } from "lucide-react";
 import { SOCIAL_LINKS } from "@/config/links";
 
 const Footer = () => {
@@ -15,15 +15,20 @@ const Footer = () => {
             className="w-20 h-20 object-contain opacity-80"
           />
 
+          {/* Radno vreme */}
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <Clock className="w-4 h-4" />
+            <span className="text-sm">Pon-Pet: 9-18h | Sub: 9-15h</span>
+          </div>
+
           {/* Društvene mreže */}
           <div className="flex items-center gap-4">
             <a
               href={SOCIAL_LINKS.instagram}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 flex items-center justify-center border border-border 
-                         hover:border-primary hover:text-primary transition-all duration-300"
-              aria-label="Pratite nas na Instagramu"
+              className="text-muted-foreground hover:text-primary transition-colors"
+              aria-label="Instagram"
             >
               <Instagram className="w-5 h-5" />
             </a>
@@ -31,24 +36,17 @@ const Footer = () => {
               href={SOCIAL_LINKS.facebook}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 flex items-center justify-center border border-border 
-                         hover:border-primary hover:text-primary transition-all duration-300"
-              aria-label="Pratite nas na Facebooku"
+              className="text-muted-foreground hover:text-primary transition-colors"
+              aria-label="Facebook"
             >
               <Facebook className="w-5 h-5" />
             </a>
           </div>
 
-          {/* Navigacija */}
-          <nav className="flex flex-wrap justify-center gap-8 text-sm">
-            <a href="#o-salonu" className="text-muted-foreground hover:text-primary transition-colors">
-              O salonu
-            </a>
+          {/* Minimalni linkovi */}
+          <nav className="flex gap-6 text-sm">
             <a href="#usluge" className="text-muted-foreground hover:text-primary transition-colors">
               Cenovnik
-            </a>
-            <a href="#galerija" className="text-muted-foreground hover:text-primary transition-colors">
-              Galerija
             </a>
             <a href="#kontakt" className="text-muted-foreground hover:text-primary transition-colors">
               Kontakt
