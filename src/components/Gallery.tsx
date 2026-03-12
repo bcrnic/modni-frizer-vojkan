@@ -44,12 +44,12 @@ const galleryImages = [
   },
   { 
     src: `${import.meta.env.BASE_URL}assets/9.jpeg`, 
-    alt: "Ultra ravna platinasto plava kosa", 
-    caption: "Ogledalo sjaj i savršeno ravno feniranje" 
+    alt: "Platinasto plava ravna kosa", 
+    caption: "Ravno feniranje i čist, hladan ton plave" 
   },
   { 
     src: `${import.meta.env.BASE_URL}assets/10.jpeg`, 
-    alt: "Svečana frizura sa punđom", 
+    alt: "Svečana frizura (niska punđa)", 
     caption: "Romantične lokne i elegantno podignuta kosa" 
   },
   { 
