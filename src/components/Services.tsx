@@ -59,11 +59,11 @@ const Services = () => {
         <StaggerContainer className="grid md:grid-cols-2 gap-8">
           {services.map((category) => (
             <StaggerItem key={category.category}>
-              <div className="service-card h-full p-10 shadow-sm hover:shadow-md transition-shadow duration-300">
-                <h3 className="font-heading text-2xl text-center mb-8 pb-4 border-b border-border">
+              <div className="service-card h-full p-6 md:p-10 shadow-sm hover:shadow-md transition-shadow duration-300">
+                <h3 className="font-heading text-xl md:text-2xl text-center mb-6 md:mb-8 pb-4 border-b border-border">
                   {category.category}
                 </h3>
-                <div className="space-y-6">
+                <div className="space-y-5 md:space-y-6">
                   {category.items.map((item) => (
                     <div key={item.name} className="group">
                       <div className="flex justify-between items-start mb-1">
@@ -74,7 +74,7 @@ const Services = () => {
                           {item.price}
                         </span>
                       </div>
-                      <p className="text-muted-foreground text-sm">{item.description}</p>
+                      <p className="text-muted-foreground/90 text-base md:text-sm">{item.description}</p>
                     </div>
                   ))}
                 </div>
