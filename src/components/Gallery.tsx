@@ -52,6 +52,16 @@ const galleryImages = [
     alt: "Svečana frizura sa punđom", 
     caption: "Romantične lokne i elegantno podignuta kosa" 
   },
+  { 
+    src: `${import.meta.env.BASE_URL}assets/gallery-2.jpg`, 
+    alt: "Ravno feniranje (srednja dužina)", 
+    caption: "Prirodan sjaj i uredne linije šišanja" 
+  },
+  { 
+    src: `${import.meta.env.BASE_URL}assets/gallery-3.jpg`, 
+    alt: "Kratki bob sa šiškama", 
+    caption: "Moderni bob sa punim volumenom" 
+  },
 ];
 
 const Gallery = () => {
