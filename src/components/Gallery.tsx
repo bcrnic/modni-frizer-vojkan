@@ -78,7 +78,33 @@ const Gallery = () => {
         </ScrollReveal>
 
         {/* Gallery grid */}
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-8">
+        <div className="md:hidden -mx-4 px-4">
+          <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-2">
+            {galleryImages.map((image, index) => (
+              <div key={index} className="snap-center shrink-0 w-[78%] sm:w-[60%]">
+                <div className="gallery-item aspect-[4/5]">
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    loading="lazy"
+                    decoding="async"
+                    width={600}
+                    height={750}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-x-0 bottom-0 z-10 p-4 bg-gradient-to-t from-black/85 via-black/20 to-transparent">
+                    <p className="text-foreground font-heading text-base leading-snug">
+                      {image.alt}
+                    </p>
+                    <p className="text-primary text-sm">{image.caption}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {galleryImages.map((image, index) => (
             <motion.div
               key={index}
