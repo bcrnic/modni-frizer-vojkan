@@ -18,7 +18,7 @@ const Index = () => {
   const handleBookingOpen = () => setBookingOpen(true);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-x-hidden">
       <Navigation onBookingOpen={handleBookingOpen} />
       <main className="pb-24 md:pb-0">
         <Hero onBookingOpen={handleBookingOpen} />

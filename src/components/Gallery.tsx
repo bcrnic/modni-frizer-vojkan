@@ -78,8 +78,8 @@ const Gallery = () => {
         </ScrollReveal>
 
         {/* Gallery grid */}
-        <div className="md:hidden -mx-4 px-4">
-          <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-2">
+        <div className="md:hidden w-full overflow-hidden">
+          <div className="flex gap-4 overflow-x-auto overscroll-x-contain snap-x snap-mandatory px-4 pb-2">
             {galleryImages.map((image, index) => (
               <div key={index} className="snap-center shrink-0 w-[78%] sm:w-[60%]">
                 <div className="gallery-item aspect-[4/5]">
