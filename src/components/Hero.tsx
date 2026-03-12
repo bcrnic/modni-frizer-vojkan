@@ -24,6 +24,8 @@ const Hero = ({ onBookingOpen }: HeroProps) => {
           <img
             src={`${import.meta.env.BASE_URL}assets/hero-bg.jpg`}
             alt="Luksuzni frizerski salon"
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover opacity-40"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background" />
@@ -36,6 +38,8 @@ const Hero = ({ onBookingOpen }: HeroProps) => {
             <img
               src={`${import.meta.env.BASE_URL}assets/logo.png`}
               alt="Modni Frizer Vojkan Logo"
+              loading="lazy"
+              decoding="async"
               className="w-36 h-36 md:w-48 md:h-48 mx-auto object-contain mix-blend-lighten opacity-90"
             />
           </div>

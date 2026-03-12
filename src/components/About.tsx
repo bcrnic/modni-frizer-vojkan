@@ -34,7 +34,7 @@ const About = () => {
 
         {/* Glavni tekst */}
         <ScrollReveal delay={0.2} className="max-w-3xl mx-auto text-center mb-16">
-          <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+          <p className="lead-text mb-6">
             <strong className="text-gold-gradient">Modni frizer VOJKAN</strong> je ženski frizerski salon u centru Novog Sada sa
             tradicijom dugom preko <strong className="text-primary">40 godina</strong>. Radimo porodično -
             <strong className="text-gold-gradient"> Vojkan</strong> i <strong className="text-gold-gradient">Boža</strong> - i cilj

@@ -15,7 +15,7 @@ const BookingInfo = ({ onBookingOpen }: BookingInfoProps) => {
           </h2>
 
           <div className="space-y-4 text-muted-foreground text-base md:text-lg leading-relaxed">
-            <p>
+            <p className="lead-text">
               U našem salonu možete doći bez zakazivanja ili rezervisati termin unapred - kako vam više odgovara.
             </p>
             <p>

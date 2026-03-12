@@ -11,6 +11,7 @@ import Footer from "@/components/Footer";
 import BookingCalendar from "@/components/BookingCalendar";
 import BookingInfo from "@/components/sections/BookingInfo";
 import FAQ from "@/components/sections/FAQ";
+import StickyMobileBar from "@/components/StickyMobileBar";
 
 const Index = () => {
   const [bookingOpen, setBookingOpen] = useState(false);
@@ -19,7 +20,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navigation onBookingOpen={handleBookingOpen} />
-      <main>
+      <main className="pb-24 md:pb-0">
         <Hero onBookingOpen={handleBookingOpen} />
         <About />
         <Services />
@@ -31,6 +32,7 @@ const Index = () => {
       </main>
       <BookingCTA onBookingOpen={handleBookingOpen} />
       <Footer />
+      <StickyMobileBar onBookingOpen={handleBookingOpen} />
       <BookingCalendar open={bookingOpen} onOpenChange={setBookingOpen} />
     </div>
   );

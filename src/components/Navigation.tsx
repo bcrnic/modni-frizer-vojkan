@@ -40,6 +40,8 @@ const Navigation = ({ onBookingOpen }: NavigationProps) => {
             <img
               src={`${import.meta.env.BASE_URL}assets/logo.png`}
               alt="Modni Frizer VOJKAN"
+              loading="lazy"
+              decoding="async"
               className="w-12 h-12 object-contain"
             />
             <span className="font-heading text-lg hidden sm:block">
