@@ -33,7 +33,7 @@ export const ScrollToTop = () => {
             size="icon"
             onClick={scrollToTop}
             className={cn(
-                "fixed bottom-6 right-6 z-50 rounded-full w-12 h-12 shadow-lg transition-all duration-300",
+                "fixed bottom-24 md:bottom-6 right-6 z-[60] rounded-full w-12 h-12 shadow-lg transition-all duration-300",
                 "bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-110",
                 // Animacija pojavljivanja/nestajanja
                 isVisible
