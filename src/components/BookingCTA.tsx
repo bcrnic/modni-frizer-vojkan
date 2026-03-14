@@ -16,8 +16,12 @@ const BookingCTA = ({ onBookingOpen }: BookingCTAProps) => {
           <h2 className="heading-section mb-6">Zakaži termin u 30 sekundi</h2>
           <div className="decorative-line mb-8" />
           <p className="text-muted-foreground max-w-2xl mx-auto mb-10">
-            Klikni na “Zakaži termin” i izaberi slobodan termin. Ako ti više odgovara, pošalji poruku - napiši
-            uslugu i željeni dan, a mi predložimo najbolji termin.
+            Klikni na “Zakaži termin” i izaberi slobodan termin. Ako ti više odgovara, pošalji poruku - napiši uslugu i
+            željeni dan, a mi predložimo najbolji termin. Ili dođi i{" "}
+            <span className="inline-flex items-center rounded-full bg-primary/15 border border-primary/30 px-2.5 py-0.5 text-sm text-primary font-medium">
+              bez zakazivanja
+            </span>
+            .
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button

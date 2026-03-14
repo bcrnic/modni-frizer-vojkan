@@ -35,7 +35,12 @@ const BookingInfo = ({ onBookingOpen }: BookingInfoProps) => {
               <CalendarDays className="w-5 h-5" />
               Zakaži termin
             </button>
-            <p className="text-sm text-muted-foreground">ili dođite bez zakazivanja</p>
+            <p className="text-sm text-muted-foreground">
+              ili dođite{" "}
+              <span className="inline-flex items-center rounded-full bg-primary/15 border border-primary/30 px-2 py-0.5 text-xs text-primary font-medium">
+                bez zakazivanja
+              </span>
+            </p>
           </div>
         </ScrollReveal>
       </div>

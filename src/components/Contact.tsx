@@ -53,6 +53,12 @@ const Contact = ({ onBookingOpen }: ContactProps) => {
               <CalendarDays className="w-5 h-5" />
               Zakaži termin
             </button>
+            <p className="mt-3 text-sm text-muted-foreground">
+              ili dođi{" "}
+              <span className="inline-flex items-center rounded-full bg-primary/15 border border-primary/30 px-2.5 py-0.5 text-sm text-primary font-medium">
+                bez zakazivanja
+              </span>
+            </p>
           </ScrollReveal>
 
           <div className="grid lg:grid-cols-2 gap-12">
