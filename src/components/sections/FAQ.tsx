@@ -49,10 +49,16 @@ const FAQ = ({ onBookingOpen }: FAQProps) => {
           </div>
 
           {onBookingOpen && (
-            <div className="mt-10 flex justify-center">
+            <div className="mt-10 flex flex-col items-center">
               <button onClick={onBookingOpen} className="btn-gold">
                 Zakaži termin
               </button>
+              <p className="mt-3 text-sm text-muted-foreground">
+                ili dođi{" "}
+                <span className="inline-flex items-center rounded-full bg-primary/15 border border-primary/30 px-2.5 py-0.5 text-sm text-primary font-medium">
+                  bez zakazivanja
+                </span>
+              </p>
             </div>
           )}
         </ScrollReveal>

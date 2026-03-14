@@ -68,6 +68,12 @@ const PricingFAQ = ({ onBookingOpen }: PricingFAQProps) => {
               Pitaj za cenu
             </a>
           </div>
+          <p className="mt-3 text-center text-sm text-muted-foreground">
+            ili dođi{" "}
+            <span className="inline-flex items-center rounded-full bg-primary/15 border border-primary/30 px-2.5 py-0.5 text-sm text-primary font-medium">
+              bez zakazivanja
+            </span>
+          </p>
         </div>
       </div>
     </section>
