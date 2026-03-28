@@ -83,7 +83,18 @@ export const createAppointment = async (
     };
   }
 
+  const result = data as { success: boolean; error?: string; status?: SlotAvailability } | null;
 
+  if (!result) {
+    return { success: false, error: 'Failed to create appointment' };
+  }
+
+  if (result.success) {
+    // Best-effort email notification (non-blocking). Booking must succeed even if email fails.
+    void sendBookingNotification(appointment);
+  }
+
+  return result;
 };
 
 // ─── Edit appointment ─────────────────────────────────────────────────────────
@@ -161,7 +172,7 @@ export const deleteHoliday = async (id: string): Promise<boolean> => {
   return true;
 };
 
-const sendBookingNotification = async (appointment: AppointmentData): Promise<void> => {
+async function sendBookingNotification(appointment: AppointmentData): Promise<void> {
   if (!supabase) return;
 
   try {
@@ -180,7 +191,7 @@ const sendBookingNotification = async (appointment: AppointmentData): Promise<vo
     // Non-critical – booking was successful, email is best-effort
     console.warn('Email notification failed (non-critical):', err);
   }
-};
+}
 
 export const getSlotStateLabel = (state: SlotState): string => {
   switch (state) {

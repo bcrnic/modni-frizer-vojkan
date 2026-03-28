@@ -87,16 +87,61 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
-
-        [_ in never]: never
       }
-      Functions: {
-        check_slot_availability: {
-          Args: {
-            check_start: string
-            check_end: string
-          }
-          Returns: {
+      salon_holidays: {
+        Row: {
+          id: string
+          holiday_date: string
+          reason: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          holiday_date: string
+          reason?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          holiday_date?: string
+          reason?: string | null
+          created_at?: string
+        }
+        Relationships: []
+      }
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      check_slot_availability: {
+        Args: {
+          check_start: string
+          check_end: string
+        }
+        Returns: {
+          state: SlotState
+          online_count: number
+          total_count: number
+          max_online: number
+          total_capacity: number
+        }
+      }
+      create_appointment: {
+        Args: {
+          p_customer_name: string
+          p_customer_phone: string
+          p_customer_email: string
+          p_start_time: string
+          p_end_time: string
+          p_service_type: string
+          p_notes?: string
+          p_source?: AppointmentSource
+        }
+        Returns: {
+          success: boolean
+          error?: string
+          status: {
             state: SlotState
             online_count: number
             total_count: number
@@ -104,61 +149,39 @@ export type Database = {
             total_capacity: number
           }
         }
-        create_appointment: {
-          Args: {
-            p_customer_name: string
-            p_customer_phone: string
-            p_customer_email: string
-            p_start_time: string
-            p_end_time: string
-            p_service_type: string
-            p_notes?: string
-            p_source?: AppointmentSource
-          }
-          Returns: {
-            success: boolean
-            error?: string
-            status: {
-              state: SlotState
-              online_count: number
-              total_count: number
-              max_online: number
-              total_capacity: number
-            }
+      }
+      update_appointment: {
+        Args: {
+          p_appointment_id: string
+          p_start_time: string
+          p_end_time: string
+          p_service_type: string
+          p_customer_name: string
+          p_customer_phone: string
+          p_notes?: string | null
+          p_status: string
+        }
+        Returns: {
+          success: boolean
+          error?: string
+          status?: {
+            state: SlotState
+            online_count: number
+            total_count: number
+            max_online: number
+            total_capacity: number
           }
         }
-        update_appointment: {
-          Args: {
-            p_appointment_id: string
-            p_start_time: string
-            p_end_time: string
-            p_service_type: string
-            p_customer_name: string
-            p_customer_phone: string
-            p_notes?: string | null
-            p_status: string
-          }
-          Returns: {
-            success: boolean
-            error?: string
-            status?: {
-              state: SlotState
-              online_count: number
-              total_count: number
-              max_online: number
-              total_capacity: number
-            }
-          }
-        }
-      }
-      Enums: {
-        [_ in never]: never
-      }
-      CompositeTypes: {
-        [_ in never]: never
       }
     }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
   }
+}
 
 type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
 
