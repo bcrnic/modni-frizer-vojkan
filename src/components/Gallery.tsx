@@ -3,62 +3,62 @@ import { ScrollReveal } from "./animations/ScrollReveal";
 
 const galleryImages = [
   { 
-    src: `${import.meta.env.BASE_URL}assets/1.jpeg`, 
+    src: `${import.meta.env.BASE_URL}assets/1.webp`, 
     alt: "Bakarni talasi (srednja dužina)", 
     caption: "Topla bakarna nijansa i mekani talasi" 
   },
   { 
-    src: `${import.meta.env.BASE_URL}assets/2.jpeg`, 
+    src: `${import.meta.env.BASE_URL}assets/2.webp`, 
     alt: "Ledeno plavi lob (ravno)", 
     caption: "Precizan rez i hladni tonovi plave" 
   },
   { 
-    src: `${import.meta.env.BASE_URL}assets/3.jpeg`, 
+    src: `${import.meta.env.BASE_URL}assets/3.webp`, 
     alt: "Ravna kosa sa toplim prelivom", 
     caption: "Prirodan preliv i sjajno feniranje" 
   },
   { 
-    src: `${import.meta.env.BASE_URL}assets/4.jpeg`, 
+    src: `${import.meta.env.BASE_URL}assets/4.webp`, 
     alt: "Kratka bob frizura (blond)", 
     caption: "Geometrijski bob sa čistom linijom" 
   },
   { 
-    src: `${import.meta.env.BASE_URL}assets/5.jpeg`, 
+    src: `${import.meta.env.BASE_URL}assets/5.webp`, 
     alt: "Kratki bob sa volumenom (blond)", 
     caption: "Pun volumen i svetli blond ton" 
   },
   { 
-    src: `${import.meta.env.BASE_URL}assets/6.jpeg`, 
+    src: `${import.meta.env.BASE_URL}assets/6.webp`, 
     alt: "Platinasto plavi bob", 
     caption: "Kratka forma i hladna plava nijansa" 
   },
   { 
-    src: `${import.meta.env.BASE_URL}assets/7.jpeg`, 
+    src: `${import.meta.env.BASE_URL}assets/7.webp`, 
     alt: "Talasasta smeđa kosa", 
     caption: "Mekani talasi za prirodan, elegantan look" 
   },
   { 
-    src: `${import.meta.env.BASE_URL}assets/8.jpeg`, 
+    src: `${import.meta.env.BASE_URL}assets/8.webp`, 
     alt: "Plava balayage sa loknama", 
     caption: "Mekani prelivi i glamurozne lokne" 
   },
   { 
-    src: `${import.meta.env.BASE_URL}assets/9.jpeg`, 
+    src: `${import.meta.env.BASE_URL}assets/9.webp`, 
     alt: "Platinasto plava ravna kosa", 
     caption: "Ravno feniranje i čist, hladan ton plave" 
   },
   { 
-    src: `${import.meta.env.BASE_URL}assets/10.jpeg`, 
+    src: `${import.meta.env.BASE_URL}assets/10.webp`, 
     alt: "Svečana frizura (niska punđa)", 
     caption: "Romantične lokne i elegantno podignuta kosa" 
   },
   { 
-    src: `${import.meta.env.BASE_URL}assets/gallery-2.jpg`, 
+    src: `${import.meta.env.BASE_URL}assets/gallery-2.webp`, 
     alt: "Ravno feniranje (srednja dužina)", 
     caption: "Prirodan sjaj i uredne linije šišanja" 
   },
   { 
-    src: `${import.meta.env.BASE_URL}assets/gallery-3.jpg`, 
+    src: `${import.meta.env.BASE_URL}assets/gallery-3.webp`, 
     alt: "Kratki bob sa šiškama", 
     caption: "Moderni bob sa punim volumenom" 
   },

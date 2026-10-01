@@ -10,7 +10,7 @@ const Footer = () => {
         <div className="flex flex-col items-center gap-6">
           {/* Logo */}
           <img
-            src={`${import.meta.env.BASE_URL}assets/logo.png`}
+            src={`${import.meta.env.BASE_URL}assets/logo.webp`}
             alt="Modni Frizer VOJKAN"
             loading="lazy"
             decoding="async"
