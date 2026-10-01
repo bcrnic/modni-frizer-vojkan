@@ -150,9 +150,16 @@ BEGIN
   ASSERT NOT (r->>'success')::boolean, 'fifth online booking must be refused';
   ASSERT r->'status'->>'state' = 'ONLINE_FULL_WALKIN_AVAILABLE', 'state is walk-in only: ' || r;
 
-  -- Overlapping half-hour later slot is also affected by the 60-minute bookings.
-  r := book('Klijentkinja 5', '0600000005', ctx('mon_noon') + interval '30 minutes');
-  ASSERT NOT (r->>'success')::boolean, 'overlapping slot is also online-full';
+  -- Capacity counts per exact start time: a full 12:00 does not block 12:30,
+  -- and 12:30 gets its own 4 online seats.
+  FOR i IN 1..4 LOOP
+    r := book('Pola sata ' || i, '06400000' || i, ctx('mon_noon') + interval '30 minutes');
+    ASSERT (r->>'success')::boolean, '12:30 booking ' || i || ' independent of full 12:00: ' || r;
+  END LOOP;
+  r := book('Pola sata 5', '0640000005', ctx('mon_noon') + interval '30 minutes');
+  ASSERT NOT (r->>'success')::boolean, 'fifth online booking at 12:30 must be refused';
+  ASSERT (public.check_slot_availability(ctx('mon_noon') - interval '30 minutes', ctx('mon_noon') + interval '30 minutes')->>'online_count')::int = 0,
+    '11:30 does not see 12:00 bookings';
 
   -- Per-phone limit: three active online bookings per number.
   r := book('Ista', '0611111111', ctx('tue_15'));
@@ -172,7 +179,7 @@ DO $$
 DECLARE r json; i int;
 BEGIN
   ASSERT public.is_admin(), 'owner is admin';
-  ASSERT (SELECT count(*) FROM public.appointments) = 7, 'admin sees all appointments';
+  ASSERT (SELECT count(*) FROM public.appointments) = 11, 'admin sees all appointments';
 
   FOR i IN 1..3 LOOP
     r := book('Walk-in ' || i, '', ctx('mon_noon'), 'walkin');
@@ -181,6 +188,14 @@ BEGIN
 
   r := book('Walk-in 4', '', ctx('mon_noon'), 'walkin');
   ASSERT NOT (r->>'success')::boolean AND r->'status'->>'state' = 'FULL', 'eighth person must be refused: ' || r;
+
+  -- A completely full 12:00 still leaves 12:30 open for walk-ins.
+  FOR i IN 1..3 LOOP
+    r := book('Walk-in 12:30 ' || i, '', ctx('mon_noon') + interval '30 minutes', 'walkin');
+    ASSERT (r->>'success')::boolean, '12:30 walk-in ' || i || ': ' || r;
+  END LOOP;
+  r := book('Walk-in 12:30 4', '', ctx('mon_noon') + interval '30 minutes', 'walkin');
+  ASSERT NOT (r->>'success')::boolean, '12:30 is full after 7 people';
 
   -- Admin may record a walk-in that already started.
   r := book('Upravo ušla', '', now() - interval '10 minutes', 'walkin');

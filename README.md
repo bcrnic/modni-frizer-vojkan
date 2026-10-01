@@ -28,7 +28,7 @@ This ensures:
 - **ONLINE_FULL_WALKIN_AVAILABLE**: Online booking full, but walk-ins welcome
 - **FULL**: No capacity left
 
-Every appointment currently lasts 60 minutes, so bookings at 11:00 and 11:30 overlap and count against each other.
+Capacity is counted per exact start time: 4 online bookings at 11:00 close 11:00 for online booking, but 11:30 still has its own 4 online seats. Service durations are not fixed, so the 60-minute `end_time` stored with each appointment is informational only.
 
 Rules enforced by the database (not just the UI): online bookings must be in the future, at most 60 days ahead, not on Sundays or holidays; at most 3 active online bookings per phone number; walk-ins can only be created by admins. All bookings are serialised with an advisory lock so two simultaneous requests cannot take the same last seat.
 
