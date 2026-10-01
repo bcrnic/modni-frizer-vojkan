@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { format, addDays, isSunday, isBefore, startOfDay, parseISO } from "date-fns";
+import { format, addDays, isSunday, isBefore, startOfDay } from "date-fns";
 import { srLatn } from "date-fns/locale";
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
@@ -20,15 +20,29 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { supabase, isSupabaseConfigured } from "@/integrations/supabase/client";
+import { isSupabaseConfigured } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
-import { CalendarIcon, Clock, Check, Loader2, AlertCircle } from "lucide-react";
-import { checkSlotAvailability, createAppointment, getSlotStateLabel, getSlotStateColor } from "@/services/booking";
+import { CalendarIcon, Clock, Check, Loader2, Phone } from "lucide-react";
+import {
+  createAppointment,
+  getHolidays,
+  getSlotsAvailability,
+  getSlotStateLabel,
+  getSlotStateColor,
+} from "@/services/booking";
 import type { SlotAvailability } from "@/services/booking";
-import type { SlotState } from "@/integrations/supabase/types";
 import { cn } from "@/lib/utils";
+import {
+  LIMITS,
+  MAX_DAYS_AHEAD,
+  getUpcomingTimeSlots,
+  salonSlotToDate,
+  validateCustomer,
+  type CustomerErrors,
+} from "@/lib/booking-rules";
+import { PHONE_NUMBER_DISPLAY, PHONE_NUMBER_TEL } from "@/config/links";
 
-import { SERVICES, TIME_SLOTS, SATURDAY_TIME_SLOTS } from "@/config/constants";
+import { SERVICES } from "@/config/constants";
 
 interface BookingCalendarProps {
   open: boolean;
@@ -47,6 +61,13 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [slotAvailability, setSlotAvailability] = useState<Record<string, SlotAvailability>>({});
   const [isLoadingSlots, setIsLoadingSlots] = useState(false);
+  const [holidays, setHolidays] = useState<Set<string>>(new Set());
+  const [errors, setErrors] = useState<CustomerErrors>({});
+
+  useEffect(() => {
+    if (!open || !isSupabaseConfigured) return;
+    getHolidays().then((list) => setHolidays(new Set(list.map((h) => h.holiday_date))));
+  }, [open]);
 
   const resetForm = () => {
     setStep(1);
@@ -58,6 +79,7 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
     setCustomerEmail("");
     setNotes("");
     setSlotAvailability({});
+    setErrors({});
   };
 
   const handleClose = () => {
@@ -67,34 +89,15 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
 
   const fetchSlotAvailability = async (date: Date) => {
     setIsLoadingSlots(true);
+    setSlotAvailability({});
     try {
-      if (!isSupabaseConfigured || !supabase) {
-        setSlotAvailability({});
-        return;
-      }
+      if (!isSupabaseConfigured) return;
 
-      const isSat = date.getDay() === 6;
-      const slots = isSat ? SATURDAY_TIME_SLOTS : TIME_SLOTS;
-
-      // Check all slots in parallel instead of sequentially
-      const entries = await Promise.all(
-        slots.map(async (slot) => {
-          const [hours, minutes] = slot.split(':').map(Number);
-          const slotDate = new Date(date);
-          slotDate.setHours(hours, minutes, 0, 0);
-          const availability = await checkSlotAvailability(slotDate);
-          return [slot, availability] as const;
-        })
-      );
-
-      const results: Record<string, SlotAvailability> = {};
-      for (const [slot, availability] of entries) {
-        if (availability) {
-          results[slot] = availability;
-        }
-      }
-
-      setSlotAvailability(results);
+      const slots = getUpcomingTimeSlots(date).map((time) => ({
+        key: time,
+        start: salonSlotToDate(date, time),
+      }));
+      setSlotAvailability(await getSlotsAvailability(slots));
     } catch (error) {
       console.error("Error fetching slot availability:", error);
       toast({
@@ -117,13 +120,11 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
 
   const getAvailableTimeSlots = () => {
     if (!selectedDate) return [];
-
-    const isSat = selectedDate.getDay() === 6;
-    return isSat ? SATURDAY_TIME_SLOTS : TIME_SLOTS;
+    return getUpcomingTimeSlots(selectedDate);
   };
 
   const handleSubmit = async () => {
-    if (!isSupabaseConfigured || !supabase) {
+    if (!isSupabaseConfigured) {
       toast({
         title: "Online zakazivanje nije dostupno",
         description: "Trenutno nije podešen sistem za online zakazivanje. Kontaktirajte nas putem telefona ili WhatsApp-a.",
@@ -132,7 +133,7 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
       return;
     }
 
-    if (!selectedDate || !selectedTime || !selectedService || !customerName || !customerPhone) {
+    if (!selectedDate || !selectedTime || !selectedService) {
       toast({
         title: "Greška",
         description: "Molimo popunite sva obavezna polja.",
@@ -141,30 +142,43 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
       return;
     }
 
+    const validationErrors = validateCustomer({
+      name: customerName,
+      phone: customerPhone,
+      email: customerEmail,
+      notes,
+    });
+    setErrors(validationErrors);
+    if (Object.keys(validationErrors).length > 0) return;
+
     setIsSubmitting(true);
 
     try {
-      const [hours, minutes] = selectedTime.split(':').map(Number);
-      const startTime = new Date(selectedDate);
-      startTime.setHours(hours, minutes, 0, 0);
+      const startTime = salonSlotToDate(selectedDate, selectedTime);
 
       const result = await createAppointment({
-        customerName,
-        customerPhone,
-        customerEmail: customerEmail || undefined,
+        customerName: customerName.trim(),
+        customerPhone: customerPhone.trim(),
+        customerEmail: customerEmail.trim() || undefined,
         startTime,
         serviceType: selectedService,
-        notes: notes || undefined,
+        notes: notes.trim() || undefined,
         source: 'online'
       });
 
       if (!result.success) {
-        throw new Error(result.error || 'Failed to create appointment');
+        if (result.status) {
+          // The slot filled up meanwhile: show fresh availability and let the visitor pick again.
+          await fetchSlotAvailability(selectedDate);
+          setSelectedTime("");
+          setStep(1);
+        }
+        throw new Error(result.error || 'Zakazivanje nije uspelo.');
       }
 
       toast({
         title: "Termin uspešno zakazan!",
-        description: `Očekujemo Vas ${format(startTime, "d. MMMM yyyy.", { locale: srLatn })} u ${selectedTime}h.`,
+        description: `Očekujemo Vas ${format(selectedDate, "d. MMMM yyyy.", { locale: srLatn })} u ${selectedTime}h.`,
       });
 
       handleClose();
@@ -182,7 +196,13 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
 
   const disabledDays = (date: Date) => {
     const today = startOfDay(new Date());
-    return isSunday(date) || isBefore(date, today);
+    return (
+      isSunday(date) ||
+      isBefore(date, today) ||
+      date > addDays(today, MAX_DAYS_AHEAD) ||
+      holidays.has(format(date, "yyyy-MM-dd")) ||
+      getUpcomingTimeSlots(date).length === 0
+    );
   };
 
   const availableSlots = getAvailableTimeSlots();
@@ -202,7 +222,7 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
         </DialogHeader>
 
         {/* Progress indicator */}
-        <div className="flex items-center justify-center gap-2 mb-6">
+        <div className={cn("flex items-center justify-center gap-2 mb-6", !isSupabaseConfigured && "hidden")}>
           {[1, 2, 3].map((s) => (
             <div
               key={s}
@@ -220,8 +240,18 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
           ))}
         </div>
 
+        {!isSupabaseConfigured && (
+          <div className="p-4 rounded-lg border border-border bg-muted/50 text-sm space-y-2">
+            <p>Online zakazivanje trenutno nije dostupno.</p>
+            <a href={`tel:${PHONE_NUMBER_TEL}`} className="inline-flex items-center gap-2 text-primary font-medium">
+              <Phone className="w-4 h-4" />
+              Pozovite nas: {PHONE_NUMBER_DISPLAY}
+            </a>
+          </div>
+        )}
+
         {/* Step 1: Date & Time Selection */}
-        {step === 1 && (
+        {isSupabaseConfigured && step === 1 && (
           <div className="space-y-6">
             <div>
               <Label className="text-sm text-muted-foreground mb-3 block">
@@ -236,7 +266,7 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
                 locale={srLatn}
                 className="rounded-md border border-border mx-auto pointer-events-auto"
                 fromDate={new Date()}
-                toDate={addDays(new Date(), 60)}
+                toDate={addDays(new Date(), MAX_DAYS_AHEAD)}
               />
             </div>
 
@@ -257,8 +287,8 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
                 ) : (
                   <div className="grid grid-cols-4 gap-2">
                     {availableSlots.map((time) => {
-                      const availability = slotAvailability[time];
-                      const state = availability?.state || 'ONLINE_AVAILABLE';
+                      // Unknown availability (e.g. request failed) is never bookable.
+                      const state = slotAvailability[time]?.state;
                       const isSelectable = state === 'ONLINE_AVAILABLE';
 
                       return (
@@ -267,6 +297,7 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
                             variant={selectedTime === time ? "default" : "outline"}
                             size="sm"
                             onClick={() => isSelectable && setSelectedTime(time)}
+                            disabled={!isSelectable}
                             className={cn(
                               "text-sm w-full",
                               !isSelectable && "opacity-50 cursor-not-allowed",
@@ -281,14 +312,14 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
                             variant="outline"
                             className={cn(
                               "absolute -top-2 -right-2 text-[10px] py-0 px-1",
-                              getSlotStateColor(state)
+                              state ? getSlotStateColor(state) : "text-muted-foreground"
                             )}
                           >
-                            {state === 'ONLINE_AVAILABLE' ? '✓' : '!'}
+                            {state === 'ONLINE_AVAILABLE' ? '✓' : state ? '!' : '?'}
                           </Badge>
 
                           {/* Tooltip on hover */}
-                          {!isSelectable && (
+                          {!isSelectable && state && (
                             <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-background border text-xs rounded shadow-lg hidden group-hover:block whitespace-nowrap z-50">
                               {getSlotStateLabel(state)}
                             </div>
@@ -312,7 +343,7 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
         )}
 
         {/* Step 2: Service Selection */}
-        {step === 2 && (
+        {isSupabaseConfigured && step === 2 && (
           <div className="space-y-6">
             <div>
               <Label className="text-sm text-muted-foreground mb-3 block">
@@ -348,7 +379,7 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
         )}
 
         {/* Step 3: Customer Information */}
-        {step === 3 && (
+        {isSupabaseConfigured && step === 3 && (
           <div className="space-y-4">
             <div className="p-4 bg-muted/50 rounded-lg mb-4">
               <p className="text-sm text-muted-foreground">Vaš termin:</p>
@@ -365,7 +396,11 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
                 value={customerName}
                 onChange={(e) => setCustomerName(e.target.value)}
                 placeholder="Vaše ime"
+                maxLength={LIMITS.nameMax}
+                autoComplete="name"
+                aria-invalid={!!errors.name}
               />
+              {errors.name && <p className="text-sm text-destructive mt-1">{errors.name}</p>}
             </div>
 
             <div>
@@ -376,7 +411,11 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
                 value={customerPhone}
                 onChange={(e) => setCustomerPhone(e.target.value)}
                 placeholder="+381 6X XXX XXXX"
+                maxLength={LIMITS.phoneMax}
+                autoComplete="tel"
+                aria-invalid={!!errors.phone}
               />
+              {errors.phone && <p className="text-sm text-destructive mt-1">{errors.phone}</p>}
             </div>
 
             <div>
@@ -387,7 +426,11 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
                 value={customerEmail}
                 onChange={(e) => setCustomerEmail(e.target.value)}
                 placeholder="vas@email.com"
+                maxLength={LIMITS.emailMax}
+                autoComplete="email"
+                aria-invalid={!!errors.email}
               />
+              {errors.email && <p className="text-sm text-destructive mt-1">{errors.email}</p>}
             </div>
 
             <div>
@@ -397,7 +440,10 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 placeholder="Posebni zahtevi..."
+                maxLength={LIMITS.notesMax}
+                aria-invalid={!!errors.notes}
               />
+              {errors.notes && <p className="text-sm text-destructive mt-1">{errors.notes}</p>}
             </div>
 
             <div className="flex gap-3 pt-2">

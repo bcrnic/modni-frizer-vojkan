@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
-import { format, isSameDay, parseISO, addMinutes } from "date-fns";
+import { format, parseISO } from "date-fns";
 import { srLatn } from "date-fns/locale";
-import { Calendar as CalendarIcon, Clock, User, Phone, Scissors, Loader2 } from "lucide-react";
+import { Calendar as CalendarIcon, Clock, User, Phone, Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -17,8 +17,17 @@ import {
 } from "@/components/ui/dialog";
 import { SERVICES } from "@/config/constants";
 import { cn } from "@/lib/utils";
-import { editAppointment, checkSlotAvailability } from "@/services/booking";
+import { editAppointment, getSlotsAvailability } from "@/services/booking";
 import type { SlotState } from "@/services/booking";
+import { salonSlotToDate } from "@/lib/booking-rules";
+
+// The admin may move appointments anywhere in a wider window than the public slots.
+const ADMIN_SLOT_TIMES: string[] = [];
+for (let hour = 8; hour < 20; hour++) {
+    for (const minute of [0, 30]) {
+        ADMIN_SLOT_TIMES.push(`${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`);
+    }
+}
 
 
 
@@ -76,71 +85,32 @@ const EditAppointmentDialog = ({ appointment, isOpen, onOpenChange, onSuccess }:
     // ── Fetch slots ────────────────────────────────────────────────────────────
 
     const fetchSlotAvailability = useCallback(async (date: Date) => {
+        if (!appointment) return;
         setIsCheckingSlots(true);
         try {
-            // Create time slots from 09:00 to 19:00, every 30 mins
-            const slots: TimeSlot[] = [];
-            const startHour = 9;
-            const endHour = 19;
+            const now = new Date();
+            const currentStart = parseISO(appointment.start_time).getTime();
+            const starts = ADMIN_SLOT_TIMES.map((time) => ({ key: time, start: salonSlotToDate(date, time) }));
 
-            const checkPromises = [];
+            // The appointment itself is excluded so it does not count against its own move.
+            const availability = await getSlotsAvailability(
+                starts.filter(({ start }) => start > now && start.getTime() !== currentStart),
+                { excludeId: appointment.id }
+            );
 
-            for (let hour = startHour; hour < endHour; hour++) {
-                for (const minute of [0, 30]) {
-                    const timeString = `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`;
-                    const currentSlotTime = new Date(date);
-                    currentSlotTime.setHours(hour, minute, 0, 0);
-
-                    // Skip past times
-                    if (isSameDay(date, new Date()) && currentSlotTime < new Date()) {
-                        slots.push({ time: timeString, state: "FULL" });
-                        continue;
-                    }
-
-                    // If this is the exact time slot the user currently has, mark it as "CURRENT"
-                    if (
-                        appointment &&
-                        isSameDay(date, parseISO(appointment.start_time)) &&
-                        timeString === format(parseISO(appointment.start_time), "HH:mm")
-                    ) {
-                        slots.push({ time: timeString, state: "CURRENT" as const });
-                        continue;
-                    }
-
-                    // Otherwise, check DB
-                    checkPromises.push(
-                        checkSlotAvailability(currentSlotTime).then(res => {
-                            if (res) {
-                                const existingIndex = slots.findIndex(s => s.time === timeString);
-                                if (existingIndex >= 0) {
-                                    slots[existingIndex] = { time: timeString, state: res.state };
-                                } else {
-                                    slots.push({ time: timeString, state: res.state });
-                                }
-                            } else {
-                                slots.push({ time: timeString, state: "FULL" }); // Fallback
-                            }
-                        })
-                    );
-                }
-            }
-
-            await Promise.all(checkPromises);
-            slots.sort((a, b) => a.time.localeCompare(b.time));
+            const slots: TimeSlot[] = starts.map(({ key, start }) => ({
+                time: key,
+                state: start.getTime() === currentStart ? "CURRENT" : availability[key]?.state ?? "FULL",
+            }));
             setAvailableSlots(slots);
-
-            // If the currently pre-selected time isn't in this new day, reset it
-            if (slots.length > 0 && !slots.find(s => s.time === selectedTime)) {
-                setSelectedTime("");
-            }
-
+            setSelectedTime((prev) => (slots.some((s) => s.time === prev) ? prev : ""));
         } catch (err) {
             console.error("Error fetching slots:", err);
             toast({ title: "Greška", description: "Nije moguće proveriti dostupnost", variant: "destructive" });
         } finally {
             setIsCheckingSlots(false);
         }
-    }, [appointment, selectedTime]);
+    }, [appointment]);
 
     useEffect(() => {
         if (selectedDate && isOpen) {
@@ -160,9 +130,7 @@ const EditAppointmentDialog = ({ appointment, isOpen, onOpenChange, onSuccess }:
 
         setIsSubmitting(true);
         try {
-            const [hours, minutes] = selectedTime.split(":").map(Number);
-            const appointmentDate = new Date(selectedDate);
-            appointmentDate.setHours(hours, minutes, 0, 0);
+            const appointmentDate = salonSlotToDate(selectedDate, selectedTime);
 
             const result = await editAppointment(appointment.id, {
                 customerName: name,
@@ -179,9 +147,13 @@ const EditAppointmentDialog = ({ appointment, isOpen, onOpenChange, onSuccess }:
             toast({ title: "Uspešno", description: "Termin je uspešno izmenjen." });
             onSuccess();
             onOpenChange(false);
-        } catch (err: any) {
+        } catch (err) {
             console.error(err);
-            toast({ title: "Greška", description: err.message || "Nije moguće izmeniti termin.", variant: "destructive" });
+            toast({
+                title: "Greška",
+                description: err instanceof Error ? err.message : "Nije moguće izmeniti termin.",
+                variant: "destructive",
+            });
         } finally {
             setIsSubmitting(false);
         }

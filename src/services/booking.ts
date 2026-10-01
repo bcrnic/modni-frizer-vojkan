@@ -11,6 +11,14 @@ export interface SlotAvailability {
   total_count: number;
   max_online: number;
   total_capacity: number;
+  holiday?: boolean;
+}
+
+export interface BookingResult {
+  success: boolean;
+  error?: string;
+  appointment_id?: string;
+  status?: SlotAvailability;
 }
 
 export interface AppointmentData {
@@ -31,30 +39,54 @@ export interface HolidayData {
 
 const DEFAULT_APPOINTMENT_DURATION = 60; // minutes
 
-export const checkSlotAvailability = async (
-  startTime: Date,
-  duration: number = DEFAULT_APPOINTMENT_DURATION
-): Promise<SlotAvailability | null> => {
-  if (!supabase) return null;
+/**
+ * Availability of several slots in one request. Slots whose availability is
+ * unknown (request failed) are missing from the result and must be treated
+ * as not bookable.
+ */
+export const getSlotsAvailability = async (
+  starts: { key: string; start: Date }[],
+  options: { duration?: number; excludeId?: string } = {}
+): Promise<Record<string, SlotAvailability>> => {
+  if (!supabase || starts.length === 0) return {};
 
-  const endTime = addMinutes(startTime, duration);
-
-  const { data, error } = await supabase.rpc('check_slot_availability', {
-    check_start: format(startTime, "yyyy-MM-dd'T'HH:mm:ssxxx"),
-    check_end: format(endTime, "yyyy-MM-dd'T'HH:mm:ssxxx")
+  const { data, error } = await supabase.rpc('get_slots_availability', {
+    p_starts: starts.map(({ start }) => start.toISOString()),
+    p_duration_minutes: options.duration ?? DEFAULT_APPOINTMENT_DURATION,
+    p_exclude_id: options.excludeId ?? null,
   });
 
   if (error) {
     console.error('Error checking slot availability:', error);
-    return null;
+    throw error;
   }
 
-  return data as SlotAvailability;
+  const byInstant = new Map<number, SlotAvailability>();
+  for (const row of (data ?? []) as { start: string; availability: SlotAvailability }[]) {
+    byInstant.set(new Date(row.start).getTime(), row.availability);
+  }
+
+  const result: Record<string, SlotAvailability> = {};
+  for (const { key, start } of starts) {
+    const availability = byInstant.get(start.getTime());
+    if (availability) result[key] = availability;
+  }
+  return result;
+};
+
+export const isCurrentUserAdmin = async (): Promise<boolean> => {
+  if (!supabase) return false;
+  const { data, error } = await supabase.rpc('is_admin');
+  if (error) {
+    console.error('Error checking admin role:', error);
+    return false;
+  }
+  return data === true;
 };
 
 export const createAppointment = async (
   appointment: AppointmentData
-): Promise<{ success: boolean; error?: string; status?: SlotAvailability }> => {
+): Promise<BookingResult> => {
   if (!supabase) {
     return {
       success: false,
@@ -68,10 +100,10 @@ export const createAppointment = async (
     p_customer_name: appointment.customerName,
     p_customer_phone: appointment.customerPhone,
     p_customer_email: appointment.customerEmail || null,
-    p_start_time: format(appointment.startTime, "yyyy-MM-dd'T'HH:mm:ssxxx"),
-    p_end_time: format(endTime, "yyyy-MM-dd'T'HH:mm:ssxxx"),
+    p_start_time: appointment.startTime.toISOString(),
+    p_end_time: endTime.toISOString(),
     p_service_type: appointment.serviceType,
-    p_notes: appointment.notes,
+    p_notes: appointment.notes ?? null,
     p_source: appointment.source || 'online'
   });
 
@@ -83,15 +115,15 @@ export const createAppointment = async (
     };
   }
 
-  const result = data as { success: boolean; error?: string; status?: SlotAvailability } | null;
+  const result = data as BookingResult | null;
 
   if (!result) {
-    return { success: false, error: 'Failed to create appointment' };
+    return { success: false, error: 'Zakazivanje nije uspelo. Pokušajte ponovo.' };
   }
 
-  if (result.success) {
+  if (result.success && result.appointment_id && (appointment.source ?? 'online') === 'online') {
     // Best-effort email notification (non-blocking). Booking must succeed even if email fails.
-    void sendBookingNotification(appointment);
+    void sendBookingNotification(result.appointment_id);
   }
 
   return result;
@@ -103,7 +135,7 @@ export const editAppointment = async (
   appointmentId: string,
   appointment: AppointmentData,
   status: string
-): Promise<{ success: boolean; error?: string; status?: SlotAvailability }> => {
+): Promise<BookingResult> => {
   if (!supabase) {
     return { success: false, error: 'Booking system not configured' };
   }
@@ -112,12 +144,12 @@ export const editAppointment = async (
 
   const { data, error } = await supabase.rpc('update_appointment', {
     p_appointment_id: appointmentId,
-    p_start_time: format(appointment.startTime, "yyyy-MM-dd'T'HH:mm:ssxxx"),
-    p_end_time: format(endTime, "yyyy-MM-dd'T'HH:mm:ssxxx"),
+    p_start_time: appointment.startTime.toISOString(),
+    p_end_time: endTime.toISOString(),
     p_service_type: appointment.serviceType,
     p_customer_name: appointment.customerName,
     p_customer_phone: appointment.customerPhone,
-    p_notes: appointment.notes,
+    p_notes: appointment.notes ?? null,
     p_status: status
   });
 
@@ -126,7 +158,7 @@ export const editAppointment = async (
     return { success: false, error: error.message };
   }
 
-  return data as { success: boolean; error?: string; status: SlotAvailability };
+  return data as BookingResult;
 };
 
 // ─── Holidays Management ──────────────────────────────────────────────────────
@@ -172,20 +204,13 @@ export const deleteHoliday = async (id: string): Promise<boolean> => {
   return true;
 };
 
-async function sendBookingNotification(appointment: AppointmentData): Promise<void> {
+async function sendBookingNotification(appointmentId: string): Promise<void> {
   if (!supabase) return;
 
   try {
+    // The function loads everything it sends from the database itself.
     await supabase.functions.invoke('send-booking-notification', {
-      body: {
-        customerName: appointment.customerName,
-        customerPhone: appointment.customerPhone,
-        customerEmail: appointment.customerEmail,
-        appointmentDate: appointment.startTime.toISOString(),
-        appointmentTime: format(appointment.startTime, 'HH:mm'),
-        serviceType: appointment.serviceType,
-        notes: appointment.notes,
-      },
+      body: { appointmentId },
     });
   } catch (err) {
     // Non-critical – booking was successful, email is best-effort
