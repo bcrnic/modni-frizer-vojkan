@@ -86,7 +86,7 @@ Before running the application, you need to configure your Supabase project.
    ```bash
    supabase functions deploy send-booking-notification
    ```
-   The function only takes an appointment id. It reads the booking from the database, sends the emails once per appointment and only within 10 minutes of the booking, so it cannot be abused to send arbitrary emails.
+   JWT verification must be off for this function (`supabase/config.toml` sets it for CLI deploys; in the dashboard turn off *Enforce JWT verification*), because publishable keys are not JWTs. The function only takes an appointment id. It reads the booking from the database, sends the emails once per appointment and only within 10 minutes of the booking, so it cannot be abused to send arbitrary emails.
 
 ---
 
