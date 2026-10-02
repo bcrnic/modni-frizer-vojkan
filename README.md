@@ -122,7 +122,9 @@ A secure admin interface for walk-in bookings is available at `/admin`. This all
 
 ## Deployment
 
-The site is configured for GitHub Pages deployment via GitHub Actions.
-Pushing to the `main` branch will trigger an automatic deployment pipeline.
+The site is hosted on Netlify at https://frizervojkan.rs (configuration in `netlify.toml`).
+Every push to `main` is deployed automatically, and every pull request gets a Deploy Preview link.
 
-The build needs the repository secrets `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` (or the older name `VITE_SUPABASE_ANON_KEY`). Without them the site still deploys, but online booking is disabled and visitors are shown the phone number instead.
+The build needs the Netlify environment variables `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` (*Project configuration → Environment variables*). Without them the site still deploys, but online booking is disabled and visitors are shown the phone number instead.
+
+The GitHub repository secrets with the same names are only used by the Supabase keep-alive workflow.
