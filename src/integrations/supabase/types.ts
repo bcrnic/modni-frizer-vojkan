@@ -8,7 +8,7 @@ export type Json =
 
 export type SlotState = 'ONLINE_AVAILABLE' | 'ONLINE_FULL_WALKIN_AVAILABLE' | 'FULL';
 export type AppointmentSource = 'online' | 'walkin';
-export type AppointmentStatus = 'confirmed' | 'cancelled';
+export type AppointmentStatus = 'pending' | 'confirmed' | 'cancelled';
 
 export type Database = {
   __InternalSupabase: {
@@ -29,6 +29,7 @@ export type Database = {
           service_type: string
           status: AppointmentStatus
           source: AppointmentSource
+          notification_sent_at: string | null
           updated_at: string
         }
         Insert: {
@@ -43,6 +44,7 @@ export type Database = {
           service_type: string
           status?: AppointmentStatus
           source?: AppointmentSource
+          notification_sent_at?: string | null
           updated_at?: string
         }
         Update: {
@@ -57,6 +59,7 @@ export type Database = {
           service_type?: string
           status?: AppointmentStatus
           source?: AppointmentSource
+          notification_sent_at?: string | null
           updated_at?: string
         }
         Relationships: []
@@ -88,6 +91,21 @@ export type Database = {
         }
         Relationships: []
       }
+      admin_users: {
+        Row: {
+          user_id: string
+          created_at: string
+        }
+        Insert: {
+          user_id: string
+          created_at?: string
+        }
+        Update: {
+          user_id?: string
+          created_at?: string
+        }
+        Relationships: []
+      }
       salon_holidays: {
         Row: {
           id: string
@@ -114,10 +132,15 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      is_admin: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
       check_slot_availability: {
         Args: {
           check_start: string
           check_end: string
+          p_exclude_id?: string | null
         }
         Returns: {
           state: SlotState
@@ -125,28 +148,49 @@ export type Database = {
           total_count: number
           max_online: number
           total_capacity: number
+          holiday?: boolean
         }
       }
-      create_appointment: {
+      get_slots_availability: {
         Args: {
-          p_customer_name: string
-          p_customer_phone: string
-          p_customer_email: string
-          p_start_time: string
-          p_end_time: string
-          p_service_type: string
-          p_notes?: string
-          p_source?: AppointmentSource
+          p_starts: string[]
+          p_duration_minutes?: number
+          p_exclude_id?: string | null
         }
         Returns: {
-          success: boolean
-          error?: string
-          status: {
+          start: string
+          availability: {
             state: SlotState
             online_count: number
             total_count: number
             max_online: number
             total_capacity: number
+            holiday?: boolean
+          }
+        }[]
+      }
+      create_appointment: {
+        Args: {
+          p_customer_name: string
+          p_customer_phone: string
+          p_customer_email: string | null
+          p_start_time: string
+          p_end_time: string
+          p_service_type: string
+          p_notes?: string | null
+          p_source?: AppointmentSource
+        }
+        Returns: {
+          success: boolean
+          error?: string
+          appointment_id?: string
+          status?: {
+            state: SlotState
+            online_count: number
+            total_count: number
+            max_online: number
+            total_capacity: number
+            holiday?: boolean
           }
         }
       }
@@ -170,6 +214,7 @@ export type Database = {
             total_count: number
             max_online: number
             total_capacity: number
+            holiday?: boolean
           }
         }
       }

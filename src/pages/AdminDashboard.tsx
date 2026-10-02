@@ -1,11 +1,10 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { format, isToday, isTomorrow, parseISO, addDays } from "date-fns";
 import { srLatn } from "date-fns/locale";
-import type { Session } from "@supabase/supabase-js";
+import type { RealtimeChannel, Session } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import { Badge } from "@/components/ui/badge";
 import {
   Select,
   SelectContent,
@@ -38,7 +37,8 @@ import {
 import { cn } from "@/lib/utils";
 import WalkinBooking from "@/components/admin/WalkinBooking";
 import EditAppointmentDialog from "@/components/admin/EditAppointmentDialog";
-import { getHolidays, addHoliday, deleteHoliday, type HolidayData } from "@/services/booking";
+import { getHolidays, addHoliday, deleteHoliday, editAppointment, type HolidayData } from "@/services/booking";
+import { salonSlotToDate } from "@/lib/booking-rules";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -110,7 +110,7 @@ const AdminDashboard = ({ session: _session }: AdminDashboardProps) => {
   const [isAddingHoliday, setIsAddingHoliday] = useState(false);
 
   const [isLive, setIsLive] = useState(false);
-  const channelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
+  const channelRef = useRef<RealtimeChannel | null>(null);
 
   // ── Fetch ──────────────────────────────────────────────────────────────────
 
@@ -124,9 +124,10 @@ const AdminDashboard = ({ session: _session }: AdminDashboardProps) => {
         .order("start_time", { ascending: true });
 
       if (selectedDate) {
-        const day = format(selectedDate, "yyyy-MM-dd");
-        const nextDay = format(addDays(selectedDate, 1), "yyyy-MM-dd");
-        q = q.gte("start_time", `${day}T00:00:00`).lt("start_time", `${nextDay}T00:00:00`);
+        // Day boundaries in the salon's timezone, sent as explicit UTC instants.
+        const dayStart = salonSlotToDate(selectedDate, "00:00");
+        const nextDayStart = salonSlotToDate(addDays(selectedDate, 1), "00:00");
+        q = q.gte("start_time", dayStart.toISOString()).lt("start_time", nextDayStart.toISOString());
       }
 
       if (statusFilter !== "all") {
@@ -176,7 +177,7 @@ const AdminDashboard = ({ session: _session }: AdminDashboardProps) => {
     channelRef.current = channel;
 
     return () => {
-      supabase.removeChannel(channel);
+      supabase?.removeChannel(channel);
       setIsLive(false);
     };
   }, [fetchAppointments]);
@@ -198,19 +199,32 @@ const AdminDashboard = ({ session: _session }: AdminDashboardProps) => {
   // ── Update status ──────────────────────────────────────────────────────────
 
   const updateStatus = async (id: string, newStatus: string) => {
-    if (!supabase) return;
+    const apt = appointments.find((a) => a.id === id);
+    if (!apt) return;
     setUpdatingId(id);
     try {
-      const { error } = await supabase
-        .from("appointments")
-        .update({ status: newStatus })
-        .eq("id", id);
-      if (error) throw error;
+      // Goes through update_appointment so re-confirming re-checks capacity.
+      const result = await editAppointment(
+        id,
+        {
+          customerName: apt.customer_name,
+          customerPhone: apt.customer_phone,
+          serviceType: apt.service_type,
+          startTime: parseISO(apt.start_time),
+          notes: apt.notes ?? undefined,
+        },
+        newStatus
+      );
+      if (!result.success) throw new Error(result.error);
       toast({ title: "Status ažuriran", description: `Termin je ${STATUS_LABELS[newStatus]?.toLowerCase()}.` });
       // Real-time will automatically refresh - no need to do it manually
     } catch (err) {
       console.error(err);
-      toast({ title: "Greška", description: "Nije moguće ažurirati status.", variant: "destructive" });
+      toast({
+        title: "Greška",
+        description: err instanceof Error && err.message ? err.message : "Nije moguće ažurirati status.",
+        variant: "destructive",
+      });
     } finally {
       setUpdatingId(null);
     }

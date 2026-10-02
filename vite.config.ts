@@ -3,10 +3,8 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }: { mode: string }) => ({
-  base:
-    process.env.BASE_PATH ??
-    (mode === "production" ? "/modni-frizer-vojkan/" : "/"),
+export default defineConfig(() => ({
+  base: process.env.BASE_PATH ?? "/",
   server: {
     host: "::",
     port: 8080,

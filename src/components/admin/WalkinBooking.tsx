@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { format } from "date-fns";
 import { srLatn } from "date-fns/locale";
 import { Calendar } from "@/components/ui/calendar";
@@ -16,13 +16,14 @@ import {
 import { toast } from "@/hooks/use-toast";
 import { CalendarIcon, Clock, Loader2, UserPlus } from "lucide-react";
 import {
-  checkSlotAvailability,
   createAppointment,
+  getSlotsAvailability,
   getSlotStateColor,
 } from "@/services/booking";
 import type { SlotAvailability } from "@/services/booking";
 import { cn } from "@/lib/utils";
-import { SERVICES, TIME_SLOTS, SATURDAY_TIME_SLOTS } from "@/config/constants";
+import { SERVICES } from "@/config/constants";
+import { getTimeSlotsForDay, salonSlotToDate } from "@/lib/booking-rules";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -50,24 +51,11 @@ export default function WalkinBooking({ onSuccess }: WalkinBookingProps) {
     setIsLoadingSlots(true);
     setSlotAvailability({});
     try {
-      const isSat = date.getDay() === 6;
-      const slots = isSat ? SATURDAY_TIME_SLOTS : TIME_SLOTS;
-
-      const entries = await Promise.all(
-        slots.map(async (slot) => {
-          const [hours, minutes] = slot.split(":").map(Number);
-          const slotDate = new Date(date);
-          slotDate.setHours(hours, minutes, 0, 0);
-          const availability = await checkSlotAvailability(slotDate);
-          return [slot, availability] as const;
-        })
-      );
-
-      const results: Record<string, SlotAvailability> = {};
-      for (const [slot, availability] of entries) {
-        if (availability) results[slot] = availability;
-      }
-      setSlotAvailability(results);
+      const slots = getTimeSlotsForDay(date).map((time) => ({
+        key: time,
+        start: salonSlotToDate(date, time),
+      }));
+      setSlotAvailability(await getSlotsAvailability(slots));
     } catch (err) {
       console.error("Error fetching slot availability:", err);
       toast({
@@ -79,6 +67,11 @@ export default function WalkinBooking({ onSuccess }: WalkinBookingProps) {
       setIsLoadingSlots(false);
     }
   }, []);
+
+  // Load today's slots on first render (selectedDate starts as today).
+  useEffect(() => {
+    fetchSlotAvailability(new Date());
+  }, [fetchSlotAvailability]);
 
   const handleDateSelect = async (date: Date | undefined) => {
     setSelectedDate(date);
@@ -100,13 +93,11 @@ export default function WalkinBooking({ onSuccess }: WalkinBookingProps) {
 
     setIsSubmitting(true);
     try {
-      const [hours, minutes] = selectedTime.split(":").map(Number);
-      const startTime = new Date(selectedDate);
-      startTime.setHours(hours, minutes, 0, 0);
+      const startTime = salonSlotToDate(selectedDate, selectedTime);
 
       const result = await createAppointment({
         customerName,
-        customerPhone: customerPhone || "—",
+        customerPhone: customerPhone.trim() || "—",
         startTime,
         serviceType: selectedService,
         notes: notes || undefined,
@@ -141,11 +132,7 @@ export default function WalkinBooking({ onSuccess }: WalkinBookingProps) {
     }
   };
 
-  const timeSlots = selectedDate
-    ? selectedDate.getDay() === 6
-      ? SATURDAY_TIME_SLOTS
-      : TIME_SLOTS
-    : [];
+  const timeSlots = selectedDate ? getTimeSlotsForDay(selectedDate) : [];
 
   // ── Render ────────────────────────────────────────────────────────────────
 
@@ -183,13 +170,15 @@ export default function WalkinBooking({ onSuccess }: WalkinBookingProps) {
               <Loader2 className="w-6 h-6 animate-spin text-primary" />
             </div>
           ) : timeSlots.length === 0 ? (
-            <p className="text-sm text-muted-foreground py-4">Izaberi datum.</p>
+            <p className="text-sm text-muted-foreground py-4">
+              {selectedDate ? "Salon ne radi ovog dana." : "Izaberi datum."}
+            </p>
           ) : (
             <div className="grid grid-cols-4 gap-2">
               {timeSlots.map((time) => {
                 const avail = slotAvailability[time];
-                // Admins can override ONLINE_FULL, only truly FULL is blocked
-                const isFull = avail?.state === "FULL";
+                // Admins can override ONLINE_FULL; FULL or unknown availability is blocked
+                const isFull = !avail || avail.state === "FULL";
 
                 return (
                   <div key={time} className="relative">

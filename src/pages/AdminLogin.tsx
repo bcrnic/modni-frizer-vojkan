@@ -32,10 +32,10 @@ const AdminLogin = () => {
       const { error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
       // Admin.tsx detektuje session promenu automatski – ne treba navigate
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: "Pogrešan email ili lozinka",
-        description: error?.message ?? "Pokušajte ponovo.",
+        description: error instanceof Error ? error.message : "Pokušajte ponovo.",
         variant: "destructive",
       });
     } finally {
