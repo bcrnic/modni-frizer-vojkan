@@ -23,3 +23,5 @@ $$;
 CREATE FUNCTION auth.role() RETURNS text LANGUAGE sql STABLE AS $$
   SELECT current_setting('request.jwt.claims', true)::json->>'role'
 $$;
+
+CREATE PUBLICATION supabase_realtime;

@@ -253,4 +253,9 @@ BEGIN
 END $$;
 
 RESET ROLE;
+DO $$ BEGIN
+  ASSERT EXISTS (SELECT 1 FROM pg_publication_tables
+                 WHERE pubname = 'supabase_realtime' AND tablename = 'appointments'),
+    'appointments must be in the realtime publication';
+END $$;
 \echo 'All booking tests passed.'

@@ -73,7 +73,7 @@ Before running the application, you need to configure your Supabase project.
    supabase secrets set SALON_PHONE="+381 62 144 5958"
    ```
 
-4. **Apply database migrations** (SQL editor, or `supabase db push`). All files in `supabase/migrations/` must be applied in order.
+4. **Apply database migrations.** For a brand-new project, paste `supabase/setup_new_project.sql` into *SQL Editor → New query* and run it (it contains every migration, in one transaction). For an existing project, apply the files in `supabase/migrations/` that are not applied yet, in order, or use `supabase db push`. After adding a migration, regenerate the combined file with `supabase/build-setup.sh`.
 
 5. **Register the admin.** Only users listed in `admin_users` can use the admin panel; being logged in is not enough. Create the owner's user in *Authentication → Users*, then run:
    ```sql

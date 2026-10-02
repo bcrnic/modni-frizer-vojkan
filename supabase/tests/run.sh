@@ -19,3 +19,12 @@ for f in supabase/migrations/*.sql; do
   "${PSQL[@]}" -d "$DB" -f "$f"
 done
 "${PSQL[@]}" -d "$DB" -f supabase/tests/booking_test.sql
+
+# The combined setup file for new projects must behave exactly the same.
+supabase/build-setup.sh >/dev/null
+git diff --exit-code --quiet -- supabase/setup_new_project.sql 2>/dev/null \
+  || { echo "supabase/setup_new_project.sql is out of date: run supabase/build-setup.sh"; exit 1; }
+"${PSQL[@]}" -d postgres -c "DROP DATABASE IF EXISTS \"${DB}_setup\"" -c "CREATE DATABASE \"${DB}_setup\""
+"${PSQL[@]}" -d "${DB}_setup" -f supabase/tests/supabase_stub.sql
+"${PSQL[@]}" -d "${DB}_setup" -f supabase/setup_new_project.sql
+"${PSQL[@]}" -d "${DB}_setup" -f supabase/tests/booking_test.sql
