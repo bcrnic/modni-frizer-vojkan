@@ -1,1 +1,7 @@
 project_id = "txxevjemdahobzbjcdox"
+
+# The site uses a publishable key (sb_publishable_...), which is not a JWT, so the
+# gateway must not require one. The function needs no caller identity: it only
+# accepts an appointment id and reads everything else from the database.
+[functions.send-booking-notification]
+verify_jwt = false
