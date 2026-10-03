@@ -1,6 +1,6 @@
 export const WHATSAPP_NUMBER = "+381621445958";
 export const VIBER_NUMBER = "+381621445958";
-export const EMAIL_ADDRESS = "modnifrizervojkan@hotmail.com";
+export const EMAIL_ADDRESS = "frizer.vojkan@gmail.com";
 
 export const PHONE_NUMBER_DISPLAY = "+381 62 144 5958";
 export const PHONE_NUMBER_TEL = "+381621445958";
