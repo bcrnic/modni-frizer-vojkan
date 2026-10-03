@@ -152,6 +152,7 @@ export default function WalkinBooking({ onSuccess }: WalkinBookingProps) {
             selected={selectedDate}
             onSelect={handleDateSelect}
             locale={srLatn}
+            fluid
             className="rounded-md border border-border"
           />
         </div>

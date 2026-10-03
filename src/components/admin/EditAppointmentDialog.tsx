@@ -193,7 +193,8 @@ const EditAppointmentDialog = ({ appointment, isOpen, onOpenChange, onSuccess }:
                             onSelect={setSelectedDate}
                             locale={srLatn}
                             disabled={(date) => date < new Date(new Date().setHours(0, 0, 0, 0))}
-                            className="rounded-md border border-border w-full flex justify-center"
+                            fluid
+                            className="rounded-md border border-border"
                         />
                     </div>
 

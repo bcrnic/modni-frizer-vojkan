@@ -283,13 +283,13 @@ const AdminDashboard = ({ session: _session }: AdminDashboardProps) => {
           <div className="flex items-center gap-3">
             <Scissors className="w-5 h-5 text-primary" />
             <div>
-              <h1 className="font-heading text-xl leading-none">Admin Panel</h1>
-              <p className="text-xs text-muted-foreground">Modni Frizer Vojkan</p>
+              <h1 className="font-heading text-xl leading-none whitespace-nowrap">Admin Panel</h1>
+              <p className="text-xs text-muted-foreground whitespace-nowrap">Modni Frizer Vojkan</p>
             </div>
             {/* Real-time indicator */}
             <div
               className={cn(
-                "flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full border ml-4",
+                "flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full border ml-1 sm:ml-4",
                 isLive
                   ? "text-green-600 border-green-500/30 bg-green-500/10"
                   : "text-muted-foreground border-border"
@@ -300,9 +300,9 @@ const AdminDashboard = ({ session: _session }: AdminDashboardProps) => {
             </div>
           </div>
 
-          <Button variant="outline" size="sm" onClick={handleLogout}>
-            <LogOut className="w-4 h-4 mr-2" />
-            Odjavi se
+          <Button variant="outline" size="sm" onClick={handleLogout} aria-label="Odjavi se">
+            <LogOut className="w-4 h-4 sm:mr-2" />
+            <span className="hidden sm:inline">Odjavi se</span>
           </Button>
         </div>
       </header>
@@ -310,17 +310,18 @@ const AdminDashboard = ({ session: _session }: AdminDashboardProps) => {
       {/* ── Content ── */}
       <div className="container mx-auto px-4 py-8">
         <Tabs defaultValue="appointments">
-          <TabsList className="mb-8">
-            <TabsTrigger value="appointments" className="gap-2">
-              <CalendarDays className="w-4 h-4" />
+          {/* On phones the three tabs share the full width; icons appear from sm up. */}
+          <TabsList className="mb-8 grid w-full grid-cols-3 sm:inline-flex sm:w-auto">
+            <TabsTrigger value="appointments" className="gap-2 px-2 sm:px-3">
+              <CalendarDays className="hidden sm:block w-4 h-4" />
               Termini
             </TabsTrigger>
-            <TabsTrigger value="add" className="gap-2">
-              <Plus className="w-4 h-4" />
+            <TabsTrigger value="add" className="gap-2 px-2 sm:px-3">
+              <Plus className="hidden sm:block w-4 h-4" />
               Dodaj termin
             </TabsTrigger>
-            <TabsTrigger value="holidays" className="gap-2">
-              <CalendarDays className="w-4 h-4" />
+            <TabsTrigger value="holidays" className="gap-2 px-2 sm:px-3">
+              <CalendarDays className="hidden sm:block w-4 h-4" />
               Neradni dani
             </TabsTrigger>
           </TabsList>
@@ -342,7 +343,8 @@ const AdminDashboard = ({ session: _session }: AdminDashboardProps) => {
                     selected={selectedDate}
                     onSelect={setSelectedDate}
                     locale={srLatn}
-                    className="rounded-md border border-border"
+                    fluid
+                    className="rounded-md border border-border p-2"
                   />
                   <Button
                     variant="ghost"
@@ -602,7 +604,8 @@ const AdminDashboard = ({ session: _session }: AdminDashboardProps) => {
                       onSelect={setHolidayDate}
                       locale={srLatn}
                       disabled={(date) => date < new Date(new Date().setHours(0, 0, 0, 0))}
-                      className="rounded-md border border-border w-full flex justify-center"
+                      fluid
+                      className="rounded-md border border-border"
                     />
                   </div>
 
