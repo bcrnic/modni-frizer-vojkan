@@ -42,7 +42,8 @@ const services = [
 const Services = () => {
   return (
     <section id="usluge" className="section-padding">
-      <div className="container mx-auto">
+      {/* On phones the section's own px-4 is enough; the extra container padding left too little room. */}
+      <div className="container mx-auto px-0 sm:px-8">
         {/* Naslov sekcije */}
         <ScrollReveal className="text-center mb-16">
           <p className="text-primary uppercase tracking-[0.3em] text-sm mb-4">Cenovnik</p>
@@ -56,9 +57,9 @@ const Services = () => {
         </ScrollReveal>
 
         {/* Kategorije usluga */}
-        <StaggerContainer className="grid md:grid-cols-2 gap-8">
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           {services.map((category) => (
-            <StaggerItem key={category.category}>
+            <StaggerItem key={category.category} className="min-w-0">
               <div className="service-card h-full p-6 md:p-10 shadow-sm hover:shadow-md transition-shadow duration-300">
                 <h3 className="font-heading text-xl md:text-2xl text-center mb-6 md:mb-8 pb-4 border-b border-border">
                   {category.category}
@@ -66,11 +67,12 @@ const Services = () => {
                 <div className="space-y-5 md:space-y-6">
                   {category.items.map((item) => (
                     <div key={item.name} className="group">
-                      <div className="flex justify-between items-start mb-1">
-                        <span className="font-medium text-foreground group-hover:text-primary transition-colors">
+                      <div className="flex justify-between items-start gap-4 mb-1">
+                        <span className="min-w-0 font-medium text-foreground group-hover:text-primary transition-colors">
                           {item.name}
                         </span>
-                        <span className="text-primary font-heading text-lg ml-4 whitespace-nowrap">
+                        {/* Long prices ("od 450 RSD po pramenu") may wrap instead of widening the card. */}
+                        <span className="shrink-0 max-w-[50%] text-right text-primary font-heading text-lg leading-snug">
                           {item.price}
                         </span>
                       </div>
