@@ -18,7 +18,8 @@ const Hero = ({ onBookingOpen }: HeroProps) => {
 
   return (
     <>
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Top padding keeps the content below the fixed 80px navigation on short (laptop) screens. */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-28 pb-16 md:pt-32">
         {/* Pozadinska slika sa overlay-em */}
         <div className="absolute inset-0">
           <img
@@ -38,7 +39,7 @@ const Hero = ({ onBookingOpen }: HeroProps) => {
               src={`${import.meta.env.BASE_URL}assets/logo.webp`}
               alt="Modni Frizer Vojkan Logo"
               decoding="async"
-              className="w-36 h-36 md:w-48 md:h-48 mx-auto object-contain mix-blend-lighten opacity-90"
+              className="w-36 h-36 md:w-48 md:h-48 [@media(max-height:800px)]:md:w-36 [@media(max-height:800px)]:md:h-36 mx-auto object-contain mix-blend-lighten opacity-90"
             />
           </div>
 
