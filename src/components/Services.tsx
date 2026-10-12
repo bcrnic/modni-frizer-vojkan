@@ -1,4 +1,6 @@
 import { ScrollReveal, StaggerContainer, StaggerItem } from "./animations/ScrollReveal";
+import type { CSSProperties } from "react";
+import SpotlightCard from "@/components/reactbits/SpotlightCard";
 
 /*
 === CENOVNIK - MESTA ZA IZMENU ===
@@ -60,7 +62,20 @@ const Services = () => {
         <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           {services.map((category) => (
             <StaggerItem key={category.category} className="min-w-0">
-              <div className="service-card h-full p-6 md:p-10 shadow-sm hover:shadow-md transition-shadow duration-300">
+              {/* Gold light follows the mouse on desktop; on touch screens the card looks as before. */}
+              <SpotlightCard
+                className="h-full p-6 md:p-10"
+                spotlightColor="#d4a832"
+                intensity={0.12}
+                spotlightSize={280}
+                borderGlow={0.9}
+                proximity={60}
+                style={{
+                  "--spotlight-card-surface": "hsl(var(--card))",
+                  "--spotlight-card-border": "hsl(var(--border))",
+                  "--spotlight-card-shadow": "none",
+                } as CSSProperties}
+              >
                 <h3 className="font-heading text-xl md:text-2xl text-center mb-6 md:mb-8 pb-4 border-b border-border">
                   {category.category}
                 </h3>
@@ -80,7 +95,7 @@ const Services = () => {
                     </div>
                   ))}
                 </div>
-              </div>
+              </SpotlightCard>
             </StaggerItem>
           ))}
         </StaggerContainer>

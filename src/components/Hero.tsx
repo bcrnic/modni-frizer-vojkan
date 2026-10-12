@@ -1,5 +1,8 @@
 import { MessageCircle, Mail, CalendarDays } from "lucide-react";
 import { EMAIL_ADDRESS, VIBER_NUMBER, WHATSAPP_NUMBER, WHATSAPP_PREFILL } from "@/config/links";
+import BlurText from "@/components/reactbits/BlurText";
+import ShinyText from "@/components/reactbits/ShinyText";
+import StarBorder from "@/components/reactbits/StarBorder";
 
 /*
 === MESTA ZA IZMENU ===
@@ -44,12 +47,24 @@ const Hero = ({ onBookingOpen }: HeroProps) => {
           </div>
 
           {/* Naslov */}
-          <h1 
-            className="heading-display mb-6 text-foreground animate-fade-in opacity-0"
-            style={{ animationDelay: "0.4s" }}
-          >
-            Ženski frizerski salon u <span className="text-gold-gradient">Novom Sadu</span> - frizura koja traje
-          </h1>
+          <BlurText
+            as="h1"
+            className="heading-display mb-6 text-foreground justify-center"
+            delay={90}
+            stepDuration={0.3}
+            segments={[
+              "Ženski frizerski salon u",
+              {
+                key: "grad",
+                node: (
+                  <ShinyText color="#d4a832" shineColor="#fff4cc" speed={2.6} delay={2.5} shineWidth={30}>
+                    Novom Sadu
+                  </ShinyText>
+                ),
+              },
+              "- frizura koja traje",
+            ]}
+          />
 
           <p
             className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-3 font-light tracking-wide animate-fade-in opacity-0"
@@ -82,13 +97,21 @@ const Hero = ({ onBookingOpen }: HeroProps) => {
             className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up opacity-0"
             style={{ animationDelay: "0.8s" }}
           >
-            <button
+            <StarBorder
+              as="button"
               onClick={onBookingOpen}
               className="btn-gold"
+              radius={0}
+              thickness={1.5}
+              color="#fff4cc"
+              trailColor="#d4a832"
+              glow={0.8}
+              duration={5}
+              borderColor="rgba(255, 255, 255, 0.18)"
             >
               <CalendarDays className="w-5 h-5" />
               Zakaži termin
-            </button>
+            </StarBorder>
             <a
               href={whatsappLink}
               target="_blank"
