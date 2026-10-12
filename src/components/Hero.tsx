@@ -30,9 +30,9 @@ const Hero = ({ onBookingOpen }: HeroProps) => {
             alt=""
             aria-hidden="true"
             decoding="async"
-            className="w-full h-full object-cover opacity-80"
+            className="w-full h-full object-cover object-[72%_center] md:object-center opacity-60"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/30 to-background" />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/45 to-background" />
         </div>
 
         {/* Sadržaj */}
