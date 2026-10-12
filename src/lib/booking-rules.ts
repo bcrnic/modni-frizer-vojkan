@@ -96,3 +96,15 @@ export function getTimeSlotsForDay(day: Date): string[] {
 export function getUpcomingTimeSlots(day: Date, now: Date = new Date()): string[] {
   return getTimeSlotsForDay(day).filter((time) => salonSlotToDate(day, time) > now);
 }
+
+/**
+ * Services that cannot be booked online on some weekdays (0 = Sunday ... 6 = Saturday).
+ * The salon can still enter them from the admin panel.
+ */
+export const ONLINE_SERVICE_BLOCKED_DAYS: Record<string, number[]> = {
+  Feniranje: [5, 6],
+};
+
+export function isServiceBookableOnline(service: string, day: Date): boolean {
+  return !ONLINE_SERVICE_BLOCKED_DAYS[service]?.includes(day.getDay());
+}

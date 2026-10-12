@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import {
   getTimeSlotsForDay,
   getUpcomingTimeSlots,
+  isServiceBookableOnline,
   salonSlotToDate,
   validateCustomer,
 } from "./booking-rules";
@@ -68,5 +69,18 @@ describe("time slots", () => {
     expect(upcoming[0]).toBe("15:30");
     expect(upcoming).not.toContain("15:00");
     expect(getUpcomingTimeSlots(monday, salonSlotToDate(monday, "18:00"))).toEqual([]);
+  });
+});
+
+describe("isServiceBookableOnline", () => {
+  it("blocks blow-dry on Fridays and Saturdays only", () => {
+    expect(isServiceBookableOnline("Feniranje", new Date(2026, 9, 15))).toBe(true); // Thursday
+    expect(isServiceBookableOnline("Feniranje", new Date(2026, 9, 16))).toBe(false); // Friday
+    expect(isServiceBookableOnline("Feniranje", new Date(2026, 9, 17))).toBe(false); // Saturday
+  });
+
+  it("leaves other services alone", () => {
+    expect(isServiceBookableOnline("Šišanje", new Date(2026, 9, 16))).toBe(true);
+    expect(isServiceBookableOnline("Šišanje", new Date(2026, 9, 17))).toBe(true);
   });
 });

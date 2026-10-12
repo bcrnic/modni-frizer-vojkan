@@ -36,6 +36,7 @@ import {
   LIMITS,
   MAX_DAYS_AHEAD,
   getUpcomingTimeSlots,
+  isServiceBookableOnline,
   salonSlotToDate,
   validateCustomer,
   type CustomerErrors,
@@ -113,6 +114,9 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
   const handleDateSelect = async (date: Date | undefined) => {
     setSelectedDate(date);
     setSelectedTime("");
+    if (date && selectedService && !isServiceBookableOnline(selectedService, date)) {
+      setSelectedService("");
+    }
     if (date) {
       await fetchSlotAvailability(date);
     }
@@ -354,13 +358,22 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
                   <SelectValue placeholder="Odaberite uslugu..." />
                 </SelectTrigger>
                 <SelectContent>
-                  {SERVICES.map((service) => (
-                    <SelectItem key={service} value={service}>
-                      {service}
-                    </SelectItem>
-                  ))}
+                  {SERVICES.map((service) => {
+                    const bookable = !selectedDate || isServiceBookableOnline(service, selectedDate);
+                    return (
+                      <SelectItem key={service} value={service} disabled={!bookable}>
+                        {service}
+                        {!bookable && " (ne petkom i subotom)"}
+                      </SelectItem>
+                    );
+                  })}
                 </SelectContent>
               </Select>
+              {selectedDate && !isServiceBookableOnline("Feniranje", selectedDate) && (
+                <p className="text-xs text-muted-foreground mt-2">
+                  Feniranje se petkom i subotom ne zakazuje online. Pozovite nas ili dođite bez zakazivanja.
+                </p>
+              )}
             </div>
 
             <div className="flex gap-3">
