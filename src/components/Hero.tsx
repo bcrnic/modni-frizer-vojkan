@@ -27,11 +27,12 @@ const Hero = ({ onBookingOpen }: HeroProps) => {
         <div className="absolute inset-0">
           <img
             src={`${import.meta.env.BASE_URL}assets/hero-bg.webp`}
-            alt="Luksuzni frizerski salon"
+            alt=""
+            aria-hidden="true"
             decoding="async"
-            className="w-full h-full object-cover opacity-40"
+            className="w-full h-full object-cover opacity-80"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background" />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/30 to-background" />
         </div>
 
         {/* Sadržaj */}
