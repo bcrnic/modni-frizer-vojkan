@@ -16,6 +16,16 @@ const Admin = () => {
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
 
+  // Backup for the X-Robots-Tag header in netlify.toml: tell crawlers that
+  // render the page not to index the admin panel.
+  useEffect(() => {
+    const meta = document.createElement("meta");
+    meta.name = "robots";
+    meta.content = "noindex, nofollow";
+    document.head.appendChild(meta);
+    return () => meta.remove();
+  }, []);
+
   useEffect(() => {
     if (!isSupabaseConfigured || !supabase) {
       setLoading(false);
