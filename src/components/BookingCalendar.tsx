@@ -358,20 +358,16 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
                   <SelectValue placeholder="Odaberite uslugu..." />
                 </SelectTrigger>
                 <SelectContent>
-                  {SERVICES.map((service) => {
-                    const bookable = !selectedDate || isServiceBookableOnline(service, selectedDate);
-                    return (
-                      <SelectItem key={service} value={service} disabled={!bookable}>
-                        {service}
-                        {!bookable && " (ne petkom i subotom)"}
-                      </SelectItem>
-                    );
-                  })}
+                  {SERVICES.filter((service) => !selectedDate || isServiceBookableOnline(service, selectedDate)).map((service) => (
+                    <SelectItem key={service} value={service}>
+                      {service}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
               {selectedDate && !isServiceBookableOnline("Feniranje", selectedDate) && (
                 <p className="text-xs text-muted-foreground mt-2">
-                  Feniranje se petkom i subotom ne zakazuje online. Pozovite nas ili dođite bez zakazivanja.
+                  Feniranje petkom i subotom radimo bez zakazivanja.
                 </p>
               )}
             </div>
