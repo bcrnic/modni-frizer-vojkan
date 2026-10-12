@@ -365,11 +365,6 @@ const BookingCalendar = ({ open, onOpenChange }: BookingCalendarProps) => {
                   ))}
                 </SelectContent>
               </Select>
-              {selectedDate && !isServiceBookableOnline("Feniranje", selectedDate) && (
-                <p className="text-xs text-muted-foreground mt-2">
-                  Feniranje petkom i subotom radimo bez zakazivanja.
-                </p>
-              )}
             </div>
 
             <div className="flex gap-3">

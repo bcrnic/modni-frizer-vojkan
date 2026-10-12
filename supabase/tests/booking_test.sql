@@ -261,7 +261,7 @@ DECLARE
   r json;
 BEGIN
   r := public.create_appointment('Fen Petak', '0633333331', NULL, fri, fri + interval '1 hour', 'Feniranje');
-  ASSERT NOT (r->>'success')::boolean AND r->>'error' LIKE 'Feniranje%', 'no online blow-dry on Friday: ' || r;
+  ASSERT NOT (r->>'success')::boolean AND r->>'error' LIKE 'Izabrana usluga%', 'no online blow-dry on Friday: ' || r;
   r := public.create_appointment('Fen Subota', '0633333332', NULL, sat, sat + interval '1 hour', 'Feniranje');
   ASSERT NOT (r->>'success')::boolean, 'no online blow-dry on Saturday: ' || r;
   r := public.create_appointment('Fen Cetvrtak', '0633333333', NULL, thu, thu + interval '1 hour', 'Feniranje');
