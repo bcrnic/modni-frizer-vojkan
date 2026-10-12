@@ -10,3 +10,15 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+# Keep the admin panel out of search results. Search engines must still be
+# able to fetch the page to see this header, so robots.txt does not block it.
+[[headers]]
+  for = "/admin"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
