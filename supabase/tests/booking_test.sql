@@ -252,6 +252,37 @@ BEGIN
   ASSERT (SELECT count(*) FROM public.salon_holidays) = 1, 'anon can read holidays';
 END $$;
 
+DO $$
+DECLARE
+  week timestamp := date_trunc('week', now() AT TIME ZONE 'Europe/Belgrade');
+  fri timestamptz := (week + interval '11 days 12 hours') AT TIME ZONE 'Europe/Belgrade';
+  sat timestamptz := (week + interval '12 days 10 hours') AT TIME ZONE 'Europe/Belgrade';
+  thu timestamptz := (week + interval '10 days 12 hours') AT TIME ZONE 'Europe/Belgrade';
+  r json;
+BEGIN
+  r := public.create_appointment('Fen Petak', '0633333331', NULL, fri, fri + interval '1 hour', 'Feniranje');
+  ASSERT NOT (r->>'success')::boolean AND r->>'error' LIKE 'Feniranje%', 'no online blow-dry on Friday: ' || r;
+  r := public.create_appointment('Fen Subota', '0633333332', NULL, sat, sat + interval '1 hour', 'Feniranje');
+  ASSERT NOT (r->>'success')::boolean, 'no online blow-dry on Saturday: ' || r;
+  r := public.create_appointment('Fen Cetvrtak', '0633333333', NULL, thu, thu + interval '1 hour', 'Feniranje');
+  ASSERT (r->>'success')::boolean, 'online blow-dry on Thursday is fine: ' || r;
+  r := public.create_appointment('Sisanje Petak', '0633333334', NULL, fri, fri + interval '1 hour', 'Šišanje');
+  ASSERT (r->>'success')::boolean, 'other services on Friday are fine: ' || r;
+END $$;
+
+RESET ROLE;
+SET ROLE authenticated;
+SET request.jwt.claims = '{"role":"authenticated","sub":"00000000-0000-0000-0000-00000000000a"}';
+
+DO $$
+DECLARE
+  sat timestamptz := (date_trunc('week', now() AT TIME ZONE 'Europe/Belgrade') + interval '12 days 11 hours') AT TIME ZONE 'Europe/Belgrade';
+  r json;
+BEGIN
+  r := public.create_appointment('Fen Admin', '0633333335', NULL, sat, sat + interval '1 hour', 'Feniranje', NULL, 'online');
+  ASSERT (r->>'success')::boolean, 'the salon can still book blow-dry on Saturday: ' || r;
+END $$;
+
 RESET ROLE;
 DO $$ BEGIN
   ASSERT EXISTS (SELECT 1 FROM pg_publication_tables
