@@ -4,7 +4,6 @@ import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Services from "@/components/Services";
 import PricingFAQ from "@/components/PricingFAQ";
-import BookingCTA from "@/components/BookingCTA";
 import Gallery from "@/components/Gallery";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
@@ -31,15 +30,14 @@ const Index = () => {
         <Hero onBookingOpen={handleBookingOpen} />
         <About />
         <Services />
-        <BookingInfo onBookingOpen={handleBookingOpen} />
-        <PricingFAQ onBookingOpen={handleBookingOpen} />
+        <BookingInfo />
+        <PricingFAQ />
         <Gallery />
-        <FAQ onBookingOpen={handleBookingOpen} />
+        <FAQ />
         <Contact onBookingOpen={handleBookingOpen} />
       </main>
-      <BookingCTA onBookingOpen={handleBookingOpen} />
       <Footer />
-      <StickyMobileBar onBookingOpen={handleBookingOpen} />
+      <StickyMobileBar />
       {bookingRequested && (
         <Suspense fallback={null}>
           <BookingCalendar open={bookingOpen} onOpenChange={setBookingOpen} />
