@@ -5,7 +5,8 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="py-12 border-t border-border">
+    // Extra bottom padding on phones keeps the footer clear of the fixed call/WhatsApp bar.
+    <footer className="pt-12 pb-40 md:pb-12 border-t border-border">
       <div className="container mx-auto px-4">
         <div className="flex flex-col items-center gap-6">
           {/* Logo */}
@@ -61,6 +62,17 @@ const Footer = () => {
           {/* Copyright */}
           <p className="text-muted-foreground text-sm text-center">
             © {currentYear} Modni Frizer VOJKAN. Sva prava zadržana.
+          </p>
+          <p className="text-muted-foreground/70 text-xs text-center -mt-4">
+            Izrada sajta:{" "}
+            <a
+              href="https://rebule.rs/"
+              target="_blank"
+              rel="noopener"
+              className="hover:text-primary underline-offset-4 hover:underline transition-colors"
+            >
+              rebule.rs
+            </a>
           </p>
         </div>
       </div>
