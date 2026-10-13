@@ -1,11 +1,7 @@
-import { CalendarDays, MessageCircle } from "lucide-react";
-import { WHATSAPP_NUMBER, WHATSAPP_PREFILL } from "@/config/links";
+import { MessageCircle, Phone } from "lucide-react";
+import { PHONE_NUMBER_TEL, WHATSAPP_NUMBER, WHATSAPP_PREFILL } from "@/config/links";
 
-interface StickyMobileBarProps {
-  onBookingOpen: () => void;
-}
-
-const StickyMobileBar = ({ onBookingOpen }: StickyMobileBarProps) => {
+const StickyMobileBar = () => {
   const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER.replace(/\s/g, "")}?text=${encodeURIComponent(WHATSAPP_PREFILL)}`;
 
   return (
@@ -18,10 +14,10 @@ const StickyMobileBar = ({ onBookingOpen }: StickyMobileBarProps) => {
           </span>
         </p>
         <div className="grid grid-cols-2 gap-3">
-          <button onClick={onBookingOpen} className="btn-gold w-full py-3 px-4 text-xs">
-            <CalendarDays className="w-4 h-4" />
-            Zakaži
-          </button>
+          <a href={`tel:${PHONE_NUMBER_TEL}`} className="btn-gold w-full py-3 px-4 text-xs">
+            <Phone className="w-4 h-4" />
+            Pozovi
+          </a>
           <a
             href={whatsappLink}
             target="_blank"
