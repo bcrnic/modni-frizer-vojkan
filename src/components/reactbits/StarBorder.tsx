@@ -279,9 +279,12 @@ const StarBorder = <T extends React.ElementType = 'button'>({
     let last = performance.now();
     let alive = true;
 
-    const measure = () => {
-      state.width = root.offsetWidth;
-      state.height = root.offsetHeight;
+    // Sizes come from the ResizeObserver entry, so measuring never forces the
+    // browser to recalculate layout in the middle of a frame.
+    const measure = (entries: ResizeObserverEntry[]) => {
+      const box = entries[entries.length - 1]?.borderBoxSize?.[0];
+      state.width = box ? box.inlineSize : root.offsetWidth;
+      state.height = box ? box.blockSize : root.offsetHeight;
       state.dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = Math.max(1, Math.round((state.width + BLEED * 2) * state.dpr));
       canvas.height = Math.max(1, Math.round((state.height + BLEED * 2) * state.dpr));
@@ -471,7 +474,7 @@ const StarBorder = <T extends React.ElementType = 'button'>({
 
     const frame = (now: number) => {
       raf = 0;
-      if (!alive) return;
+      if (!alive || !state.width) return; // not measured yet; the ResizeObserver wakes us
       const s = settingsRef.current;
       const dt = Math.min(0.05, Math.max(0.001, (now - last) / 1000));
       last = now;
@@ -604,7 +607,6 @@ const StarBorder = <T extends React.ElementType = 'button'>({
     root.addEventListener('click', onClick);
     root.addEventListener('focus', onFocus);
     root.addEventListener('blur', onBlur);
-    measure();
 
     return () => {
       alive = false;

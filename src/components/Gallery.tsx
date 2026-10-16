@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { ScrollReveal } from "./animations/ScrollReveal";
 
 const galleryImages = [
@@ -106,7 +106,7 @@ const Gallery = () => {
 
         <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {galleryImages.map((image, index) => (
-            <motion.div
+            <m.div
               key={index}
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
@@ -131,7 +131,7 @@ const Gallery = () => {
                 <p className="text-foreground font-heading text-lg">{image.alt}</p>
                 <p className="text-primary text-sm">{image.caption}</p>
               </div>
-            </motion.div>
+            </m.div>
           ))}
         </div>
 
