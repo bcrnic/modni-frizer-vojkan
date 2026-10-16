@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -10,7 +8,7 @@ Luksuzni frizerski salon - Crna/Zlatna tema
 
 MESTA ZA IZMENU:
 - Boje su definisane ispod u :root sekciji
-- Font porodice su importovane iznad
+- Fontovi (Manrope, Inter) se hostuju lokalno, importovani su u src/main.tsx
 */
 
 @layer base {
@@ -55,8 +53,8 @@ MESTA ZA IZMENU:
     --charcoal-light: 0 0% 14%;
     
     /* Font porodice */
-    --font-heading: 'Manrope', system-ui, sans-serif;
-    --font-body: 'Inter', system-ui, sans-serif;
+    --font-heading: 'Manrope Variable', 'Manrope', system-ui, sans-serif;
+    --font-body: 'Inter Variable', 'Inter', system-ui, sans-serif;
 
     /* Sidebar (nije u upotrebi ali mora postojati) */
     --sidebar-background: 0 0% 6%;
@@ -186,6 +184,43 @@ MESTA ZA IZMENU:
 
   .lead-text {
     @apply text-lg md:text-xl text-muted-foreground/90 font-light leading-relaxed;
+  }
+}
+
+/* Hero heading word-by-word reveal (BlurText). Only opacity and transform are
+   animated so the browser can run it on the GPU. */
+.blur-text-word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(var(--blur-text-from, -50px));
+}
+
+.blur-text-word.is-visible {
+  animation-name: blur-text-in;
+  animation-fill-mode: both;
+}
+
+@keyframes blur-text-in {
+  0% {
+    opacity: 0;
+    transform: translateY(var(--blur-text-from, -50px));
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(var(--blur-text-overshoot, 5px));
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blur-text-word,
+  .blur-text-word.is-visible {
+    opacity: 1;
+    transform: none;
+    animation: none;
   }
 }
 
