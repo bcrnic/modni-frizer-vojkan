@@ -1,10 +1,13 @@
 name: Supabase Keep-Alive
 
-# Pinga Supabase REST API svaka 4 dana da baza ne pauze na free planu.
-# GitHub Actions cron koristi UTC vreme.
+# Pinga Supabase REST API svaki dan da se baza ne pauzira na free planu
+# (Supabase pauzira projekte posle 7 dana slabe aktivnosti).
+# GitHub Actions cron koristi UTC vreme i zakazana pokretanja često kasne.
+# Napomena: u javnom repou GitHub sam isključi zakazane workflow-e posle
+# 60 dana bez commita - tada ga treba ponovo uključiti u Actions tabu.
 on:
   schedule:
-    - cron: "0 8 */4 * *"   # Svaka 4 dana u 08:00 UTC (09:00 ili 10:00 CET)
+    - cron: "0 8 * * *"     # Svaki dan u 08:00 UTC (09:00 ili 10:00 po našem vremenu)
   workflow_dispatch:         # Može se pokrenuti ručno iz GitHub UI
 
 jobs:
