@@ -21,7 +21,7 @@ const Navigation = ({ onBookingOpen }: NavigationProps) => {
       setIsScrolled(window.scrollY > 50);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -36,10 +36,13 @@ const Navigation = ({ onBookingOpen }: NavigationProps) => {
       <div className="container mx-auto px-4">
         <nav className="flex items-center justify-between h-20">
           {/* Logo */}
-          <a href="#" className="flex items-center gap-3">
+          <a href="#" className="flex items-center gap-3" aria-label="Modni Frizer VOJKAN - početna">
+            {/* The link is named by aria-label, so the logo itself is decorative. */}
             <img
-              src={`${import.meta.env.BASE_URL}assets/logo.webp`}
-              alt="Modni Frizer VOJKAN"
+              src={`${import.meta.env.BASE_URL}assets/logo-96.webp`}
+              alt=""
+              width={96}
+              height={96}
               decoding="async"
               className="w-12 h-12 object-contain"
             />

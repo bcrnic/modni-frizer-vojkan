@@ -6,6 +6,14 @@
   # The site is served from the domain root on Netlify (GitHub Pages uses /modni-frizer-vojkan/)
   BASE_PATH = "/"
 
+# Nothing is published under /.well-known/. Without this rule the catch-all
+# below answers e.g. /.well-known/ai-catalog.json with the HTML page, which
+# Lighthouse then reports as an invalid file.
+[[redirects]]
+  from = "/.well-known/*"
+  to = "/index.html"
+  status = 404
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
@@ -22,3 +30,30 @@
   for = "/admin/*"
   [headers.values]
     X-Robots-Tag = "noindex, nofollow"
+
+# Basic security headers for every page.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    X-Frame-Options = "SAMEORIGIN"
+    Content-Security-Policy = "frame-ancestors 'self'; base-uri 'self'; object-src 'none'"
+    Cross-Origin-Opener-Policy = "same-origin"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Built files have a content hash in their name, so they can be cached for good.
+[[headers]]
+  for = "/assets/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/*.woff2"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

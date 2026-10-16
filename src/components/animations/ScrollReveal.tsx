@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { ReactNode } from "react";
 
 interface ScrollRevealProps {
@@ -24,7 +24,7 @@ export const ScrollReveal = ({
   const initial = directionVariants[direction];
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, ...initial }}
       whileInView={{ opacity: 1, x: 0, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
@@ -36,7 +36,7 @@ export const ScrollReveal = ({
       className={className}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 };
 
@@ -46,7 +46,7 @@ export const FadeIn = ({
   delay = 0,
 }: Omit<ScrollRevealProps, "direction">) => {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, margin: "-50px" }}
@@ -54,7 +54,7 @@ export const FadeIn = ({
       className={className}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 };
 
@@ -64,7 +64,7 @@ export const ScaleIn = ({
   delay = 0,
 }: Omit<ScrollRevealProps, "direction">) => {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, scale: 0.9 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true, margin: "-50px" }}
@@ -72,7 +72,7 @@ export const ScaleIn = ({
       className={className}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 };
 
@@ -84,7 +84,7 @@ export const StaggerContainer = ({
   className?: string;
 }) => {
   return (
-    <motion.div
+    <m.div
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-100px" }}
@@ -99,7 +99,7 @@ export const StaggerContainer = ({
       className={className}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 };
 
@@ -111,7 +111,7 @@ export const StaggerItem = ({
   className?: string;
 }) => {
   return (
-    <motion.div
+    <m.div
       variants={{
         hidden: { opacity: 0, y: 40 },
         visible: {
@@ -126,6 +126,6 @@ export const StaggerItem = ({
       className={className}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 };

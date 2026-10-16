@@ -29,7 +29,10 @@ const Hero = ({ onBookingOpen }: HeroProps) => {
             src={`${import.meta.env.BASE_URL}assets/hero-bg.webp`}
             alt=""
             aria-hidden="true"
-            decoding="async"
+            width={1376}
+            height={768}
+            // React 18 only passes the lowercase attribute through to the DOM.
+            {...{ fetchpriority: "high" }}
             className="w-full h-full object-cover object-[72%_center] md:object-center opacity-60"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/45 to-background" />
@@ -41,6 +44,10 @@ const Hero = ({ onBookingOpen }: HeroProps) => {
           <div className="mb-8 animate-fade-in opacity-0" style={{ animationDelay: "0.2s" }}>
             <img
               src={`${import.meta.env.BASE_URL}assets/logo.webp`}
+              srcSet={`${import.meta.env.BASE_URL}assets/logo-288.webp 288w, ${import.meta.env.BASE_URL}assets/logo.webp 384w`}
+              sizes="(min-width: 768px) 192px, 144px"
+              width={384}
+              height={384}
               alt="Modni Frizer Vojkan Logo"
               decoding="async"
               className="w-36 h-36 md:w-48 md:h-48 [@media(max-height:800px)]:md:w-36 [@media(max-height:800px)]:md:h-36 mx-auto object-contain mix-blend-lighten opacity-90"
