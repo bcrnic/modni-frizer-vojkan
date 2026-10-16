@@ -11,8 +11,10 @@ const Footer = () => {
         <div className="flex flex-col items-center gap-6">
           {/* Logo */}
           <img
-            src={`${import.meta.env.BASE_URL}assets/logo.webp`}
+            src={`${import.meta.env.BASE_URL}assets/logo-160.webp`}
             alt="Modni Frizer VOJKAN"
+            width={160}
+            height={160}
             loading="lazy"
             decoding="async"
             className="w-20 h-20 object-contain opacity-80"
@@ -21,7 +23,7 @@ const Footer = () => {
           {/* Radno vreme */}
           <div className="flex items-center gap-2 text-muted-foreground">
             <Clock className="w-4 h-4" />
-            <span className="text-sm">Pon-Pet: 9-18h | Sub: 9-15h</span>
+            <span className="text-sm">Pon-Pet: 11-19h | Sub: 8-16h</span>
           </div>
 
           {/* Društvene mreže */}
@@ -63,7 +65,7 @@ const Footer = () => {
           <p className="text-muted-foreground text-sm text-center">
             © {currentYear} Modni Frizer VOJKAN. Sva prava zadržana.
           </p>
-          <p className="text-muted-foreground/70 text-xs text-center -mt-4">
+          <p className="text-muted-foreground text-xs text-center -mt-4">
             Izrada sajta:{" "}
             <a
               href="https://rebule.rs/"
