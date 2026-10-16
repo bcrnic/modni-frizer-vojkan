@@ -8,7 +8,7 @@
 // - accepts `segments`: plain strings are split into words, nodes animate as one unit
 //   (used to keep "Novom Sadu" together with its shine effect);
 // - shows the text immediately when the visitor prefers reduced motion (handled in CSS).
-import { useEffect, useMemo, useRef, useState, type CSSProperties, type ElementType, type ReactNode } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState, type CSSProperties, type ElementType, type ReactNode } from "react";
 
 type Segment = string | { node: ReactNode; key: string };
 
@@ -80,7 +80,7 @@ const BlurText = ({
   const offset = direction === "top" ? -50 : 50;
 
   return (
-    <Tag ref={ref} className={`flex flex-wrap ${className}`}>
+    <Tag ref={ref} className={`flex flex-wrap ${className}`} style={{ columnGap: "0.25em" }}>
       {units.map((unit, index) => {
         const last = index === units.length - 1;
         const style = {
@@ -90,16 +90,21 @@ const BlurText = ({
           animationDelay: `${(index * delay) / 1000}s`,
           animationTimingFunction: easing,
         } as CSSProperties;
+        // The space between words sits outside the animated span: a space at the end
+        // of an inline-block is dropped by the browser (iOS Safari showed the heading
+        // as one long word). The visible gap comes from `column-gap` on the wrapper;
+        // the real space keeps the text readable for search engines and screen readers.
         return (
-          <span
-            key={unit.key}
-            className={`blur-text-word${inView ? " is-visible" : ""}`}
-            style={style}
-            onAnimationEnd={last ? onAnimationComplete : undefined}
-          >
-            {unit.content}
+          <Fragment key={unit.key}>
+            <span
+              className={`blur-text-word${inView ? " is-visible" : ""}`}
+              style={style}
+              onAnimationEnd={last ? onAnimationComplete : undefined}
+            >
+              {unit.content}
+            </span>
             {last ? null : " "}
-          </span>
+          </Fragment>
         );
       })}
     </Tag>
