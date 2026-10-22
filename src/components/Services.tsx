@@ -50,11 +50,11 @@ const Services = () => {
         <ScrollReveal className="text-center mb-16">
           <p className="text-primary uppercase tracking-[0.3em] text-sm mb-4">Cenovnik</p>
           <h2 className="heading-section mb-6">
-            Naše <span className="text-gold-gradient">cene</span>
+            Usluge i <span className="text-gold-gradient">cene</span>
           </h2>
           <div className="decorative-line mb-8" />
           <p className="text-lg text-muted-foreground/80 max-w-2xl mx-auto font-light">
-            Cene zavise od dužine kose. Javi se porukom za tačnu cenu.
+            Šišanje, farbanje, pramenovi, balayage i nega kose. Cene zavise od dužine kose - javi se porukom za tačnu cenu.
           </p>
         </ScrollReveal>
 

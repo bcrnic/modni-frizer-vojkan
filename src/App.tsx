@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { LazyMotion } from "framer-motion";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
@@ -13,14 +13,25 @@ const Toaster = lazy(() => import("@/components/ui/toaster").then((m) => ({ defa
 // Animation features load right after the page instead of with it.
 const loadMotionFeatures = () => import("@/lib/motion-features").then((m) => m.default);
 
-const App = () => (
-  <LazyMotion features={loadMotionFeatures} strict>
+// Shared by the browser (App) and the build-time prerender (entry-server.tsx),
+// so the prerendered HTML matches what React hydrates.
+// The toaster appears only after the page has loaded in the browser, so the
+// prerendered HTML and the first browser render are the same.
+export const AppToaster = () => {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
+  return (
     <Suspense fallback={null}>
       <Toaster />
     </Suspense>
-    <BrowserRouter basename={import.meta.env.BASE_URL}>
-      <ScrollToTop />
-      <Routes>
+  );
+};
+
+export const AppRoutes = () => (
+  <>
+    <ScrollToTop />
+    <Routes>
         <Route path="/" element={<Index />} />
         <Route
           path="/admin"
@@ -32,7 +43,15 @@ const App = () => (
         />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
-      </Routes>
+    </Routes>
+  </>
+);
+
+const App = () => (
+  <LazyMotion features={loadMotionFeatures} strict>
+    <AppToaster />
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <AppRoutes />
     </BrowserRouter>
   </LazyMotion>
 );
