@@ -18,7 +18,10 @@ const replaceOnce = (html, pattern, replacement, label) => {
   return html.replace(pattern, replacement);
 };
 
-const withApp = (html, path) => html.replace('<div id="root"></div>', `<div id="root">${render(path)}</div>`);
+// data-prerendered tells src/main.tsx which page this HTML is, so the browser
+// only hydrates it at that address.
+const withApp = (html, path) =>
+  html.replace('<div id="root"></div>', `<div id="root" data-prerendered="${path}">${render(path)}</div>`);
 
 await writeFile(resolve(dist, "index.html"), withApp(template, "/"));
 console.log("prerendered /");
@@ -41,9 +44,13 @@ for (const page of pages) {
     `<script type="application/ld+json">${JSON.stringify(page.jsonLd).replace(/</g, "\\u003c")}</script>`,
     "JSON-LD",
   );
-  const dir = resolve(dist, page.path.slice(1));
-  await mkdir(dir, { recursive: true });
-  await writeFile(resolve(dir, "index.html"), withApp(html, page.path));
+  // Both /slug (slug.html) and /slug/ (slug/index.html) get the page, whatever
+  // the host does with the trailing slash.
+  const out = withApp(html, page.path);
+  const slug = page.path.slice(1);
+  await mkdir(resolve(dist, slug), { recursive: true });
+  await writeFile(resolve(dist, `${slug}.html`), out);
+  await writeFile(resolve(dist, slug, "index.html"), out);
   console.log(`prerendered ${page.path}`);
 }
 

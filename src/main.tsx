@@ -5,17 +5,18 @@ import "@fontsource-variable/manrope/wght.css";
 import "@fontsource-variable/inter/wght.css";
 import App from "./App.tsx";
 import "./index.css";
-import { PRERENDERED_PATHS } from "./content/servicePages";
 
 const root = document.getElementById("root")!;
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const path = window.location.pathname.slice(base.length).replace(/\/$/, "") || "/";
-const isPrerendered = PRERENDERED_PATHS.includes(path);
+// Set by scripts/prerender.mjs. A host may answer an address with another
+// page's HTML (the admin panel gets the home page), so check it is this page.
+const isPrerendered = root.dataset.prerendered === path;
 
-// Public pages are prerendered at build time (scripts/prerender.mjs), so React
-// takes over the existing HTML. Every other path (admin, 404) gets the home
-// page's index.html from the host, so that prerendered content is cleared first.
-if (isPrerendered && root.hasChildNodes()) {
+// Public pages are prerendered at build time, so React takes over the existing
+// HTML. Anywhere else the prerendered content belongs to another page, so it is
+// cleared and the page is drawn in the browser.
+if (isPrerendered) {
   hydrateRoot(root, <App />);
 } else {
   root.textContent = "";

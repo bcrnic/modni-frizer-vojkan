@@ -228,5 +228,3 @@ export const servicePageBySlug: Record<string, ServicePage> = Object.fromEntries
 /** Putanja stranice usluge, uz BASE_PATH (GitHub Pages koristi podfolder). */
 export const servicePagePath = (slug: string) => `${import.meta.env.BASE_URL}${slug}`;
 
-/** Sve stranice koje se renderuju pri buildu (scripts/prerender.mjs). */
-export const PRERENDERED_PATHS = ["/", ...servicePages.map((page) => `/${page.slug}`)];
