@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Modni frizer Vojkan | Ženski frizer Novi Sad | Zakazivanje i walk-in</title>
+  <title>Ženski frizer u centru Novog Sada | Modni frizer Vojkan</title>
   <meta name="description"
-    content="Modni frizer Vojkan je ženski frizerski salon u Novom Sadu. Zakazivanje termina dostupno online, ali primamo i klijente bez zakazivanja. Posetite nas ili rezervišite termin." />
+    content="Ženski frizerski salon u centru Novog Sada sa tradicijom od preko 40 godina. Šišanje, farbanje i balayage. Zakažite online ili dođite bez zakazivanja." />
   <meta name="keywords"
     content="frizer Novi Sad, ženski frizer Novi Sad, frizer bez zakazivanja Novi Sad, zakazivanje frizer Novi Sad, frizerski salon Novi Sad" />
   <meta name="author" content="Modni Frizer Vojkan" />
@@ -22,52 +22,243 @@
        instead of waiting for the JavaScript to render the page. -->
   <link rel="preload" as="image" href="/assets/hero-bg.webp" type="image/webp" fetchpriority="high" />
 
-  <meta property="og:title" content="Modni frizer Vojkan | Ženski frizer Novi Sad | Zakazivanje i walk-in" />
+  <meta property="og:title" content="Ženski frizer u centru Novog Sada | Modni frizer Vojkan" />
   <meta property="og:description"
-    content="Modni frizer Vojkan je ženski frizerski salon u Novom Sadu. Zakazivanje termina dostupno online, ali primamo i klijente bez zakazivanja. Posetite nas ili rezervišite termin." />
+    content="Ženski frizerski salon u centru Novog Sada sa tradicijom od preko 40 godina. Šišanje, farbanje i balayage. Zakažite online ili dođite bez zakazivanja." />
   <meta property="og:type" content="website" />
+  <meta property="og:locale" content="sr_RS" />
+  <meta property="og:site_name" content="Modni frizer Vojkan" />
   <meta property="og:url" content="https://frizervojkan.rs/" />
   <meta property="og:image" content="https://frizervojkan.rs/og.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
 
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:site" content="@ModniVojkan" />
   <meta name="twitter:image" content="https://frizervojkan.rs/og.jpg" />
 
+  <!-- Keep the FAQ answers here identical to src/components/sections/FAQ.tsx
+       and the prices identical to src/components/Services.tsx. -->
   <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "HairSalon",
-        "name": "Modni Frizer VOJKAN",
-        "url": "https://frizervojkan.rs/",
-        "telephone": "+381621445958",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Uspenska 1, ulaz iz Pavla Papa",
-          "addressLocality": "Novi Sad",
-          "postalCode": "21000",
-          "addressCountry": "RS"
-        },
-        "geo": {
-          "@type": "GeoCoordinates",
-          "latitude": 45.2551,
-          "longitude": 19.8423
-        },
-        "openingHoursSpecification": [
-          {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-            "opens": "11:00",
-            "closes": "19:00"
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "HairSalon",
+          "@id": "https://frizervojkan.rs/#salon",
+          "name": "Modni frizer VOJKAN",
+          "url": "https://frizervojkan.rs/",
+          "description": "Ženski frizerski salon u centru Novog Sada, kod Hotela Centar, sa tradicijom od preko 40 godina. Termin se zakazuje online, porukom ili telefonom, a primamo i klijentkinje bez zakazivanja.",
+          "image": "https://frizervojkan.rs/og.jpg",
+          "logo": "https://frizervojkan.rs/assets/logo.webp",
+          "telephone": "+381621445958",
+          "email": "frizer.vojkan@gmail.com",
+          "priceRange": "1.200 - 11.000 RSD",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Uspenska 1, ulaz iz Pavla Papa",
+            "addressLocality": "Novi Sad",
+            "postalCode": "21000",
+            "addressCountry": "RS"
           },
-          {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": ["Saturday"],
-            "opens": "08:00",
-            "closes": "16:00"
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 45.2551,
+            "longitude": 19.8423
+          },
+          "hasMap": "https://maps.app.goo.gl/tyw5yTK9W7Gv9cZW7",
+          "areaServed": {
+            "@type": "City",
+            "name": "Novi Sad"
+          },
+          "sameAs": [
+            "https://www.facebook.com/vojkanmodnifrizer/",
+            "https://www.instagram.com/modnifrizervojkan/"
+          ],
+          "openingHoursSpecification": [
+            {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday"
+              ],
+              "opens": "11:00",
+              "closes": "19:00"
+            },
+            {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": [
+                "Saturday"
+              ],
+              "opens": "08:00",
+              "closes": "16:00"
+            }
+          ],
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Cenovnik",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Žensko šišanje + feniranje"
+                },
+                "priceSpecification": {
+                  "@type": "PriceSpecification",
+                  "minPrice": 3500,
+                  "priceCurrency": "RSD"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Feniranje"
+                },
+                "priceSpecification": {
+                  "@type": "PriceSpecification",
+                  "minPrice": 1200,
+                  "priceCurrency": "RSD"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Farbanje kose - koren"
+                },
+                "priceSpecification": {
+                  "@type": "PriceSpecification",
+                  "minPrice": 4000,
+                  "priceCurrency": "RSD"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Farbanje kose - cela dužina"
+                },
+                "priceSpecification": {
+                  "@type": "PriceSpecification",
+                  "minPrice": 5000,
+                  "priceCurrency": "RSD"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Pramenovi / Balayage"
+                },
+                "priceSpecification": {
+                  "@type": "PriceSpecification",
+                  "minPrice": 9000,
+                  "priceCurrency": "RSD"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Preliv / Toniranje"
+                },
+                "priceSpecification": {
+                  "@type": "PriceSpecification",
+                  "minPrice": 4000,
+                  "priceCurrency": "RSD"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Regeneracija kose + feniranje"
+                },
+                "priceSpecification": {
+                  "@type": "PriceSpecification",
+                  "minPrice": 2500,
+                  "priceCurrency": "RSD"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Nadogradnja kose"
+                },
+                "priceSpecification": {
+                  "@type": "PriceSpecification",
+                  "minPrice": 450,
+                  "priceCurrency": "RSD",
+                  "unitText": "po pramenu"
+                }
+              }
+            ]
           }
-        ]
-      }
-    </script>
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://frizervojkan.rs/#website",
+          "url": "https://frizervojkan.rs/",
+          "name": "Modni frizer Vojkan",
+          "inLanguage": "sr-Latn-RS",
+          "publisher": {
+            "@id": "https://frizervojkan.rs/#salon"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://frizervojkan.rs/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Da li je potrebno zakazivanje?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Zakazivanje nije obavezno. Uvek primamo i klijente bez zakazivanja (walk-in). Za kraće čekanje preporučujemo zakazivanje termina unapred."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Koliko traje šišanje i feniranje?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Klasično žensko šišanje sa feniranjem traje u proseku oko 45 minuta do sat vremena, zavisno od dužine i gustine kose. Usluge farbanja i balayage-a zahtevaju od 2 do 3.5 sata."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Da li radite nedeljom?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Ne, nedeljom ne radimo. Naše radno vreme je od ponedeljka do petka od 11:00 do 19:00, i subotom od 08:00 do 16:00 časova."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Smešteni ste u centru, da li ima parkinga u blizini?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Da, nalazimo se u strogom centru Novog Sada (kod Hotela Centar). Najbliži javni parking je ispred Pozorišta, kao i u okolnim ulicama (plava zona)."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Kako da znam koja frizura mi najbolje pristaje?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Pre svakog tretmana radimo besplatne konsultacije. Na osnovu vašeg oblika lica, tipa kose i životnog stila, naš tim će vam predložiti najbolju opciju održavanja i stilizovanja."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  </script>
 </head>
 
 <body>
