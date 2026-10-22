@@ -10,6 +10,9 @@ Radno vreme: ponedeljak - petak 11:00 - 19:00, subota 08:00 - 16:00, nedeljom ne
 
 - [Početna strana](https://frizervojkan.rs/): o salonu, usluge, cene, galerija radova, česta pitanja i online zakazivanje
 - [Usluge](https://frizervojkan.rs/#usluge): spisak usluga
+- [Balayage i pramenovi](https://frizervojkan.rs/balayage-novi-sad): cene, trajanje i kako izgleda dolazak
+- [Farbanje kose](https://frizervojkan.rs/farbanje-kose-novi-sad): koren ili cela dužina, cene i trajanje
+- [Žensko šišanje i feniranje](https://frizervojkan.rs/zensko-sisanje-novi-sad): cene, trajanje i dolazak bez zakazivanja
 - [Cene](https://frizervojkan.rs/#cene): cenovnik i pitanja o cenama
 - [Zakazivanje](https://frizervojkan.rs/#zakazivanje): kako se zakazuje termin i dolazak bez zakazivanja
 - [Česta pitanja](https://frizervojkan.rs/#faq): odgovori na najčešća pitanja

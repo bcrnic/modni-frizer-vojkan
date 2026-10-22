@@ -1,8 +1,12 @@
 import { Instagram, Facebook, Clock } from "lucide-react";
+import { useLocation } from "react-router-dom";
 import { SOCIAL_LINKS } from "@/config/links";
+import { servicePages, servicePagePath } from "@/content/servicePages";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const onHome = useLocation().pathname === "/";
+  const sectionHref = (hash: string) => (onHome ? hash : `${import.meta.env.BASE_URL}${hash}`);
 
   return (
     // Extra bottom padding on phones keeps the footer clear of the fixed call/WhatsApp bar.
@@ -49,11 +53,22 @@ const Footer = () => {
           </div>
 
           {/* Minimalni linkovi */}
+          <nav aria-label="Usluge" className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
+            {servicePages.map((page) => (
+              <a
+                key={page.slug}
+                href={servicePagePath(page.slug)}
+                className="text-muted-foreground hover:text-primary transition-colors"
+              >
+                {page.serviceName}
+              </a>
+            ))}
+          </nav>
           <nav className="flex gap-6 text-sm">
-            <a href="#usluge" className="text-muted-foreground hover:text-primary transition-colors">
+            <a href={sectionHref("#usluge")} className="text-muted-foreground hover:text-primary transition-colors">
               Cenovnik
             </a>
-            <a href="#kontakt" className="text-muted-foreground hover:text-primary transition-colors">
+            <a href={sectionHref("#kontakt")} className="text-muted-foreground hover:text-primary transition-colors">
               Kontakt
             </a>
           </nav>

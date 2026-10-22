@@ -3,6 +3,8 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import { LazyMotion } from "framer-motion";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import ServicePage from "./pages/ServicePage";
+import { servicePages } from "./content/servicePages";
 import { ScrollToTop } from "@/components/ui/ScrollToTop";
 
 // Visitors never download the admin panel.
@@ -33,6 +35,9 @@ export const AppRoutes = () => (
     <ScrollToTop />
     <Routes>
         <Route path="/" element={<Index />} />
+        {servicePages.map((page) => (
+          <Route key={page.slug} path={`/${page.slug}`} element={<ServicePage page={page} />} />
+        ))}
         <Route
           path="/admin"
           element={

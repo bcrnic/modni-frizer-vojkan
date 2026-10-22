@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+import { useLocation } from "react-router-dom";
 
 const navLinks = [
   { href: "#o-salonu", label: "O salonu" },
@@ -15,6 +16,9 @@ interface NavigationProps {
 const Navigation = ({ onBookingOpen }: NavigationProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  // On a service page the section links point back to the home page.
+  const onHome = useLocation().pathname === "/";
+  const sectionHref = (hash: string) => (onHome ? hash : `${import.meta.env.BASE_URL}${hash}`);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,7 +40,7 @@ const Navigation = ({ onBookingOpen }: NavigationProps) => {
       <div className="container mx-auto px-4">
         <nav className="flex items-center justify-between h-20">
           {/* Logo */}
-          <a href="#" className="flex items-center gap-3" aria-label="Modni Frizer VOJKAN - početna">
+          <a href={onHome ? "#" : import.meta.env.BASE_URL} className="flex items-center gap-3" aria-label="Modni Frizer VOJKAN - početna">
             {/* The link is named by aria-label, so the logo itself is decorative. */}
             <img
               src={`${import.meta.env.BASE_URL}assets/logo-96.webp`}
@@ -56,7 +60,7 @@ const Navigation = ({ onBookingOpen }: NavigationProps) => {
             {navLinks.map((link) => (
               <a
                 key={link.href}
-                href={link.href}
+                href={sectionHref(link.href)}
                 className="text-sm uppercase tracking-wider text-muted-foreground 
                            hover:text-primary transition-colors duration-300"
               >
@@ -90,7 +94,7 @@ const Navigation = ({ onBookingOpen }: NavigationProps) => {
               {navLinks.map((link) => (
                 <a
                   key={link.href}
-                  href={link.href}
+                  href={sectionHref(link.href)}
                   className="text-lg text-muted-foreground hover:text-primary 
                              transition-colors py-2"
                   onClick={() => setIsMobileMenuOpen(false)}
