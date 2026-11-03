@@ -60,7 +60,7 @@ const About = () => {
             {highlights.map((item) => (
               <div key={item.label} className="px-4 py-8 md:py-10 text-center">
                 <dt className="sr-only">{item.label}</dt>
-                <dd className="font-heading text-3xl md:text-4xl text-gold-gradient mb-2">{item.value}</dd>
+                <dd className="font-heading font-medium text-3xl md:text-4xl text-gold-gradient mb-2">{item.value}</dd>
                 <dd className="text-xs md:text-sm uppercase tracking-[0.15em] text-muted-foreground">{item.label}</dd>
               </div>
             ))}
