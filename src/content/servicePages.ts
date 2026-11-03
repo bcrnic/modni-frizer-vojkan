@@ -65,14 +65,14 @@ export const servicePages: ServicePage[] = [
         heading: "Koliko košta balayage u Novom Sadu?",
         paragraphs: [
           "Kod nas pramenovi i balayage koštaju od 9.000 RSD, a uz šišanje od 11.000 RSD. Preliv ili toniranje, kada samo osvežavaš postojeću nijansu, košta od 4.000 RSD.",
-          "Cena se razlikuje od osobe do osobe jer duga i gusta kosa traži više materijala i vremena. Najbrže do tačne cene stižeš porukom: napiši uslugu i dužinu kose i pošalji fotografiju.",
+          "Cena se razlikuje od osobe do osobe jer duga i gusta kosa traži više materijala i vremena. Tačnu cenu dogovaramo na kratkim konsultacijama pre početka.",
         ],
       },
       {
         heading: "Kako izgleda dolazak na balayage?",
         paragraphs: [
           "Počinjemo kratkim razgovorom: šta želiš, šta ti stoji i šta je realno za tvoju kosu. Tada dogovaramo i cenu, pre nego što krenemo sa radom.",
-          "Posle tretmana dobijaš savet kako da boja traje duže i kako da kosa ostane sjajna. Pošto usluga traje nekoliko sati, za balayage preporučujemo da termin zakažeš unapred.",
+          "Posle tretmana dobijaš savet kako da boja traje duže i kako da kosa ostane sjajna.",
         ],
       },
     ],
@@ -89,7 +89,7 @@ export const servicePages: ServicePage[] = [
       {
         question: "Da li mogu da dođem na balayage bez zakazivanja?",
         answer:
-          "Bez zakazivanja primamo uvek, ali za balayage savetujemo termin unapred, jer usluga traje nekoliko sati. Zakazati možeš online, porukom na WhatsApp ili Viber ili telefonom.",
+          "Da, primamo i bez zakazivanja. Imaj na umu da balayage traje nekoliko sati.",
       },
       {
         question: "Da li je cena balayage-a konačna?",
@@ -126,7 +126,7 @@ export const servicePages: ServicePage[] = [
         heading: "Koliko košta farbanje kose u Novom Sadu?",
         paragraphs: [
           "Kod nas farbanje korena košta od 4.000 RSD, farbanje cele dužine od 5.000 RSD, a farbanje uz šišanje od 6.000 RSD. Radimo sa premium bojama.",
-          "Tačna cena zavisi od dužine i gustine kose i od toga koliko boje je potrebno. Zato je dogovaramo pre početka, a do okvirne cene najbrže stižeš porukom sa fotografijom kose.",
+          "Tačna cena zavisi od dužine i gustine kose i od toga koliko boje je potrebno. Zato je dogovaramo pre početka, na kratkim konsultacijama.",
         ],
       },
       {
@@ -149,7 +149,7 @@ export const servicePages: ServicePage[] = [
       {
         question: "Da li mogu da dođem na farbanje bez zakazivanja?",
         answer:
-          "Da, uvek primamo i klijentkinje bez zakazivanja. Ako želiš da izbegneš čekanje, zakaži termin online, porukom ili telefonom.",
+          "Da, uvek primamo i klijentkinje bez zakazivanja.",
       },
       {
         question: "Zašto je cena farbanja okvirna?",
@@ -164,11 +164,11 @@ export const servicePages: ServicePage[] = [
     linkLabel: "Sve o šišanju i feniranju",
     title: "Žensko šišanje u Novom Sadu | Modni frizer Vojkan",
     description:
-      "Žensko šišanje i feniranje u centru Novog Sada, od 3.500 RSD. Traje 45 minuta do sat vremena. Zakaži ili dođi bez zakazivanja.",
+      "Žensko šišanje i feniranje u centru Novog Sada, od 3.500 RSD. Traje 45 minuta do sat vremena. Dolazak je moguć bez zakazivanja.",
     eyebrow: "Šišanje i feniranje",
     h1: "Žensko šišanje i feniranje u Novom Sadu",
     intro:
-      "Žensko šišanje sa feniranjem radimo u salonu Modni frizer VOJKAN u centru Novog Sada, kod Hotela Centar. Košta od 3.500 RSD i traje oko 45 minuta do sat vremena. Možeš da zakažeš termin ili da dođeš bez zakazivanja, tokom celog radnog vremena.",
+      "Žensko šišanje sa feniranjem radimo u salonu Modni frizer VOJKAN u centru Novog Sada, kod Hotela Centar. Košta od 3.500 RSD i traje oko 45 minuta do sat vremena. Možeš da dođeš bez zakazivanja, tokom celog radnog vremena.",
     prices: [
       ...pricesOf("zensko-sisanje-novi-sad"),
       ...services.flatMap((c) => c.items).filter((p) => p.name.startsWith("Regeneracija")),
@@ -186,13 +186,13 @@ export const servicePages: ServicePage[] = [
         heading: "Koliko košta žensko šišanje u Novom Sadu?",
         paragraphs: [
           "Kod nas žensko šišanje sa feniranjem košta od 3.500 RSD, a samo feniranje od 1.200 RSD. Šišanje se može spojiti sa farbanjem (od 6.000 RSD) ili sa balayage-om (od 11.000 RSD).",
-          "Cena zavisi od dužine kose. Ako nisi sigurna koliko će koštati, pošalji poruku sa uslugom i dužinom kose.",
+          "Cena zavisi od dužine kose, a tačnu cenu dogovaramo pre početka.",
         ],
       },
       {
         heading: "Mogu li da dođem bez zakazivanja?",
         paragraphs: [
-          "Da. Uvek ostavljamo deo kapaciteta za klijentkinje koje dolaze bez zakazivanja, pa si dobrodošla u bilo kom trenutku tokom radnog vremena. Ako želiš da izbegneš čekanje, zakaži termin online, porukom ili telefonom.",
+          "Da. Uvek ostavljamo deo kapaciteta za klijentkinje koje dolaze bez zakazivanja, pa si dobrodošla u bilo kom trenutku tokom radnog vremena.",
         ],
       },
     ],

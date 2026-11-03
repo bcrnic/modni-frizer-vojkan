@@ -19,6 +19,14 @@ const features = [
   }
 ];
 
+// Only facts the salon has confirmed (see the text below and the social profiles).
+const highlights = [
+  { value: "40+", label: "godina tradicije" },
+  { value: "2", label: "frizera, porodični salon" },
+  { value: "Centar", label: "Novog Sada, kod Hotela Centar" },
+  { value: "2.000+", label: "pratilaca na Instagramu" },
+];
+
 const About = () => {
   return (
     <section id="o-salonu" className="section-padding bg-secondary/30">
@@ -44,6 +52,19 @@ const About = () => {
             Pre svake promene radimo kratke konsultacije: šta želiš, šta ti stoji i šta je realno za tvoju kosu. Ako farbaš
             ili radiš balayage, dobićeš i savet kako da boja traje duže i kako da kosa ostane sjajna.
           </p>
+        </ScrollReveal>
+
+        {/* Brojke */}
+        <ScrollReveal delay={0.1} className="mb-16">
+          <dl className="grid grid-cols-2 lg:grid-cols-4 border border-border/40 divide-x divide-y lg:divide-y-0 divide-border/40 bg-card/20">
+            {highlights.map((item) => (
+              <div key={item.label} className="px-4 py-8 md:py-10 text-center">
+                <dt className="sr-only">{item.label}</dt>
+                <dd className="font-heading text-3xl md:text-4xl text-gold-gradient mb-2">{item.value}</dd>
+                <dd className="text-xs md:text-sm uppercase tracking-[0.15em] text-muted-foreground">{item.label}</dd>
+              </div>
+            ))}
+          </dl>
         </ScrollReveal>
 
         {/* Feature kartice */}

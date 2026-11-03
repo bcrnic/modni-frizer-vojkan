@@ -18,7 +18,7 @@ const Services = () => {
           </h2>
           <div className="decorative-line mb-8" />
           <p className="text-lg text-muted-foreground/80 max-w-2xl mx-auto font-light">
-            Šišanje, farbanje, pramenovi, balayage i nega kose. Cene zavise od dužine kose - javi se porukom za tačnu cenu.
+            Šišanje, farbanje, pramenovi, balayage i nega kose. Cene zavise od dužine kose i utroška materijala.
           </p>
         </ScrollReveal>
 

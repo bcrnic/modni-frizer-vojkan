@@ -1,25 +1,14 @@
-import { MessageCircle, Mail, CalendarDays, Phone } from "lucide-react";
-import { EMAIL_ADDRESS, PHONE_NUMBER_TEL, VIBER_NUMBER, WHATSAPP_NUMBER, WHATSAPP_PREFILL } from "@/config/links";
+import { CalendarDays, Images } from "lucide-react";
 import { ONLINE_BOOKING_ENABLED } from "@/config/booking";
 import BlurText from "@/components/reactbits/BlurText";
 import ShinyText from "@/components/reactbits/ShinyText";
 import StarBorder from "@/components/reactbits/StarBorder";
-
-/*
-=== MESTA ZA IZMENU ===
-- WHATSAPP_NUMBER: Promenite broj telefona za WhatsApp
-- EMAIL_ADDRESS: Promenite email adresu
-*/
 
 interface HeroProps {
   onBookingOpen: () => void;
 }
 
 const Hero = ({ onBookingOpen }: HeroProps) => {
-  const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER.replace(/\s/g, "")}?text=${encodeURIComponent(WHATSAPP_PREFILL)}`;
-  const viberLink = `viber://chat?number=${encodeURIComponent(VIBER_NUMBER.replace(/\s/g, ""))}`;
-  const emailLink = `mailto:${EMAIL_ADDRESS}?subject=${encodeURIComponent("Zakazivanje termina - Modni frizer VOJKAN")}`;
-
   return (
     <>
       {/* Top padding keeps the content below the fixed 80px navigation on short (laptop) screens. */}
@@ -79,11 +68,11 @@ const Hero = ({ onBookingOpen }: HeroProps) => {
             className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-3 font-light tracking-wide animate-fade-in opacity-0"
             style={{ animationDelay: "0.5s" }}
           >
-            Zakazivanje termina ili{" "}
+            {ONLINE_BOOKING_ENABLED ? "Zakazivanje termina ili" : "Dođite"}{" "}
             <span className="inline-flex items-center rounded-full bg-primary/15 border border-primary/30 px-2.5 py-0.5 md:px-3 md:py-1 text-sm md:text-base text-primary font-medium">
-              dolazak bez zakazivanja
+              {ONLINE_BOOKING_ENABLED ? "dolazak bez zakazivanja" : "bez zakazivanja"}
             </span>{" "}
-            - izbor je Vaš.
+            {ONLINE_BOOKING_ENABLED ? "- izbor je Vaš." : "- tu smo u centru Novog Sada."}
           </p>
 
           {/* Podnaslov */}
@@ -91,8 +80,10 @@ const Hero = ({ onBookingOpen }: HeroProps) => {
             className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-4 font-light tracking-wide animate-fade-in opacity-0"
             style={{ animationDelay: "0.6s" }}
           >
-            U "<span className="text-gold-gradient">Modnom frizeru VOJKAN</span>" radiš sa frizerima koji slušaju, predlažu i rade precizno. Zakaži termin za šišanje,
-            boju ili balayage - bez komplikacija.
+            U "<span className="text-gold-gradient">Modnom frizeru VOJKAN</span>" radiš sa frizerima koji slušaju, predlažu i rade precizno.
+            {ONLINE_BOOKING_ENABLED
+              ? " Zakaži termin za šišanje, boju ili balayage - bez komplikacija."
+              : " Šišanje, boja i balayage - bez komplikacija."}
           </p>
 
           {/* Dekorativna linija */}
@@ -101,8 +92,8 @@ const Hero = ({ onBookingOpen }: HeroProps) => {
             style={{ animationDelay: "0.7s" }}
           />
 
-          {/* CTA Dugmad */}
-          <div 
+          {/* CTA: online booking when it is on; otherwise a quiet link to the work. */}
+          <div
             className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up opacity-0"
             style={{ animationDelay: "0.8s" }}
           >
@@ -123,51 +114,12 @@ const Hero = ({ onBookingOpen }: HeroProps) => {
                 Zakaži termin
               </StarBorder>
             ) : (
-              <StarBorder
-                as="a"
-                href={`tel:${PHONE_NUMBER_TEL}`}
-                className="btn-gold"
-                radius={0}
-                thickness={1.5}
-                color="#fff4cc"
-                trailColor="#d4a832"
-                glow={0.8}
-                duration={5}
-                borderColor="rgba(255, 255, 255, 0.18)"
-              >
-                <Phone className="w-5 h-5" />
-                Pozovite nas
-              </StarBorder>
+              <a href="#galerija" className="btn-outline-gold">
+                <Images className="w-5 h-5" />
+                Pogledajte naše radove
+              </a>
             )}
-            <a
-              href={whatsappLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-outline-gold"
-            >
-              <MessageCircle className="w-5 h-5" />
-              WhatsApp
-            </a>
-            <a
-              href={viberLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-outline-gold"
-            >
-              <MessageCircle className="w-5 h-5" />
-              Viber
-            </a>
-            <a
-              href={emailLink}
-              className="btn-outline-gold"
-            >
-              <Mail className="w-5 h-5" />
-              Email
-            </a>
           </div>
-          <p className="text-sm text-muted-foreground mt-6 animate-fade-in opacity-0" style={{ animationDelay: "0.95s" }}>
-            Najbrže odgovaramo na poruke. Pošalji: željeni dan + usluga + dužina kose.
-          </p>
         </div>
 
         {/* Scroll indikator */}

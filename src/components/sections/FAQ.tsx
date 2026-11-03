@@ -9,13 +9,6 @@ const FAQ = () => {
 
           <div className="space-y-8">
             <div className="p-6 bg-card border border-border">
-              <h3 className="font-heading text-xl mb-2">Da li je potrebno zakazivanje?</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Zakazivanje nije obavezno. Uvek primamo i klijente bez zakazivanja (walk-in). Za kraće čekanje preporučujemo zakazivanje termina unapred.
-              </p>
-            </div>
-
-            <div className="p-6 bg-card border border-border">
               <h3 className="font-heading text-xl mb-2">Koliko traje šišanje i feniranje?</h3>
               <p className="text-muted-foreground leading-relaxed">
                 Klasično žensko šišanje sa feniranjem traje u proseku oko 45 minuta do sat vremena, zavisno od dužine i gustine kose. Usluge farbanja i balayage-a zahtevaju od 2 do 3.5 sata.

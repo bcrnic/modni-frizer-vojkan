@@ -1,11 +1,10 @@
 import { lazy, Suspense, useEffect, useState } from "react";
-import { CalendarDays, ChevronRight, Clock, MessageCircle } from "lucide-react";
+import { CalendarDays, ChevronRight, Clock } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import StickyMobileBar from "@/components/StickyMobileBar";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
-import { WHATSAPP_NUMBER, WHATSAPP_PREFILL } from "@/config/links";
+import { ONLINE_BOOKING_ENABLED } from "@/config/booking";
 import { servicePages, servicePagePath, type ServicePage as ServicePageData } from "@/content/servicePages";
 
 // Same as on the home page: the booking dialog loads only when someone wants to book.
@@ -28,13 +27,12 @@ const ServicePage = ({ page }: ServicePageProps) => {
     document.title = page.title;
   }, [page.title]);
 
-  const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER.replace(/\s/g, "")}?text=${encodeURIComponent(WHATSAPP_PREFILL)}`;
   const otherPages = servicePages.filter((other) => other.slug !== page.slug);
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
       <Navigation onBookingOpen={handleBookingOpen} />
-      <main className="pb-24 md:pb-0">
+      <main>
         {/* Uvod: direktan odgovor odmah ispod naslova */}
         <section className="pt-32 pb-12 md:pt-40 md:pb-16">
           <div className="container mx-auto px-4 max-w-3xl">
@@ -59,16 +57,12 @@ const ServicePage = ({ page }: ServicePageProps) => {
             <div className="decorative-line mb-8 !mx-0" />
             <p className="lead-text mb-10">{page.intro}</p>
 
-            <div className="flex flex-col sm:flex-row gap-4">
+            {ONLINE_BOOKING_ENABLED && (
               <button onClick={handleBookingOpen} className="btn-gold">
                 <CalendarDays className="w-5 h-5" />
                 Zakaži termin
               </button>
-              <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="btn-outline-gold">
-                <MessageCircle className="w-5 h-5" />
-                Pitaj za cenu
-              </a>
-            </div>
+            )}
           </div>
         </section>
 
@@ -189,8 +183,7 @@ const ServicePage = ({ page }: ServicePageProps) => {
         <Contact onBookingOpen={handleBookingOpen} />
       </main>
       <Footer />
-      <StickyMobileBar />
-      {bookingRequested && (
+      {ONLINE_BOOKING_ENABLED && bookingRequested && (
         <Suspense fallback={null}>
           <BookingCalendar open={bookingOpen} onOpenChange={setBookingOpen} />
         </Suspense>

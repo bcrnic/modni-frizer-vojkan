@@ -9,8 +9,7 @@ const Footer = () => {
   const sectionHref = (hash: string) => (onHome ? hash : `${import.meta.env.BASE_URL}${hash}`);
 
   return (
-    // Extra bottom padding on phones keeps the footer clear of the fixed call/WhatsApp bar.
-    <footer className="pt-12 pb-40 md:pb-12 border-t border-border">
+    <footer className="py-12 border-t border-border">
       <div className="container mx-auto px-4">
         <div className="flex flex-col items-center gap-6">
           {/* Logo */}
