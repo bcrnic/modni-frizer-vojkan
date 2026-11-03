@@ -9,9 +9,10 @@ const FAQ = () => {
 
           <div className="space-y-8">
             <div className="p-6 bg-card border border-border">
-              <h3 className="font-heading text-xl mb-2">Da li je potrebno zakazivanje?</h3>
+              <h3 className="font-heading text-xl mb-2">Kako da zakažem termin?</h3>
               <p className="text-muted-foreground leading-relaxed">
-                Zakazivanje nije obavezno. Uvek primamo i klijente bez zakazivanja (walk-in). Za kraće čekanje preporučujemo zakazivanje termina unapred.
+                Pozovite nas ili pošaljite poruku na Viber ili WhatsApp - napišite uslugu i dan koji vam odgovara. Možete doći i
+                bez zakazivanja; tada je moguće kraće čekanje.
               </p>
             </div>
 

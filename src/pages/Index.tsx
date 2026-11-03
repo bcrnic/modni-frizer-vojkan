@@ -7,7 +7,6 @@ import PricingFAQ from "@/components/PricingFAQ";
 import Gallery from "@/components/Gallery";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import BookingInfo from "@/components/sections/BookingInfo";
 import FAQ from "@/components/sections/FAQ";
 import StickyMobileBar from "@/components/StickyMobileBar";
 import { ONLINE_BOOKING_ENABLED } from "@/config/booking";
@@ -31,7 +30,6 @@ const Index = () => {
         <Hero onBookingOpen={handleBookingOpen} />
         <About />
         <Services />
-        <BookingInfo />
         <PricingFAQ />
         <Gallery />
         <FAQ />
