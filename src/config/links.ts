@@ -8,7 +8,7 @@ export const PHONE_NUMBER_TEL = "+381621445958";
 export const ADDRESS_LINE = "Uspenska 1, ulaz iz Pavla Papa";
 export const CITY_COUNTRY = "Novi Sad, Srbija";
 
-export const WHATSAPP_PREFILL = "Zdravo! Želim da zakažem termin u salonu Modni frizer VOJKAN.";
+export const WHATSAPP_PREFILL = "Zdravo! Imam pitanje za salon Modni frizer VOJKAN.";
 
 export const SOCIAL_LINKS = {
   facebook: "https://www.facebook.com/vojkanmodnifrizer/?locale=sr_RS",

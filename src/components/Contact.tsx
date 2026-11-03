@@ -24,7 +24,7 @@ interface ContactProps {
 const Contact = ({ onBookingOpen }: ContactProps) => {
   const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_PREFILL)}`;
   const viberLink = `viber://chat?number=${encodeURIComponent(VIBER_NUMBER.replace(/\s/g, ""))}`;
-  const emailLink = `mailto:${EMAIL_ADDRESS}?subject=${encodeURIComponent("Zakazivanje termina - Modni frizer VOJKAN")}`;
+  const emailLink = `mailto:${EMAIL_ADDRESS}?subject=${encodeURIComponent("Pitanje - Modni frizer VOJKAN")}`;
   const phoneLink = `tel:${PHONE_NUMBER_TEL.replace(/\s/g, "")}`;
   const googleMapsLink = "https://maps.app.goo.gl/tyw5yTK9W7Gv9cZW7";
   const googleMapsEmbedSrc = `https://www.google.com/maps?q=${encodeURIComponent(
@@ -43,11 +43,13 @@ const Contact = ({ onBookingOpen }: ContactProps) => {
             </h2>
             <div className="decorative-line mb-8" />
             <p className="text-muted-foreground max-w-xl mx-auto mb-6">
-              Najbrže je porukom (WhatsApp/Viber). Ako voliš direktno - pozovi nas. Odgovaramo u toku radnog vremena i
-              potvrđujemo termin čim se dogovorimo.
+              Javite nam se porukom ili telefonom u toku radnog vremena, a u salon možete doći i{" "}
+              <span className="inline-flex items-center rounded-full bg-primary/15 border border-primary/30 px-2.5 py-0.5 text-sm text-primary font-medium">
+                bez zakazivanja
+              </span>
+              .
             </p>
-            {/* Online booking CTA (a call button while online booking is paused) */}
-            {ONLINE_BOOKING_ENABLED ? (
+            {ONLINE_BOOKING_ENABLED && (
               <button
                 onClick={onBookingOpen}
                 className="btn-gold inline-flex items-center gap-2"
@@ -55,18 +57,7 @@ const Contact = ({ onBookingOpen }: ContactProps) => {
                 <CalendarDays className="w-5 h-5" />
                 Zakaži termin
               </button>
-            ) : (
-              <a href={`tel:${PHONE_NUMBER_TEL}`} className="btn-gold inline-flex items-center gap-2">
-                <Phone className="w-5 h-5" />
-                Pozovite nas
-              </a>
             )}
-            <p className="mt-3 text-sm text-muted-foreground">
-              ili dođi{" "}
-              <span className="inline-flex items-center rounded-full bg-primary/15 border border-primary/30 px-2.5 py-0.5 text-sm text-primary font-medium">
-                bez zakazivanja
-              </span>
-            </p>
           </ScrollReveal>
 
           <div className="grid lg:grid-cols-2 gap-12">
@@ -88,7 +79,7 @@ const Contact = ({ onBookingOpen }: ContactProps) => {
                     </div>
                     <div>
                       <p className="text-foreground font-medium mb-1">WhatsApp</p>
-                      <p className="text-muted-foreground text-sm">Pošalji poruku i napiši uslugu + željeni dan</p>
+                      <p className="text-muted-foreground text-sm">Pošaljite nam poruku</p>
                     </div>
                   </a>
                 </StaggerItem>
@@ -107,7 +98,7 @@ const Contact = ({ onBookingOpen }: ContactProps) => {
                     </div>
                     <div>
                       <p className="text-foreground font-medium mb-1">Viber</p>
-                      <p className="text-muted-foreground text-sm">Pošalji poruku i napiši uslugu + željeni dan</p>
+                      <p className="text-muted-foreground text-sm">Pošaljite nam poruku</p>
                     </div>
                   </a>
                 </StaggerItem>

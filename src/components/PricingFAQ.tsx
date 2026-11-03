@@ -1,11 +1,7 @@
-import { MessageCircle } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { WHATSAPP_NUMBER, WHATSAPP_PREFILL } from "@/config/links";
 import { ScrollReveal } from "./animations/ScrollReveal";
 
 const PricingFAQ = () => {
-  const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER.replace(/\s/g, "")}?text=${encodeURIComponent(WHATSAPP_PREFILL)}`;
-
   return (
     <section id="cene" className="section-padding bg-secondary/30">
       <div className="container mx-auto">
@@ -17,7 +13,6 @@ const PricingFAQ = () => {
           <div className="decorative-line mb-8" />
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Najčešće pitanje je: “Koliko košta?”. Cene su okvirne i zavise od dužine kose i utroška materijala.
-            Najbrži način da dobiješ tačnu cenu je poruka - napiši uslugu i pošalji sliku kose.
           </p>
         </ScrollReveal>
 
@@ -49,17 +44,12 @@ const PricingFAQ = () => {
             <AccordionItem value="item-4">
               <AccordionTrigger>Kako najbrže da dobijem tačnu cenu?</AccordionTrigger>
               <AccordionContent className="text-muted-foreground">
-                Pošalji poruku: usluga + dužina kose + (po želji) fotografija. Javljamo ti okvir i predlog termina.
+                Javite nam se sa uslugom i dužinom kose (po želji i fotografijom) - kontakt je na dnu stranice. Ili dođite u
+                salon, pa ćemo cenu dogovoriti na kratkim konsultacijama.
               </AccordionContent>
             </AccordionItem>
           </Accordion>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
-            <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="btn-outline-gold">
-              <MessageCircle className="w-5 h-5" />
-              Pitaj za cenu
-            </a>
-          </div>
         </div>
       </div>
     </section>

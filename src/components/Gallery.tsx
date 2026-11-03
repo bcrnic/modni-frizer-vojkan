@@ -155,11 +155,6 @@ const Gallery = () => {
           ))}
         </div>
 
-        <ScrollReveal delay={0.2}>
-          <p className="text-center text-muted-foreground mt-12">
-            Sviđa vam se neka frizura? Pošaljite nam fotografiju porukom i dogovorićemo se.
-          </p>
-        </ScrollReveal>
       </div>
 
       <Dialog open={open !== null} onOpenChange={(isOpen) => !isOpen && setOpen(null)}>

@@ -8,7 +8,6 @@ import Gallery from "@/components/Gallery";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import FAQ from "@/components/sections/FAQ";
-import StickyMobileBar from "@/components/StickyMobileBar";
 import { ONLINE_BOOKING_ENABLED } from "@/config/booking";
 
 // The booking dialog pulls in Supabase, the calendar and date-fns;
@@ -26,7 +25,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
       <Navigation onBookingOpen={handleBookingOpen} />
-      <main className="pb-24 md:pb-0">
+      <main>
         <Hero onBookingOpen={handleBookingOpen} />
         <About />
         <Services />
@@ -36,7 +35,6 @@ const Index = () => {
         <Contact onBookingOpen={handleBookingOpen} />
       </main>
       <Footer />
-      <StickyMobileBar />
       {ONLINE_BOOKING_ENABLED && bookingRequested && (
         <Suspense fallback={null}>
           <BookingCalendar open={bookingOpen} onOpenChange={setBookingOpen} />
