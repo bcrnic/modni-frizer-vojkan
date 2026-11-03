@@ -1,5 +1,6 @@
 import { Phone, Mail, MessageCircle, MapPin, Clock, CalendarDays } from "lucide-react";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "./animations/ScrollReveal";
+import { ONLINE_BOOKING_ENABLED } from "@/config/booking";
 import { EMAIL_ADDRESS, PHONE_NUMBER_DISPLAY, PHONE_NUMBER_TEL, VIBER_NUMBER, WHATSAPP_NUMBER, WHATSAPP_PREFILL } from "@/config/links";
 
 /*
@@ -45,14 +46,21 @@ const Contact = ({ onBookingOpen }: ContactProps) => {
               Najbrže je porukom (WhatsApp/Viber). Ako voliš direktno - pozovi nas. Odgovaramo u toku radnog vremena i
               potvrđujemo termin čim se dogovorimo.
             </p>
-            {/* Online booking CTA */}
-            <button
-              onClick={onBookingOpen}
-              className="btn-gold inline-flex items-center gap-2"
-            >
-              <CalendarDays className="w-5 h-5" />
-              Zakaži termin
-            </button>
+            {/* Online booking CTA (a call button while online booking is paused) */}
+            {ONLINE_BOOKING_ENABLED ? (
+              <button
+                onClick={onBookingOpen}
+                className="btn-gold inline-flex items-center gap-2"
+              >
+                <CalendarDays className="w-5 h-5" />
+                Zakaži termin
+              </button>
+            ) : (
+              <a href={`tel:${PHONE_NUMBER_TEL}`} className="btn-gold inline-flex items-center gap-2">
+                <Phone className="w-5 h-5" />
+                Pozovite nas
+              </a>
+            )}
             <p className="mt-3 text-sm text-muted-foreground">
               ili dođi{" "}
               <span className="inline-flex items-center rounded-full bg-primary/15 border border-primary/30 px-2.5 py-0.5 text-sm text-primary font-medium">

@@ -10,6 +10,7 @@ import Footer from "@/components/Footer";
 import BookingInfo from "@/components/sections/BookingInfo";
 import FAQ from "@/components/sections/FAQ";
 import StickyMobileBar from "@/components/StickyMobileBar";
+import { ONLINE_BOOKING_ENABLED } from "@/config/booking";
 
 // The booking dialog pulls in Supabase, the calendar and date-fns;
 // download it only when a visitor actually wants to book.
@@ -38,7 +39,7 @@ const Index = () => {
       </main>
       <Footer />
       <StickyMobileBar />
-      {bookingRequested && (
+      {ONLINE_BOOKING_ENABLED && bookingRequested && (
         <Suspense fallback={null}>
           <BookingCalendar open={bookingOpen} onOpenChange={setBookingOpen} />
         </Suspense>
