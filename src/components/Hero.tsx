@@ -1,5 +1,6 @@
-import { MessageCircle, Mail, CalendarDays } from "lucide-react";
-import { EMAIL_ADDRESS, VIBER_NUMBER, WHATSAPP_NUMBER, WHATSAPP_PREFILL } from "@/config/links";
+import { MessageCircle, Mail, CalendarDays, Phone } from "lucide-react";
+import { EMAIL_ADDRESS, PHONE_NUMBER_TEL, VIBER_NUMBER, WHATSAPP_NUMBER, WHATSAPP_PREFILL } from "@/config/links";
+import { ONLINE_BOOKING_ENABLED } from "@/config/booking";
 import BlurText from "@/components/reactbits/BlurText";
 import ShinyText from "@/components/reactbits/ShinyText";
 import StarBorder from "@/components/reactbits/StarBorder";
@@ -105,21 +106,39 @@ const Hero = ({ onBookingOpen }: HeroProps) => {
             className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up opacity-0"
             style={{ animationDelay: "0.8s" }}
           >
-            <StarBorder
-              as="button"
-              onClick={onBookingOpen}
-              className="btn-gold"
-              radius={0}
-              thickness={1.5}
-              color="#fff4cc"
-              trailColor="#d4a832"
-              glow={0.8}
-              duration={5}
-              borderColor="rgba(255, 255, 255, 0.18)"
-            >
-              <CalendarDays className="w-5 h-5" />
-              Zakaži termin
-            </StarBorder>
+            {ONLINE_BOOKING_ENABLED ? (
+              <StarBorder
+                as="button"
+                onClick={onBookingOpen}
+                className="btn-gold"
+                radius={0}
+                thickness={1.5}
+                color="#fff4cc"
+                trailColor="#d4a832"
+                glow={0.8}
+                duration={5}
+                borderColor="rgba(255, 255, 255, 0.18)"
+              >
+                <CalendarDays className="w-5 h-5" />
+                Zakaži termin
+              </StarBorder>
+            ) : (
+              <StarBorder
+                as="a"
+                href={`tel:${PHONE_NUMBER_TEL}`}
+                className="btn-gold"
+                radius={0}
+                thickness={1.5}
+                color="#fff4cc"
+                trailColor="#d4a832"
+                glow={0.8}
+                duration={5}
+                borderColor="rgba(255, 255, 255, 0.18)"
+              >
+                <Phone className="w-5 h-5" />
+                Pozovite nas
+              </StarBorder>
+            )}
             <a
               href={whatsappLink}
               target="_blank"

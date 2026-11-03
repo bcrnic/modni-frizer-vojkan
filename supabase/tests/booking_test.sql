@@ -12,6 +12,8 @@ INSERT INTO auth.users (id, email) VALUES
   ('00000000-0000-0000-0000-00000000000a', 'owner@salon.test'),
   ('00000000-0000-0000-0000-00000000000b', 'stranger@evil.test');
 INSERT INTO public.admin_users (user_id) VALUES ('00000000-0000-0000-0000-00000000000a');
+-- The tests below exercise online booking, so make sure the switch is on.
+UPDATE public.salon_settings SET online_booking_enabled = true WHERE id = 1;
 
 -- Next week's Monday and Tuesday at 12:00 / 15:00 salon time, and the Sunday after.
 INSERT INTO test_ctx VALUES
@@ -282,6 +284,38 @@ BEGIN
   r := public.create_appointment('Fen Admin', '0633333335', NULL, sat, sat + interval '1 hour', 'Feniranje', NULL, 'online');
   ASSERT (r->>'success')::boolean, 'the salon can still book blow-dry on Saturday: ' || r;
 END $$;
+
+-- ─── Online booking switch ──────────────────────────────────────────────────
+
+RESET ROLE;
+UPDATE public.salon_settings SET online_booking_enabled = false WHERE id = 1;
+
+SET ROLE anon;
+SET request.jwt.claims = '{"role":"anon"}';
+DO $$
+DECLARE
+  thu timestamptz := (date_trunc('week', now() AT TIME ZONE 'Europe/Belgrade') + interval '10 days 14 hours') AT TIME ZONE 'Europe/Belgrade';
+  r json;
+BEGIN
+  r := public.create_appointment('Iskljuceno Online', '0644444441', NULL, thu, thu + interval '1 hour', 'Šišanje');
+  ASSERT NOT (r->>'success')::boolean AND r->>'error' LIKE 'Online zakazivanje trenutno nije dostupno%',
+    'visitors cannot book while online booking is off: ' || r;
+END $$;
+
+RESET ROLE;
+SET ROLE authenticated;
+SET request.jwt.claims = '{"role":"authenticated","sub":"00000000-0000-0000-0000-00000000000a"}';
+DO $$
+DECLARE
+  thu timestamptz := (date_trunc('week', now() AT TIME ZONE 'Europe/Belgrade') + interval '10 days 14 hours') AT TIME ZONE 'Europe/Belgrade';
+  r json;
+BEGIN
+  r := public.create_appointment('Admin Upis', '0644444442', NULL, thu, thu + interval '1 hour', 'Šišanje', NULL, 'walkin');
+  ASSERT (r->>'success')::boolean, 'the salon can still enter appointments while online booking is off: ' || r;
+END $$;
+
+RESET ROLE;
+UPDATE public.salon_settings SET online_booking_enabled = true WHERE id = 1;
 
 RESET ROLE;
 DO $$ BEGIN

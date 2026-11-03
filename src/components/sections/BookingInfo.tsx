@@ -1,4 +1,5 @@
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
+import { ONLINE_BOOKING_ENABLED } from "@/config/booking";
 
 const BookingInfo = () => {
   return (
@@ -18,7 +19,8 @@ const BookingInfo = () => {
               trenutku tokom radnog vremena.
             </p>
             <p>
-              Ako želite da izbegnete čekanje, preporučujemo zakazivanje termina online ili telefonom.
+              Ako želite da izbegnete čekanje, preporučujemo da termin zakažete{" "}
+              {ONLINE_BOOKING_ENABLED ? "online ili telefonom" : "telefonom ili porukom"}.
             </p>
             <p>
               Naš cilj je da pružimo maksimalnu fleksibilnost - bilo da planirate unapred ili dolazite spontano.
