@@ -22,7 +22,7 @@ export const services: PriceCategory[] = [
     category: "Šišanje & Stilizacija",
     slug: "zensko-sisanje-novi-sad",
     items: [
-      { name: "Žensko šišanje + feniranje", price: "od 3.500 RSD", description: "Prilagođeno Vašem stilu" },
+      { name: "Žensko šišanje + feniranje", price: "od 3.500 RSD", description: "Prilagođeno vašem stilu" },
       { name: "Feniranje", price: "od 1.200 RSD", description: "Profesionalna stilizacija" },
     ]
   },

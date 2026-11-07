@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, Phone, X } from "lucide-react";
+import { PHONE_NUMBER_DISPLAY, PHONE_NUMBER_TEL } from "@/config/links";
 import { ONLINE_BOOKING_ENABLED } from "@/config/booking";
 import { useLocation } from "react-router-dom";
 
@@ -70,6 +71,16 @@ const Navigation = ({ onBookingOpen }: NavigationProps) => {
             ))}
           </div>
 
+          {/* Telefon - desktop */}
+          <a
+            href={`tel:${PHONE_NUMBER_TEL}`}
+            className="hidden md:inline-flex items-center gap-2 text-sm tracking-wider text-foreground
+                       hover:text-primary transition-colors duration-300"
+          >
+            <Phone className="w-4 h-4 text-primary" />
+            {PHONE_NUMBER_DISPLAY}
+          </a>
+
           {/* CTA dugme - desktop */}
           {ONLINE_BOOKING_ENABLED && (
             <button
@@ -105,6 +116,15 @@ const Navigation = ({ onBookingOpen }: NavigationProps) => {
                   {link.label}
                 </a>
               ))}
+              <a
+                href={`tel:${PHONE_NUMBER_TEL}`}
+                className="inline-flex items-center gap-3 text-lg text-foreground hover:text-primary transition-colors py-2
+                           border-t border-border pt-4"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <Phone className="w-5 h-5 text-primary" />
+                {PHONE_NUMBER_DISPLAY}
+              </a>
               {ONLINE_BOOKING_ENABLED && (
                 <button
                   className="btn-gold mt-4"
