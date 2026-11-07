@@ -50,7 +50,7 @@ export const servicePages: ServicePage[] = [
     eyebrow: "Balayage i pramenovi",
     h1: "Balayage i pramenovi u Novom Sadu",
     intro:
-      "Balayage i pramenove radimo u salonu Modni frizer VOJKAN u centru Novog Sada, kod Hotela Centar. Cena počinje od 9.000 RSD, a tačna zavisi od dužine i gustine kose i utroška materijala. Pre rada su konsultacije besplatne, pa cenu znaš pre nego što počnemo.",
+      "Balayage i pramenove radimo u salonu Modni frizer VOJKAN u centru Novog Sada, kod Hotela Centar. Cena počinje od 9.000 RSD, a tačna zavisi od dužine i gustine kose i utroška materijala. Pre rada su konsultacije besplatne, pa cenu znate pre nego što počnemo.",
     prices: pricesOf("balayage-novi-sad"),
     duration: "Farbanje i balayage traju od 2 do 3.5 sata, zavisno od dužine i gustine kose.",
     sections: [
@@ -58,21 +58,21 @@ export const servicePages: ServicePage[] = [
         heading: "Šta je balayage i po čemu se razlikuje od klasičnih pramenova?",
         paragraphs: [
           "Balayage je tehnika posvetljivanja kod koje se boja nanosi slobodnom rukom, sa mekim prelazom od korena ka krajevima. Rezultat izgleda kao kosa posvetljena suncem, bez oštre linije izrastka.",
-          "Klasični pramenovi idu od samog korena i daju ravnomerniji, izraženiji kontrast. Na konsultacijama ti predlažemo šta više odgovara tvom tenu, boji kose i tome koliko često želiš da dolaziš na osvežavanje.",
+          "Klasični pramenovi idu od samog korena i daju ravnomerniji, izraženiji kontrast. Na konsultacijama vam predlažemo šta više odgovara vašem tenu, boji kose i tome koliko često želite da dolazite na osvežavanje.",
         ],
       },
       {
         heading: "Koliko košta balayage u Novom Sadu?",
         paragraphs: [
-          "Kod nas pramenovi i balayage koštaju od 9.000 RSD, a uz šišanje od 11.000 RSD. Preliv ili toniranje, kada samo osvežavaš postojeću nijansu, košta od 4.000 RSD.",
+          "Kod nas pramenovi i balayage koštaju od 9.000 RSD, a uz šišanje od 11.000 RSD. Preliv ili toniranje, kada samo osvežavate postojeću nijansu, košta od 4.000 RSD.",
           "Cena se razlikuje od osobe do osobe jer duga i gusta kosa traži više materijala i vremena. Tačnu cenu dogovaramo na kratkim konsultacijama pre početka.",
         ],
       },
       {
         heading: "Kako izgleda dolazak na balayage?",
         paragraphs: [
-          "Počinjemo kratkim razgovorom: šta želiš, šta ti stoji i šta je realno za tvoju kosu. Tada dogovaramo i cenu, pre nego što krenemo sa radom.",
-          "Posle tretmana dobijaš savet kako da boja traje duže i kako da kosa ostane sjajna.",
+          "Počinjemo kratkim razgovorom: šta želite, šta vam stoji i šta je realno za vašu kosu. Tada dogovaramo i cenu, pre nego što krenemo sa radom.",
+          "Posle tretmana dobijate savet kako da boja traje duže i kako da kosa ostane sjajna.",
         ],
       },
     ],
@@ -89,7 +89,7 @@ export const servicePages: ServicePage[] = [
       {
         question: "Da li mogu da dođem na balayage bez zakazivanja?",
         answer:
-          "Da, primamo i bez zakazivanja. Imaj na umu da balayage traje nekoliko sati.",
+          "Da, primamo i bez zakazivanja. Imajte na umu da balayage traje nekoliko sati.",
       },
       {
         question: "Da li je cena balayage-a konačna?",
@@ -116,10 +116,10 @@ export const servicePages: ServicePage[] = [
     duration: "Farbanje traje od 2 do 3.5 sata, zavisno od usluge, dužine i gustine kose.",
     sections: [
       {
-        heading: "Koren ili cela dužina: šta ti treba?",
+        heading: "Koren ili cela dužina: šta vam treba?",
         paragraphs: [
           "Farbanje korena je za kosu koja je već farbana, kada se vidi izrastak, a ostatak dužine je još u dobroj nijansi. Farbanje cele dužine je za promenu boje ili kada je boja na dužini izbledela.",
-          "Ako samo želiš da osvežiš nijansu i vratiš sjaj, ponekad je dovoljno preliv ili toniranje, od 4.000 RSD. Na konsultacijama ti kažemo šta je potrebno za tvoju kosu.",
+          "Ako samo želite da osvežite nijansu i vratite sjaj, ponekad je dovoljno preliv ili toniranje, od 4.000 RSD. Na konsultacijama vam kažemo šta je potrebno za vašu kosu.",
         ],
       },
       {
@@ -132,7 +132,7 @@ export const servicePages: ServicePage[] = [
       {
         heading: "Kako da boja traje duže?",
         paragraphs: [
-          "Posle farbanja dobijaš savet kako da boja traje duže i kako da kosa ostane sjajna. Ako je kosa posle više farbanja suva ili oštećena, uz farbanje možeš da uradiš i regeneraciju sa feniranjem, od 2.500 RSD.",
+          "Posle farbanja dobijate savet kako da boja traje duže i kako da kosa ostane sjajna. Ako je kosa posle više farbanja suva ili oštećena, uz farbanje možete da uradite i regeneraciju sa feniranjem, od 2.500 RSD.",
         ],
       },
     ],
@@ -168,7 +168,7 @@ export const servicePages: ServicePage[] = [
     eyebrow: "Šišanje i feniranje",
     h1: "Žensko šišanje i feniranje u Novom Sadu",
     intro:
-      "Žensko šišanje sa feniranjem radimo u salonu Modni frizer VOJKAN u centru Novog Sada, kod Hotela Centar. Košta od 3.500 RSD i traje oko 45 minuta do sat vremena. Možeš da dođeš bez zakazivanja, tokom celog radnog vremena.",
+      "Žensko šišanje sa feniranjem radimo u salonu Modni frizer VOJKAN u centru Novog Sada, kod Hotela Centar. Košta od 3.500 RSD i traje oko 45 minuta do sat vremena. Možete da dođete bez zakazivanja, tokom celog radnog vremena.",
     prices: [
       ...pricesOf("zensko-sisanje-novi-sad"),
       ...services.flatMap((c) => c.items).filter((p) => p.name.startsWith("Regeneracija")),
@@ -178,7 +178,7 @@ export const servicePages: ServicePage[] = [
       {
         heading: "Kakvo šišanje radimo?",
         paragraphs: [
-          "Cilj nam je oblik koji se lepo nosi i kada nemaš vremena za stilizovanje, i frizura koju lako održavaš kod kuće. Pre šišanja razgovaramo šta želiš i šta ti stoji, prema obliku lica, tipu kose i načinu života.",
+          "Cilj nam je oblik koji se lepo nosi i kada nemate vremena za stilizovanje, i frizura koju lako održavate kod kuće. Pre šišanja razgovaramo šta želite i šta vam stoji, prema obliku lica, tipu kose i načinu života.",
           "Salon je porodični, sa tradicijom dugom preko 40 godina. Rade Vojkan i Boža.",
         ],
       },
@@ -192,7 +192,7 @@ export const servicePages: ServicePage[] = [
       {
         heading: "Mogu li da dođem bez zakazivanja?",
         paragraphs: [
-          "Da. Uvek ostavljamo deo kapaciteta za klijentkinje koje dolaze bez zakazivanja, pa si dobrodošla u bilo kom trenutku tokom radnog vremena.",
+          "Da. Uvek ostavljamo deo kapaciteta za klijentkinje koje dolaze bez zakazivanja, pa ste dobrodošli u bilo kom trenutku tokom radnog vremena.",
         ],
       },
     ],

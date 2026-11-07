@@ -72,7 +72,7 @@ const Hero = ({ onBookingOpen }: HeroProps) => {
             <span className="inline-flex items-center rounded-full bg-primary/15 border border-primary/30 px-2.5 py-0.5 md:px-3 md:py-1 text-sm md:text-base text-primary font-medium">
               {ONLINE_BOOKING_ENABLED ? "dolazak bez zakazivanja" : "bez zakazivanja"}
             </span>{" "}
-            {ONLINE_BOOKING_ENABLED ? "- izbor je Vaš." : "- tu smo u centru Novog Sada."}
+            {ONLINE_BOOKING_ENABLED ? "- izbor je vaš." : "- tu smo u centru Novog Sada."}
           </p>
 
           {/* Podnaslov */}
@@ -80,9 +80,9 @@ const Hero = ({ onBookingOpen }: HeroProps) => {
             className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-4 font-light tracking-wide animate-fade-in opacity-0"
             style={{ animationDelay: "0.6s" }}
           >
-            U "<span className="text-gold-gradient">Modnom frizeru VOJKAN</span>" radiš sa frizerima koji slušaju, predlažu i rade precizno.
+            U "<span className="text-gold-gradient">Modnom frizeru VOJKAN</span>" radite sa frizerima koji slušaju, predlažu i rade precizno.
             {ONLINE_BOOKING_ENABLED
-              ? " Zakaži termin za šišanje, boju ili balayage - bez komplikacija."
+              ? " Zakažite termin za šišanje, boju ili balayage - bez komplikacija."
               : " Šišanje, boja i balayage - bez komplikacija."}
           </p>
 

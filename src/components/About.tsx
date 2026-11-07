@@ -5,7 +5,7 @@ const features = [
   {
     icon: Scissors,
     title: "Precizno šišanje",
-    description: "Oblik koji se lepo nosi i kada nemaš vremena za stilizovanje."
+    description: "Oblik koji se lepo nosi i kada nemate vremena za stilizovanje."
   },
   {
     icon: Award,
@@ -15,7 +15,7 @@ const features = [
   {
     icon: Heart,
     title: "Konsultacije pre usluge",
-    description: "Kratak dogovor pre rada - da znaš šta dobijaš i koliko traje."
+    description: "Kratak dogovor pre rada - da znate šta dobijate i koliko traje."
   }
 ];
 
@@ -46,11 +46,11 @@ const About = () => {
             <strong className="text-gold-gradient">Modni frizer VOJKAN</strong> je ženski frizerski salon u centru Novog Sada sa
             tradicijom dugom preko <strong className="text-primary">40 godina</strong>. Radimo porodično -
             <strong className="text-gold-gradient"> Vojkan</strong> i <strong className="text-gold-gradient">Boža</strong> - i cilj
-            nam je da izađeš iz salona sa frizurom koju možeš lako da održavaš.
+            nam je da izađete iz salona sa frizurom koju možete lako da održavate.
           </p>
           <p className="text-muted-foreground leading-relaxed">
-            Pre svake promene radimo kratke konsultacije: šta želiš, šta ti stoji i šta je realno za tvoju kosu. Ako farbaš
-            ili radiš balayage, dobićeš i savet kako da boja traje duže i kako da kosa ostane sjajna.
+            Pre svake promene radimo kratke konsultacije: šta želite, šta vam stoji i šta je realno za vašu kosu. Ako farbate
+            ili radite balayage, dobićete i savet kako da boja traje duže i kako da kosa ostane sjajna.
           </p>
         </ScrollReveal>
 
