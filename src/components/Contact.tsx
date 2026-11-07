@@ -43,11 +43,7 @@ const Contact = ({ onBookingOpen }: ContactProps) => {
             </h2>
             <div className="decorative-line mb-8" />
             <p className="text-muted-foreground max-w-xl mx-auto mb-6">
-              Javite nam se porukom ili telefonom u toku radnog vremena, a u salon možete doći i{" "}
-              <span className="inline-flex items-center rounded-full bg-primary/15 border border-primary/30 px-2.5 py-0.5 text-sm text-primary font-medium">
-                bez zakazivanja
-              </span>
-              .
+              Javite nam se porukom ili telefonom u toku radnog vremena.
             </p>
             {ONLINE_BOOKING_ENABLED && (
               <button

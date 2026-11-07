@@ -87,9 +87,9 @@ export const servicePages: ServicePage[] = [
         answer: "Balayage traje od 2 do 3.5 sata, zavisno od dužine i gustine kose.",
       },
       {
-        question: "Da li mogu da dođem na balayage bez zakazivanja?",
+        question: "Da li su konsultacije besplatne?",
         answer:
-          "Da, primamo i bez zakazivanja. Imajte na umu da balayage traje nekoliko sati.",
+          "Da. Pre balayage-a radimo kratke besplatne konsultacije: dogovaramo nijansu, tehniku i cenu pre nego što počnemo.",
       },
       {
         question: "Da li je cena balayage-a konačna?",
@@ -104,7 +104,7 @@ export const servicePages: ServicePage[] = [
     linkLabel: "Sve o farbanju kose",
     title: "Farbanje kose u Novom Sadu | Modni frizer Vojkan",
     description:
-      "Farbanje korena i cele dužine kose u centru Novog Sada. Cene od 4.000 RSD, besplatne konsultacije, a dolazak je moguć i bez zakazivanja.",
+      "Farbanje korena i cele dužine kose u centru Novog Sada. Cene od 4.000 RSD, premium boje i besplatne konsultacije pre početka rada.",
     eyebrow: "Farbanje kose",
     h1: "Farbanje kose u Novom Sadu",
     intro:
@@ -147,9 +147,9 @@ export const servicePages: ServicePage[] = [
         answer: "Farbanje traje od 2 do 3.5 sata, zavisno od usluge, dužine i gustine kose.",
       },
       {
-        question: "Da li mogu da dođem na farbanje bez zakazivanja?",
+        question: "Sa kojim bojama radite?",
         answer:
-          "Da, uvek primamo i klijentkinje bez zakazivanja.",
+          "Radimo sa premium bojama. Nijansu biramo zajedno na kratkim konsultacijama pre farbanja, koje su besplatne.",
       },
       {
         question: "Zašto je cena farbanja okvirna?",
@@ -164,11 +164,11 @@ export const servicePages: ServicePage[] = [
     linkLabel: "Sve o šišanju i feniranju",
     title: "Žensko šišanje u Novom Sadu | Modni frizer Vojkan",
     description:
-      "Žensko šišanje i feniranje u centru Novog Sada, od 3.500 RSD. Traje 45 minuta do sat vremena. Dolazak je moguć bez zakazivanja.",
+      "Žensko šišanje i feniranje u centru Novog Sada, od 3.500 RSD. Traje 45 minuta do sat vremena, uz besplatne konsultacije.",
     eyebrow: "Šišanje i feniranje",
     h1: "Žensko šišanje i feniranje u Novom Sadu",
     intro:
-      "Žensko šišanje sa feniranjem radimo u salonu Modni frizer VOJKAN u centru Novog Sada, kod Hotela Centar. Košta od 3.500 RSD i traje oko 45 minuta do sat vremena. Možete da dođete bez zakazivanja, tokom celog radnog vremena.",
+      "Žensko šišanje sa feniranjem radimo u salonu Modni frizer VOJKAN u centru Novog Sada, kod Hotela Centar. Košta od 3.500 RSD i traje oko 45 minuta do sat vremena. Pre šišanja su konsultacije besplatne.",
     prices: [
       ...pricesOf("zensko-sisanje-novi-sad"),
       ...services.flatMap((c) => c.items).filter((p) => p.name.startsWith("Regeneracija")),
@@ -190,9 +190,9 @@ export const servicePages: ServicePage[] = [
         ],
       },
       {
-        heading: "Mogu li da dođem bez zakazivanja?",
+        heading: "Gde se nalazimo i kada radimo?",
         paragraphs: [
-          "Da. Uvek ostavljamo deo kapaciteta za klijentkinje koje dolaze bez zakazivanja, pa ste dobrodošli u bilo kom trenutku tokom radnog vremena.",
+          "Salon je u strogom centru Novog Sada, u Uspenskoj 1 (ulaz iz Pavla Papa), kod Hotela Centar. Radimo od ponedeljka do petka od 11 do 19 časova i subotom od 8 do 16 časova.",
         ],
       },
     ],
