@@ -1,6 +1,6 @@
 # Modni frizer VOJKAN
 
-> Ženski frizerski salon u Novom Sadu (Uspenska 1, ulaz iz Pavla Papa). Termin se može zakazati online, porukom ili telefonom, a primamo i klijentkinje bez zakazivanja.
+> Ženski frizerski salon u Novom Sadu (Uspenska 1, ulaz iz Pavla Papa, kod Hotela Centar). Porodični salon sa tradicijom od preko 40 godina; pre svake usluge su konsultacije besplatne.
 
 Usluge: žensko šišanje i feniranje, farbanje kose, pramenovi i balayage, preliv i toniranje, regeneracija kose i nadogradnja kose. Cene zavise od dužine kose; tačnu cenu dajemo porukom.
 
@@ -8,13 +8,12 @@ Radno vreme: ponedeljak - petak 11:00 - 19:00, subota 08:00 - 16:00, nedeljom ne
 
 ## Sajt
 
-- [Početna strana](https://frizervojkan.rs/): o salonu, usluge, cene, galerija radova, česta pitanja i online zakazivanje
+- [Početna strana](https://frizervojkan.rs/): o salonu, usluge, cene, galerija radova i česta pitanja
 - [Usluge](https://frizervojkan.rs/#usluge): spisak usluga
 - [Balayage i pramenovi](https://frizervojkan.rs/balayage-novi-sad): cene, trajanje i kako izgleda dolazak
 - [Farbanje kose](https://frizervojkan.rs/farbanje-kose-novi-sad): koren ili cela dužina, cene i trajanje
-- [Žensko šišanje i feniranje](https://frizervojkan.rs/zensko-sisanje-novi-sad): cene, trajanje i dolazak bez zakazivanja
+- [Žensko šišanje i feniranje](https://frizervojkan.rs/zensko-sisanje-novi-sad): cene, trajanje i šta je uključeno
 - [Cene](https://frizervojkan.rs/#cene): cenovnik i pitanja o cenama
-- [Zakazivanje](https://frizervojkan.rs/#zakazivanje): kako se zakazuje termin i dolazak bez zakazivanja
 - [Česta pitanja](https://frizervojkan.rs/#faq): odgovori na najčešća pitanja
 - [Kontakt](https://frizervojkan.rs/#kontakt): adresa, telefon, radno vreme i mapa
 

@@ -68,11 +68,17 @@ const Hero = ({ onBookingOpen }: HeroProps) => {
             className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-3 font-light tracking-wide animate-fade-in opacity-0"
             style={{ animationDelay: "0.5s" }}
           >
-            {ONLINE_BOOKING_ENABLED ? "Zakazivanje termina ili" : "Dođite"}{" "}
-            <span className="inline-flex items-center rounded-full bg-primary/15 border border-primary/30 px-2.5 py-0.5 md:px-3 md:py-1 text-sm md:text-base text-primary font-medium">
-              {ONLINE_BOOKING_ENABLED ? "dolazak bez zakazivanja" : "bez zakazivanja"}
-            </span>{" "}
-            {ONLINE_BOOKING_ENABLED ? "- izbor je vaš." : "- tu smo u centru Novog Sada."}
+            {ONLINE_BOOKING_ENABLED ? (
+              <>
+                Zakazivanje termina ili{" "}
+                <span className="inline-flex items-center rounded-full bg-primary/15 border border-primary/30 px-2.5 py-0.5 md:px-3 md:py-1 text-sm md:text-base text-primary font-medium">
+                  dolazak bez zakazivanja
+                </span>{" "}
+                - izbor je vaš.
+              </>
+            ) : (
+              "Porodični salon u centru Novog Sada, kod Hotela Centar."
+            )}
           </p>
 
           {/* Podnaslov */}
