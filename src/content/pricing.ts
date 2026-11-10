@@ -8,7 +8,6 @@ export interface PriceItem {
   name: string;
   price: string;
   description: string;
-  featuredImage?: { file: string; alt: string; position?: string };
 }
 
 export interface PriceCategory {
@@ -23,12 +22,7 @@ export const services: PriceCategory[] = [
     category: "Šišanje & Stilizacija",
     slug: "zensko-sisanje-novi-sad",
     items: [
-      {
-        name: "Žensko šišanje + feniranje",
-        price: "od 3.500 RSD",
-        description: "Prilagođeno vašem stilu",
-        featuredImage: { file: "4.webp", alt: "Kratki plavi bob" },
-      },
+      { name: "Žensko šišanje + feniranje", price: "od 3.500 RSD", description: "Prilagođeno vašem stilu" },
       { name: "Feniranje", price: "od 1.200 RSD", description: "Profesionalna stilizacija" },
     ]
   },
@@ -37,12 +31,7 @@ export const services: PriceCategory[] = [
     slug: "farbanje-kose-novi-sad",
     items: [
       { name: "Farbanje kose - koren", price: "od 4.000 RSD", description: "Premium boje" },
-      {
-        name: "Farbanje kose - cela dužina",
-        price: "od 5.000 RSD",
-        description: "Premium boje",
-        featuredImage: { file: "2.webp", alt: "Ravna kosa u hladnoj plavoj nijansi" },
-      },
+      { name: "Farbanje kose - cela dužina", price: "od 5.000 RSD", description: "Premium boje" },
       { name: "Farbanje kose + šišanje", price: "od 6.000 RSD", description: "Premium boje" },
     ]
   },
@@ -50,12 +39,7 @@ export const services: PriceCategory[] = [
     category: "Pramenovi & Prelivi",
     slug: "balayage-novi-sad",
     items: [
-      {
-        name: "Pramenovi / Balayage",
-        price: "od 9.000 RSD",
-        description: "Prirodan izgled",
-        featuredImage: { file: "8.webp", alt: "Plavi balayage sa loknama", position: "object-[center_75%]" },
-      },
+      { name: "Pramenovi / Balayage", price: "od 9.000 RSD", description: "Prirodan izgled" },
       { name: "Pramenovi / Balayage + šišanje", price: "od 11.000 RSD", description: "Prirodan izgled" },
       { name: "Preliv / Toniranje", price: "od 4.000 RSD", description: "Osvežavanje boje" },
       { name: "Preliv / Toniranje + šišanje", price: "od 6.000 RSD", description: "Osvežavanje boje" },

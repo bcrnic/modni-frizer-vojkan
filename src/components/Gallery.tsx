@@ -7,9 +7,9 @@ import { cn } from "@/lib/utils";
 
 const galleryImages = [
   {
-    src: `${import.meta.env.BASE_URL}assets/1.webp`,
-    alt: "Bakarni talasi (srednja dužina)",
-    caption: "Topla bakarna nijansa i mekani talasi",
+    src: `${import.meta.env.BASE_URL}assets/7.webp`,
+    alt: "Talasasta smeđa kosa",
+    caption: "Mekani talasi za prirodan, elegantan look",
   },
   {
     src: `${import.meta.env.BASE_URL}assets/8.webp`,
@@ -30,11 +30,6 @@ const galleryImages = [
     src: `${import.meta.env.BASE_URL}assets/2.webp`,
     alt: "Ledeno plavi lob (ravno)",
     caption: "Precizan rez i hladni tonovi plave",
-  },
-  {
-    src: `${import.meta.env.BASE_URL}assets/7.webp`,
-    alt: "Talasasta smeđa kosa",
-    caption: "Mekani talasi za prirodan, elegantan look",
   },
   {
     src: `${import.meta.env.BASE_URL}assets/5.webp`,
@@ -68,14 +63,12 @@ const galleryImages = [
   },
 ];
 
-// The first photo is the large feature tile; with three columns the grid then
-// fills exactly five rows. On phones the last photo spans both columns so the
-// two-column grid has no gap at the end.
+// The first photo spans two columns. On desktop the last one fills the final two cells.
 const tileClass = (index: number) =>
   cn(
-    index === 0 && "col-span-2 aspect-[4/5] md:aspect-auto md:row-span-2",
-    index === galleryImages.length - 1 && "col-span-2 md:col-span-1 aspect-[4/5]",
-    index !== 0 && index !== galleryImages.length - 1 && "aspect-[4/5]",
+    "aspect-[4/5]",
+    index === 0 && "col-span-2 md:aspect-auto md:row-span-2",
+    index === galleryImages.length - 1 && "md:col-span-2 md:aspect-auto",
   );
 
 const Gallery = () => {

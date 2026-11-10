@@ -24,8 +24,16 @@ const Hero = ({ onBookingOpen }: HeroProps) => (
             "Ženski frizer u centru",
             {
               key: "city",
+              // Extend the gradient past descenders without changing line spacing.
               node: (
-                <ShinyText color="#d4a832" shineColor="#fff4cc" speed={2.6} delay={2.5} shineWidth={30}>
+                <ShinyText
+                  className="-my-[0.16em] py-[0.16em]"
+                  color="#d4a832"
+                  shineColor="#fff4cc"
+                  speed={2.6}
+                  delay={2.5}
+                  shineWidth={30}
+                >
                   Novog Sada
                 </ShinyText>
               ),
