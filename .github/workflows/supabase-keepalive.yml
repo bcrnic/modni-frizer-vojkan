@@ -5,9 +5,13 @@ name: Supabase Keep-Alive
 # GitHub Actions cron koristi UTC vreme i zakazana pokretanja često kasne.
 # Napomena: u javnom repou GitHub sam isključi zakazane workflow-e posle
 # 60 dana bez commita - tada ga treba ponovo uključiti u Actions tabu.
+#
+# ISKLJUČENO (novembar 2026): online zakazivanje je pauzirano, pa smo pustili
+# da Supabase pauzira projekat. Kad baza ponovo zatreba: vratite projekat u
+# Supabase-u (Restore project), pa ponovo uključite raspored ispod.
 on:
-  schedule:
-    - cron: "0 8 * * *"     # Svaki dan u 08:00 UTC (09:00 ili 10:00 po našem vremenu)
+  # schedule:
+  #   - cron: "0 8 * * *"     # Svaki dan u 08:00 UTC (09:00 ili 10:00 po našem vremenu)
   workflow_dispatch:         # Može se pokrenuti ručno iz GitHub UI
 
 jobs:
