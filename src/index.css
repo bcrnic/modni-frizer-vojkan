@@ -191,8 +191,6 @@ MESTA ZA IZMENU:
    animated so the browser can run it on the GPU. */
 .blur-text-word {
   display: inline-block;
-  opacity: 0;
-  transform: translateY(var(--blur-text-from, -50px));
 }
 
 .blur-text-word.is-visible {
