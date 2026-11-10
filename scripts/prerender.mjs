@@ -35,8 +35,8 @@ for (const page of pages) {
   html = replaceOnce(html, /<meta property="og:url" content="[^"]*" \/>/, `<meta property="og:url" content="${page.url}" />`, "og:url");
   html = replaceOnce(html, /<link rel="canonical" href="[^"]*" \/>/, `<link rel="canonical" href="${page.url}" />`, "canonical");
   // Only the home page shows the hero photo.
-  html = html.replace(/\s*<!--[^>]*?-->\s*<link rel="preload" as="image" href="[^"]*hero-bg\.webp"[^>]*>/, "");
-  html = html.replace(/\s*<link rel="preload" as="image" href="[^"]*hero-bg\.webp"[^>]*>/, "");
+  html = html.replace(/\s*<!--[^>]*?-->\s*<link rel="preload" as="image" href="[^"]*\/assets\/1\.webp"[^>]*>/, "");
+  html = html.replace(/\s*<link rel="preload" as="image" href="[^"]*\/assets\/1\.webp"[^>]*>/, "");
   // The home page schema (salon, FAQ) describes "/" only.
   html = replaceOnce(
     html,

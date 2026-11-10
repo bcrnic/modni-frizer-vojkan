@@ -31,7 +31,7 @@ const hydrationErrors = async (path: string) => {
 it("prerendered home page has its content and hydrates without mismatches", async () => {
   const root = document.createElement("div");
   root.innerHTML = render("/");
-  expect(root.querySelector("h1")?.textContent).toMatch(/Ženski frizerski salon u\s*Novom Sadu/);
+  expect(root.querySelector("h1")?.textContent).toBe("Ženski frizer u centru Novog Sada");
   expect(root.textContent).toContain("Česta pitanja");
   expect(await hydrationErrors("/")).toEqual([]);
 });

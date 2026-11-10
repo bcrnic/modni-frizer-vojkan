@@ -7,14 +7,14 @@ import { cn } from "@/lib/utils";
 
 const galleryImages = [
   {
-    src: `${import.meta.env.BASE_URL}assets/8.webp`,
-    alt: "Plava balayage sa loknama",
-    caption: "Mekani prelivi i glamurozne lokne",
-  },
-  {
     src: `${import.meta.env.BASE_URL}assets/1.webp`,
     alt: "Bakarni talasi (srednja dužina)",
     caption: "Topla bakarna nijansa i mekani talasi",
+  },
+  {
+    src: `${import.meta.env.BASE_URL}assets/8.webp`,
+    alt: "Plava balayage sa loknama",
+    caption: "Mekani prelivi i glamurozne lokne",
   },
   {
     src: `${import.meta.env.BASE_URL}assets/4.webp`,

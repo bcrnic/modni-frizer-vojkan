@@ -24,7 +24,6 @@ const highlights = [
   { value: "40+", label: "godina tradicije" },
   { value: "2", label: "frizera, porodični salon" },
   { value: "Centar", label: "Novog Sada, kod Hotela Centar" },
-  { value: "2.000+", label: "pratilaca na Instagramu" },
 ];
 
 const About = () => {
@@ -35,7 +34,7 @@ const About = () => {
         <ScrollReveal className="text-center mb-16">
           <p className="text-primary uppercase tracking-[0.3em] text-sm mb-4">O nama</p>
           <h2 className="heading-section mb-6">
-            Iskustvo, mirna ruka i dogovor bez <span className="text-gold-gradient">iznenađenja</span>
+            Upoznajte <span className="text-gold-gradient">Vojkana i Božu</span>
           </h2>
           <div className="decorative-line mb-8" />
         </ScrollReveal>
@@ -43,10 +42,7 @@ const About = () => {
         {/* Glavni tekst */}
         <ScrollReveal delay={0.2} className="max-w-3xl mx-auto text-center mb-16">
           <p className="lead-text mb-6">
-            <strong className="text-gold-gradient">Modni frizer VOJKAN</strong> je ženski frizerski salon u centru Novog Sada sa
-            tradicijom dugom preko <strong className="text-primary">40 godina</strong>. Radimo porodično -
-            <strong className="text-gold-gradient"> Vojkan</strong> i <strong className="text-gold-gradient">Boža</strong> - i cilj
-            nam je da izađete iz salona sa frizurom koju možete lako da održavate.
+            Radimo zajedno u porodičnom salonu u centru Novog Sada. Želimo da odete sa frizurom koju možete lako da održavate.
           </p>
           <p className="text-muted-foreground leading-relaxed">
             Pre svake promene radimo kratke konsultacije: šta želite, šta vam stoji i šta je realno za vašu kosu. Ako farbate
@@ -56,7 +52,7 @@ const About = () => {
 
         {/* Brojke */}
         <ScrollReveal delay={0.1} className="mb-16">
-          <dl className="grid grid-cols-2 lg:grid-cols-4 border border-border/40 divide-x divide-y lg:divide-y-0 divide-border/40 bg-card/20">
+          <dl className="grid sm:grid-cols-3 border border-border/40 divide-y sm:divide-x sm:divide-y-0 divide-border/40 bg-card/20">
             {highlights.map((item) => (
               <div key={item.label} className="px-4 py-8 md:py-10 text-center">
                 <dt className="sr-only">{item.label}</dt>

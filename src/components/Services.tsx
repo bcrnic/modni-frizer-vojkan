@@ -18,7 +18,7 @@ const Services = () => {
           </h2>
           <div className="decorative-line mb-8" />
           <p className="text-lg text-muted-foreground/80 max-w-2xl mx-auto font-light">
-            Šišanje, farbanje, pramenovi, balayage i nega kose. Cene zavise od dužine kose i utroška materijala.
+            Šišanje, farbanje, pramenovi, balayage i nega kose.
           </p>
         </ScrollReveal>
 
@@ -75,8 +75,8 @@ const Services = () => {
 
         {/* Napomena */}
         <ScrollReveal delay={0.3}>
-          <p className="text-center text-muted-foreground text-sm mt-12">
-            Konsultacije su besplatne. Tačnu cenu dogovaramo nakon pregleda kose.
+          <p id="cene" className="mx-auto mt-12 max-w-2xl scroll-mt-24 text-center text-sm leading-relaxed text-muted-foreground">
+            Cena zavisi od dužine kose i utroška materijala. Pošaljite nam fotografiju kose i recite šta želite, pa ćemo vam dati okvirnu cenu.
           </p>
         </ScrollReveal>
       </div>
