@@ -6,16 +6,10 @@
   # The site is served from the domain root on Netlify (GitHub Pages uses /modni-frizer-vojkan/)
   BASE_PATH = "/"
 
-# Nothing is published under /.well-known/. Without this rule the catch-all
-# below answers e.g. /.well-known/ai-catalog.json with the HTML page, which
-# Lighthouse then reports as an invalid file.
+# The public pages are static. Only the admin route needs the React entry point.
+# Netlify serves 404.html with HTTP 404 for paths that do not match a file.
 [[redirects]]
-  from = "/.well-known/*"
-  to = "/index.html"
-  status = 404
-
-[[redirects]]
-  from = "/*"
+  from = "/admin"
   to = "/index.html"
   status = 200
 
